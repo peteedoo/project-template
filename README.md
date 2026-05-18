@@ -26,6 +26,25 @@ cd {project-name}
 └── README.md      # This file
 ```
 
+## Workflow
+
+### Start a new project
+
+```bash
+./scripts/new-project.sh my-project-name
+```
+
+Or manually:
+```bash
+gh repo create peteedoo/my-project-name --public --template=peteedoo/project-template --clone
+```
+
+### Conventions
+
+- **Branches:** `feat/description`, `fix/description`, `docs/description`, `refactor/description`
+- **Commits:** [Conventional Commits](https://www.conventionalcommits.org/) — `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
+- **Issues:** Every change starts with an issue. Close with `Closes #N` in the PR body.
+
 ## Decisions
 
 See [docs/adr/](docs/adr/) for architecture decisions.
