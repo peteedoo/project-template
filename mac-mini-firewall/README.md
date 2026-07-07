@@ -16,6 +16,17 @@ MiniFW generates `nftables` rules, DHCP/DNS config (`dnsmasq`), and kernel harde
 
 A 2014 Mac Mini has only one built-in Ethernet port. You need a second NIC (USB adapter) to separate WAN from LAN. With 16 GB RAM it is overpowered for routing; 256 GB HDD is fine but use log rotation and avoid heavy disk writes.
 
+## Documentation
+
+| Doc | When to use |
+|-----|-------------|
+| **[docs/SETUP-PLAN.md](docs/SETUP-PLAN.md)** | Full step-by-step build, netplan, vet checklist, cutover |
+| **[docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md)** | Restore Google Fiber Network Box in 5 min |
+| **[docs/TRIAGE.md](docs/TRIAGE.md)** | **Save on your phone** — offline troubleshooting |
+| [docs/NETWORK.md](docs/NETWORK.md) | Topology (Google Fiber + Deco XE75) |
+
+**Before cutover:** save `TRIAGE.md` and `BACKUP-AND-ROLLBACK.md` to your phone.
+
 ## Quick start
 
 ```bash
@@ -50,9 +61,13 @@ See [docs/NETWORK.md](docs/NETWORK.md) for the full topology diagram, physical w
 ```
 mac-mini-firewall/
 ├── src/minifw/          # Python CLI and rule generator
-├── config/              # Example YAML config
-├── scripts/             # install.sh, detect-interfaces.sh
-└── docs/NETWORK.md      # Topology and setup guide
+├── config/              # firewall.yaml, netplan examples
+├── scripts/             # install, preflight, rollback helpers
+└── docs/
+    ├── SETUP-PLAN.md       # Full implementation plan
+    ├── BACKUP-AND-ROLLBACK.md
+    ├── TRIAGE.md           # Offline runbook
+    └── NETWORK.md
 ```
 
 ## Security defaults
