@@ -273,3 +273,109 @@ If your fiber gateway previously used `192.168.68.x` (Deco's default subnet), sw
 - [ ] Run `minifw apply` on the Mac Mini
 - [ ] Verify public IP from a Wi-Fi client: `curl ifconfig.me`
 - [ ] Disable Wi-Fi on the ISP gateway (if it still routes) to avoid a second network
+
+## Google Fiber + Deco XE75
+
+Google Fiber is one of the easiest ISPs for a custom router — **you do not need bridge mode**. Unplug the Network Box and connect your Mac Mini directly to the **Fiber Jack**.
+
+### Your equipment (from photos)
+
+| Device | What it is | What to do |
+|--------|------------|------------|
+| Small black/white box (fiber entry) | **Fiber Jack** (ONT) | Keep powered; Ethernet goes to Mac Mini WAN |
+| White box with GF logo, Wi-Fi LED | **Network Box** (ISP router) | **Unplug and remove** from the chain |
+| Deco XE75 mesh | Your Wi-Fi | AP mode only; plug into Mac Mini LAN |
+
+### Topology
+
+```mermaid
+flowchart TB
+    subgraph GFiber["Google Fiber"]
+        FIBER[Fiber line in wall]
+        JACK[Fiber Jack ONT<br/>stay powered]
+    end
+
+    subgraph YourNetwork
+        FW[Mac Mini firewall<br/>192.168.10.1]
+        SW[Switch]
+        DECO[Deco XE75 main<br/>AP mode]
+        SAT[Deco satellites]
+    end
+
+    FIBER --> JACK
+    JACK -->|Ethernet → USB NIC| FW
+    FW --> SW
+    SW --> DECO
+    SW --> SAT
+    DECO -.->|mesh| SAT
+```
+
+### Wiring steps
+
+1. **Leave the Fiber Jack powered** (it has its own power adapter — do not unplug that).
+2. **Disconnect the Network Box:**
+   - Unplug the Ethernet cable from the Fiber Jack → Network Box
+   - Unplug Network Box power
+   - Store the Network Box (return to Google if you cancel service)
+3. **Connect Mac Mini:**
+   - Fiber Jack Ethernet → USB Ethernet adapter → Mac Mini **WAN**
+   - Mac Mini built-in Ethernet → gigabit switch
+   - Switch → Deco XE75 main unit (and wired satellites if possible)
+4. **Configure Mac Mini WAN for DHCP** (Google assigns your public IP automatically).
+5. **Switch Deco to AP mode** (Deco app → More → Advanced → Operation Mode → Access Point).
+
+```
+BEFORE (current):
+  Fiber Jack ──yellow──► Network Box ──Wi-Fi/LAN──► your devices
+
+AFTER (target):
+  Fiber Jack ──────────► Mac Mini WAN
+                              ↓
+                         Mac Mini LAN ──► Switch ──► Deco XE75 (AP mode)
+```
+
+### Google Fiber WAN settings
+
+For most current residential installs, **plain DHCP on WAN is enough** — no VLAN tagging.
+
+| Setting | Value |
+|---------|-------|
+| WAN mode | DHCP (automatic) |
+| VLAN | None (try this first) |
+| IPv6 | DHCPv6 enabled (optional, Google supports it) |
+
+**If WAN does not get an IP** (older installs in some cities), your Fiber Jack may still expect **VLAN 2** with CoS priority 3. Add to your Mac Mini netplan or `systemd-networkd` config:
+
+```yaml
+# Example netplan snippet for VLAN 2 fallback
+vlans:
+  wan-vlan2:
+    id: 2
+    link: enxYOUR_USB_NIC
+    dhcp4: true
+```
+
+Try without VLAN first. Only add VLAN 2 if DHCP on the raw interface fails after 5+ minutes.
+
+### Network Box: do not use it
+
+The Network Box has **no bridge mode**. Running it in front of or behind the Mac Mini creates double NAT. Google officially supports bypassing it:
+
+> Connect your router's WAN port directly to the Fiber Jack Ethernet port.
+> — [Google Fiber: Use your own router](https://support.google.com/fiber/answer/2446100)
+
+### Google Fiber + Deco checklist
+
+- [ ] Fiber Jack stays powered (separate adapter)
+- [ ] Network Box disconnected and removed from chain
+- [ ] Fiber Jack Ethernet → Mac Mini USB WAN
+- [ ] Mac Mini LAN → switch → Deco XE75
+- [ ] Deco in **Access Point** mode (not router mode)
+- [ ] Mac Mini WAN set to DHCP
+- [ ] Run `minifw apply`
+- [ ] Test: `curl ifconfig.me` from phone on Deco Wi-Fi shows public IP
+- [ ] Optional: disable Network Box Wi-Fi is moot — box is unplugged
+
+### Support note
+
+Google Fiber support can only troubleshoot up to the Fiber Jack when using your own router. If the Fiber Jack has a solid light but the Mac Mini WAN gets no IP, the issue is on your Mac Mini config (or rare VLAN 2 requirement), not Google's network.
