@@ -20,10 +20,13 @@ A 2014 Mac Mini has only one built-in Ethernet port. You need a second NIC (USB 
 
 | Doc | When to use |
 |-----|-------------|
+| **[docs/USB-SETUP.md](docs/USB-SETUP.md)** | **Create the plug-in setup USB** |
 | **[docs/SETUP-PLAN.md](docs/SETUP-PLAN.md)** | Full step-by-step build, netplan, vet checklist, cutover |
 | **[docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md)** | Restore Google Fiber Network Box in 5 min |
 | **[docs/TRIAGE.md](docs/TRIAGE.md)** | **Save on your phone** — offline troubleshooting |
 | [docs/NETWORK.md](docs/NETWORK.md) | Topology (Google Fiber + Deco XE75) |
+
+**Fastest path:** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
 
 **Before cutover:** save `TRIAGE.md` and `BACKUP-AND-ROLLBACK.md` to your phone.
 
