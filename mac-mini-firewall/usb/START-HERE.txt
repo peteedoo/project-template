@@ -1,0 +1,45 @@
+═══════════════════════════════════════════════════════════════════
+  MINIFW SETUP USB — START HERE
+═══════════════════════════════════════════════════════════════════
+
+This USB sets up your 2014 Mac Mini as a Google Fiber firewall.
+
+WHAT YOU NEED ON THE MAC MINI FIRST
+  • Ubuntu Server 24.04 installed (see docs/USB-SETUP.md)
+  • USB keyboard + HDMI monitor (for first run)
+  • USB Gigabit Ethernet adapter (for WAN)
+
+───────────────────────────────────────────────────────────────────
+STEP 1 — Plug this USB into the Mac Mini
+───────────────────────────────────────────────────────────────────
+
+STEP 2 — Open a terminal and run ONE command:
+
+  cd /media/*/MINIFW-SETUP
+  sudo ./setup.sh
+
+  (Path may be /media/YOURUSER/MINIFW-SETUP — tab-complete it.)
+
+STEP 3 — Follow on-screen instructions for cutover.
+
+───────────────────────────────────────────────────────────────────
+IF INTERNET IS DOWN (read this anytime)
+───────────────────────────────────────────────────────────────────
+
+  Open:  EMERGENCY-CARD.txt  (on this USB)
+  Or on Mac Mini after setup:  cat /root/INTERNET-DOWN.txt
+
+  Rollback in 5 min:  sudo ./rollback-to-network-box.sh
+
+───────────────────────────────────────────────────────────────────
+FILES ON THIS USB
+───────────────────────────────────────────────────────────────────
+
+  setup.sh              ← run this
+  preflight.sh          ← run before cutover
+  rollback-to-network-box.sh
+  docs/TRIAGE.md        ← save to your phone too
+  docs/BACKUP-AND-ROLLBACK.md
+  docs/SETUP-PLAN.md
+
+═══════════════════════════════════════════════════════════════════
