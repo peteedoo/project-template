@@ -1,0 +1,58 @@
+name: Sync Starred Skills
+
+on:
+  workflow_dispatch:
+    inputs:
+      starred_username:
+        description: GitHub username whose public stars are synced when GH_STARS_TOKEN is unset
+        required: false
+        default: peteedoo
+      max_repos:
+        description: Max starred repos to scan
+        required: false
+        default: "200"
+  schedule:
+    - cron: "23 3 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync starred skills
+        env:
+          STARRED_GITHUB_USERNAME: ${{ github.event.inputs.starred_username || vars.STARRED_GITHUB_USERNAME || 'peteedoo' }}
+          STAR_SYNC_MAX_REPOS: ${{ github.event.inputs.max_repos || vars.STAR_SYNC_MAX_REPOS || '200' }}
+          STAR_SYNC_USE_AUTHENTICATED_USER: ${{ vars.STAR_SYNC_USE_AUTHENTICATED_USER || 'false' }}
+          GH_STARS_TOKEN: ${{ secrets.GH_STARS_TOKEN != '' && secrets.GH_STARS_TOKEN || github.token }}
+        run: |
+          python scripts/sync_starred_skills.py
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/sync-starred-skills
+          title: "chore: sync skills from starred repositories"
+          commit-message: "chore: sync skills from starred repositories"
+          body: |
+            Automated update from `scripts/sync_starred_skills.py`.
+
+            Includes:
+            - refreshed starred-repo snapshot
+            - updated star evaluation report
+            - imported skill directories from recommended repos
+            - regenerated imported-sources attribution
+          labels: |
+            automation
+            skills
