@@ -163,3 +163,113 @@ If you must stay on macOS, enable IP forwarding and use `pf`, but you lose easy 
 - [ ] Configure Wi-Fi AP in AP mode
 - [ ] Verify: `curl ifconfig.me` from a LAN device shows your public IP
 - [ ] Verify: inbound ports are closed (use [canyouseeme.org](https://canyouseeme.org) sparingly)
+
+## Fiber + TP-Link Deco XE75
+
+This section covers the common case: **fiber internet** with an ISP ONT/gateway and a **Deco XE75** mesh system (2- or 3-pack).
+
+### Topology
+
+```mermaid
+flowchart TB
+    subgraph Internet
+        ISP[Fiber ISP]
+    end
+
+    subgraph Edge
+        ONT[Fiber ONT / ISP gateway<br/>bridge or passthrough]
+        FW[Mac Mini firewall<br/>192.168.10.1]
+        SW[Gigabit switch<br/>optional but recommended]
+        MAIN[Deco XE75 main unit<br/>AP mode]
+        SAT1[Deco satellite]
+        SAT2[Deco satellite]
+    end
+
+    subgraph LAN["LAN 192.168.10.0/24"]
+        DEV[Phones, laptops, TVs, IoT]
+    end
+
+    ISP --> ONT
+    ONT -->|Ethernet → USB NIC| FW
+    FW -->|built-in Ethernet| SW
+    SW --> MAIN
+    SW --> SAT1
+    MAIN -.->|Wi-Fi 6E mesh| SAT1
+    MAIN -.->|Wi-Fi 6E mesh| SAT2
+    SAT1 -.-> SAT2
+    MAIN --> DEV
+    SAT1 --> DEV
+    SAT2 --> DEV
+```
+
+### Physical wiring
+
+```
+[Fiber] → [ISP ONT or gateway] → [USB Ethernet → Mac Mini WAN]
+                                        ↓
+                           [Built-in Ethernet → Switch]
+                                        ↓
+              ┌─────────────────────────┼─────────────────────────┐
+              ↓                         ↓                         ↓
+      [Deco main XE75]          [Deco satellite]           [Desktop / NAS]
+      (AP mode, wired)          (ethernet backhaul)         (optional)
+```
+
+**Recommended:** Use a **gigabit switch** on the Mac Mini LAN port. Plug the main Deco and any satellites that support wired backhaul into the switch. Wired backhaul in AP mode keeps mesh traffic off the main Deco and performs better than wireless-only backhaul.
+
+### Fiber ONT / ISP gateway
+
+Fiber setups vary by provider. The goal is the same: **only the Mac Mini should route and NAT**.
+
+| ISP setup | What to do |
+|-----------|------------|
+| Standalone ONT with one Ethernet port | Plug that port straight into Mac Mini WAN. ONT is usually already a bridge. |
+| ONT + separate ISP router (common) | Put the ISP router in **bridge**, **passthrough**, or **IP passthrough** mode so the Mac Mini gets the public IP. |
+| ISP gateway with no bridge mode | Call ISP and ask for "bridge mode" or "public IP on my equipment." Some allow **DMZ** to the Mac Mini WAN IP as a fallback (not ideal, but works). |
+| ISP gateway with VoIP / TV | Keep the gateway for phone/TV if required, but still bridge or passthrough data to the Mac Mini. Do **not** run the Deco in router mode behind the Mac Mini. |
+
+After setup, `curl ifconfig.me` from a phone on Deco Wi-Fi should show your **public** IP, not `192.168.x.x`.
+
+### Deco XE75: Access Point mode
+
+Do **not** use the Deco as your router — the Mac Mini is the router. The XE75 becomes your Wi-Fi mesh only.
+
+1. **Initial setup in Router mode** (Deco app requirement): plug main Deco into the switch, complete setup in the TP-Link Deco app.
+2. **Switch to AP mode**: Deco app → **More** → **Advanced** → **Operation Mode** → **Access Point** → Save → Reboot.
+3. One change applies to **all** Deco units in the mesh automatically.
+4. After reboot, the Deco no longer runs DHCP or NAT. The Mac Mini (`192.168.10.1`) handles both.
+
+Reference: [TP-Link Deco AP mode FAQ](https://www.tp-link.com/us/support/faq/1842/)
+
+### IP addressing with Deco
+
+| Device | IP | Notes |
+|--------|-----|-------|
+| Mac Mini (LAN) | `192.168.10.1` | Gateway, DHCP, DNS |
+| Main Deco XE75 | `192.168.10.2` (reserve in dnsmasq) | Management UI via Deco app |
+| Deco satellites | DHCP from Mac Mini | Assigned automatically |
+| Phones / laptops | `192.168.10.100+` | DHCP pool from MiniFW |
+
+If your fiber gateway previously used `192.168.68.x` (Deco's default subnet), switching to `192.168.10.0/24` on the Mac Mini avoids conflicts.
+
+### Deco features in AP mode
+
+| Feature | In AP mode |
+|---------|------------|
+| Mesh Wi-Fi / 6E band | Works |
+| DHCP / NAT / firewall | Handled by Mac Mini |
+| Deco parental controls / HomeShield | May be limited or disabled — use Mac Mini firewall rules instead |
+| Wired ethernet backhaul | Works; recommended via switch |
+| Multiple Decos wired to switch | Supported in AP mode (not in router mode) |
+
+### Fiber + Deco checklist
+
+- [ ] Confirm ONT/gateway is bridged or in passthrough
+- [ ] Mac Mini WAN (USB Ethernet) ← ONT/gateway Ethernet
+- [ ] Mac Mini LAN (built-in) → gigabit switch
+- [ ] Main Deco XE75 → switch (not the ISP gateway)
+- [ ] Complete Deco setup, then switch to **Access Point** mode
+- [ ] Wire satellite Decos to switch if possible (ethernet backhaul)
+- [ ] Run `minifw apply` on the Mac Mini
+- [ ] Verify public IP from a Wi-Fi client: `curl ifconfig.me`
+- [ ] Disable Wi-Fi on the ISP gateway (if it still routes) to avoid a second network
