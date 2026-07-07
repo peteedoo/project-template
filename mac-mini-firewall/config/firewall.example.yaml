@@ -1,0 +1,37 @@
+hostname: mac-mini-fw
+
+interfaces:
+  # USB Ethernet adapter → ISP modem (WAN)
+  wan: enx000ec6c4f1a2
+  # Built-in Thunderbolt/Gigabit port → LAN switch (LAN)
+  lan: enp2s0f0
+
+lan:
+  subnet: 192.168.10.0/24
+  gateway: 192.168.10.1
+  dhcp_start: 192.168.10.100
+  dhcp_end: 192.168.10.250
+  dns_servers:
+    - 1.1.1.1
+    - 1.0.0.1
+
+allow_icmp: true
+management_cidr: 192.168.10.0/24
+
+blocked_ips: []
+
+# Inbound ports allowed from the internet (use sparingly)
+allowed_wan_ports: []
+# Example:
+# - proto: tcp
+#   port: 443
+#   source: 203.0.113.0/24
+
+# Port forwards from WAN to LAN hosts
+port_forwards: []
+# Example:
+# - name: homeassistant
+#   proto: tcp
+#   wan_port: 8123
+#   lan_ip: 192.168.10.50
+#   lan_port: 8123
