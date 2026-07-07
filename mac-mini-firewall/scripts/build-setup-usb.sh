@@ -44,6 +44,11 @@ copy "${PROJECT_DIR}/docs/TRIAGE.md"              "${TARGET}/docs/TRIAGE.md"
 copy "${PROJECT_DIR}/docs/BACKUP-AND-ROLLBACK.md" "${TARGET}/docs/BACKUP-AND-ROLLBACK.md"
 copy "${PROJECT_DIR}/docs/SETUP-PLAN.md"          "${TARGET}/docs/SETUP-PLAN.md"
 copy "${PROJECT_DIR}/docs/NETWORK.md"             "${TARGET}/docs/NETWORK.md"
+copy "${PROJECT_DIR}/docs/USB-SETUP.md"         "${TARGET}/docs/USB-SETUP.md"
+copy "${PROJECT_DIR}/docs/README.md"              "${TARGET}/docs/README.md"
+
+echo "==> Copying Obsidian vault (open obsidian/ folder in Obsidian app)"
+copy "${PROJECT_DIR}/obsidian"                    "${TARGET}/obsidian"
 
 echo "==> Copying configs"
 copy "${PROJECT_DIR}/config/netplan.example.yaml"        "${TARGET}/config/netplan.example.yaml"

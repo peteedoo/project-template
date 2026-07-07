@@ -18,13 +18,20 @@ A 2014 Mac Mini has only one built-in Ethernet port. You need a second NIC (USB 
 
 ## Documentation
 
+### Obsidian vault (recommended)
+
+Open **`obsidian/`** as an Obsidian vault. Start at **[[Home]]** — the master build guide links every phase, rollback step, and reference note.
+
+### Plain markdown
+
 | Doc | When to use |
 |-----|-------------|
-| **[docs/USB-SETUP.md](docs/USB-SETUP.md)** | **Create the plug-in setup USB** |
-| **[docs/SETUP-PLAN.md](docs/SETUP-PLAN.md)** | Full step-by-step build, netplan, vet checklist, cutover |
-| **[docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md)** | Restore Google Fiber Network Box in 5 min |
-| **[docs/TRIAGE.md](docs/TRIAGE.md)** | **Save on your phone** — offline troubleshooting |
-| [docs/NETWORK.md](docs/NETWORK.md) | Topology (Google Fiber + Deco XE75) |
+| **[obsidian/Home.md](obsidian/Home.md)** | **Master build guide** (linked) |
+| [docs/USB-SETUP.md](docs/USB-SETUP.md) | Create the plug-in setup USB |
+| [docs/SETUP-PLAN.md](docs/SETUP-PLAN.md) | Full setup (plain markdown) |
+| [docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md) | Restore Network Box in 5 min |
+| [docs/TRIAGE.md](docs/TRIAGE.md) | Offline troubleshooting |
+| [docs/NETWORK.md](docs/NETWORK.md) | Topology reference |
 
 **Fastest path:** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
 
@@ -63,14 +70,16 @@ See [docs/NETWORK.md](docs/NETWORK.md) for the full topology diagram, physical w
 
 ```
 mac-mini-firewall/
+├── obsidian/            # Obsidian vault — start at Home.md
+│   ├── Home.md          # Master build guide (MOC)
+│   ├── Build/           # Phases 0–6
+│   ├── Network/
+│   ├── Operations/
+│   └── Reference/
 ├── src/minifw/          # Python CLI and rule generator
 ├── config/              # firewall.yaml, netplan examples
-├── scripts/             # install, preflight, rollback helpers
-└── docs/
-    ├── SETUP-PLAN.md       # Full implementation plan
-    ├── BACKUP-AND-ROLLBACK.md
-    ├── TRIAGE.md           # Offline runbook
-    └── NETWORK.md
+├── scripts/             # install, preflight, rollback, build-setup-usb
+└── docs/                # Plain markdown copies
 ```
 
 ## Security defaults

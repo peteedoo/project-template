@@ -36,11 +36,12 @@ python3 -m pip install --break-system-packages "${USB_DIR}/minifw" -q
 
 # ── 3. Offline docs on the Mac Mini (survives USB removal) ─────────────────
 echo "==> [3/7] Installing offline docs to /opt/minifw"
-install -d /opt/minifw/docs
-cp -f "${USB_DIR}/docs/"*.md /opt/minifw/docs/
+install -d /opt/minifw/docs /opt/minifw/obsidian
+cp -f "${USB_DIR}/docs/"*.md /opt/minifw/docs/ 2>/dev/null || true
+cp -Rf "${USB_DIR}/obsidian/." /opt/minifw/obsidian/ 2>/dev/null || true
 cp -f "${USB_DIR}/EMERGENCY-CARD.txt" /root/INTERNET-DOWN.txt
 cp -f "${USB_DIR}/EMERGENCY-CARD.txt" /opt/minifw/EMERGENCY-CARD.txt
-chmod 644 /opt/minifw/docs/* /root/INTERNET-DOWN.txt
+chmod 644 /opt/minifw/docs/* /root/INTERNET-DOWN.txt 2>/dev/null || true
 
 # ── 4. Detect interfaces ─────────────────────────────────────────────────────
 echo "==> [4/7] Detecting network interfaces"
@@ -151,6 +152,7 @@ echo
 echo "  Offline triage (always on this Mac Mini):"
 echo "    cat /root/INTERNET-DOWN.txt"
 echo "    ls /opt/minifw/docs/"
+echo "    ls /opt/minifw/obsidian/"
 echo
 echo "  ── BEFORE CUTTING OVER FROM NETWORK BOX ──"
 echo "  1. Plug Mac Mini LAN (${LAN_IF}) into your switch (or Network Box LAN for testing)"

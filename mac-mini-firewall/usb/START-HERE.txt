@@ -38,8 +38,8 @@ FILES ON THIS USB
   setup.sh              ← run this
   preflight.sh          ← run before cutover
   rollback-to-network-box.sh
-  docs/TRIAGE.md        ← save to your phone too
-  docs/BACKUP-AND-ROLLBACK.md
-  docs/SETUP-PLAN.md
+  obsidian/Home.md      ← master build guide (open obsidian/ in Obsidian app)
+  docs/                 ← plain markdown copies
+  EMERGENCY-CARD.txt
 
 ═══════════════════════════════════════════════════════════════════
