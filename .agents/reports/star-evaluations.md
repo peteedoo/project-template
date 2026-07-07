@@ -1,66 +1,15 @@
 # Star Skill Evaluation Report
 
-Generated: 2026-07-07T23:27:51.482654+00:00
+Generated: 2026-07-07T23:29:32.609523+00:00
 
 - Total starred repos scanned: 51
-- New stars since last snapshot: 51
+- New stars since last snapshot: 0
 - Repos imported this run: 19
 
 ## New stars
 
 | Repo | Score | Recommendation | Skills | Imported |
 | --- | ---: | --- | ---: | --- |
-| [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | 100 | import-now | 1 | yes |
-| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 100 | import-now | 1 | yes |
-| [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything) | 100 | import-now | 8 | yes |
-| [bytedance/deer-flow](https://github.com/bytedance/deer-flow) | 100 | import-now | 25 | yes |
-| [mukul975/Anthropic-Cybersecurity-Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | 100 | import-now | 817 | yes |
-| [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | 100 | import-now | 9 | yes |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 100 | import-now | 24 | yes |
-| [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | 100 | import-now | 68 | yes |
-| [stablyai/orca](https://github.com/stablyai/orca) | 95 | import-now | 8 | yes |
-| [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search) | 95 | import-now | 8 | yes |
-| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | 95 | import-now | 13 | yes |
-| [google-labs-code/design.md](https://github.com/google-labs-code/design.md) | 95 | import-now | 4 | yes |
-| [anomalyco/opencode](https://github.com/anomalyco/opencode) | 95 | import-now | 3 | yes |
-| [Panniantong/Agent-Reach](https://github.com/Panniantong/Agent-Reach) | 95 | import-now | 1 | yes |
-| [hardikpandya/stop-slop](https://github.com/hardikpandya/stop-slop) | 95 | import-now | 1 | yes |
-| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) | 95 | import-now | 175 | yes |
-| [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | 95 | import-now | 29 | yes |
-| [rohitg00/ai-engineering-from-scratch](https://github.com/rohitg00/ai-engineering-from-scratch) | 90 | import-now | 2 | yes |
-| [StarTrail-org/PixelRAG](https://github.com/StarTrail-org/PixelRAG) | 90 | import-now | 1 | yes |
-| [asgeirtj/system_prompts_leaks](https://github.com/asgeirtj/system_prompts_leaks) | 80 | review-license | 3 | no |
-| [calesthio/OpenMontage](https://github.com/calesthio/OpenMontage) | 80 | review-license | 125 | no |
-| [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | 80 | review-license | 1 | no |
-| [multica-ai/multica](https://github.com/multica-ai/multica) | 80 | review-license | 9 | no |
-| [ogulcancelik/herdr](https://github.com/ogulcancelik/herdr) | 75 | review-license | 4 | no |
-| [qazbnm456/awesome-web-security](https://github.com/qazbnm456/awesome-web-security) | 70 | review-license | 1 | no |
-| [koala73/worldmonitor](https://github.com/koala73/worldmonitor) | 70 | review-license | 16 | no |
-| [jaywcjlove/awesome-mac](https://github.com/jaywcjlove/awesome-mac) | 70 | review-license | 1 | no |
-| [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix) | 45 | skip-no-skills | 0 | no |
-| [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) | 45 | skip-no-skills | 0 | no |
-| [OpenCut-app/OpenCut](https://github.com/OpenCut-app/OpenCut) | 40 | skip-no-skills | 0 | no |
-| [microsoft/AI-For-Beginners](https://github.com/microsoft/AI-For-Beginners) | 40 | skip-no-skills | 0 | no |
-| [IceWhaleTech/CasaOS](https://github.com/IceWhaleTech/CasaOS) | 40 | skip-no-skills | 0 | no |
-| [run-llama/liteparse](https://github.com/run-llama/liteparse) | 40 | skip-no-skills | 0 | no |
-| [lfnovo/open-notebook](https://github.com/lfnovo/open-notebook) | 40 | skip-no-skills | 0 | no |
-| [DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | 40 | skip-no-skills | 0 | no |
-| [avelino/awesome-go](https://github.com/avelino/awesome-go) | 40 | skip-no-skills | 0 | no |
-| [iptv-org/iptv](https://github.com/iptv-org/iptv) | 40 | skip-no-skills | 0 | no |
-| [apple/container](https://github.com/apple/container) | 40 | skip-no-skills | 0 | no |
-| [trimstray/the-book-of-secret-knowledge](https://github.com/trimstray/the-book-of-secret-knowledge) | 40 | skip-no-skills | 0 | no |
-| [elder-plinius/T3MP3ST](https://github.com/elder-plinius/T3MP3ST) | 25 | skip-no-skills | 0 | no |
-| [PatrickJS/awesome-cursorrules](https://github.com/PatrickJS/awesome-cursorrules) | 25 | skip-no-skills | 0 | no |
-| [iptv-org/awesome-iptv](https://github.com/iptv-org/awesome-iptv) | 20 | skip-no-skills | 0 | no |
-| [ripienaar/free-for-dev](https://github.com/ripienaar/free-for-dev) | 20 | skip-no-skills | 0 | no |
-| [simplex-chat/simplex-chat](https://github.com/simplex-chat/simplex-chat) | 20 | skip-no-skills | 0 | no |
-| [grafana/grafana](https://github.com/grafana/grafana) | 20 | skip-no-skills | 0 | no |
-| [palmier-io/palmier-pro](https://github.com/palmier-io/palmier-pro) | 20 | skip-no-skills | 0 | no |
-| [awesome-selfhosted/awesome-selfhosted](https://github.com/awesome-selfhosted/awesome-selfhosted) | 20 | skip-no-skills | 0 | no |
-| [ExistentialAudio/BlackHole](https://github.com/ExistentialAudio/BlackHole) | 20 | skip-no-skills | 0 | no |
-| [odoo/odoo](https://github.com/odoo/odoo) | 20 | skip-no-skills | 0 | no |
-| [vinta/awesome-python](https://github.com/vinta/awesome-python) | 20 | skip-no-skills | 0 | no |
-| [sindresorhus/awesome](https://github.com/sindresorhus/awesome) | 20 | skip-no-skills | 0 | no |
 
 ## Imported repositories (this run)
 
@@ -112,7 +61,7 @@ Generated: 2026-07-07T23:27:51.482654+00:00
 - `Panniantong/Agent-Reach`
   - `.agents/skills/imported/panniantong--agent-reach/skill`
 - `hardikpandya/stop-slop`
-  - `.agents/skills/imported/hardikpandya--stop-slop`
+  - `.agents/skills/imported/hardikpandya--stop-slop/root-skill`
 - `rohitg00/ai-engineering-from-scratch`
   - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/check-understanding`
   - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/find-your-level`

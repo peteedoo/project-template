@@ -237,14 +237,42 @@ def normalize_relative_skill_dir(skill_path: str) -> str:
 def copy_skill_dirs(repo_slug: str, checkout_dir: Path, skill_paths: list[str]) -> list[str]:
     copied: list[str] = []
     dest_repo_root = IMPORTED_ROOT / repo_slug
+    if dest_repo_root.exists():
+        shutil.rmtree(dest_repo_root)
     for skill_path in skill_paths:
-        src_dir = checkout_dir / Path(skill_path).parent
-        rel_dir = normalize_relative_skill_dir(skill_path)
-        dest_dir = dest_repo_root / rel_dir
-        if dest_dir.exists():
-            shutil.rmtree(dest_dir)
-        dest_dir.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(src_dir, dest_dir)
+        src_parent = Path(skill_path).parent
+        if str(src_parent) == ".":
+            # Root-level SKILL.md: do not mirror the entire repository.
+            # Import only the root skill contract and common companion folders.
+            dest_dir = dest_repo_root / "root-skill"
+            if dest_dir.exists():
+                shutil.rmtree(dest_dir)
+            dest_dir.mkdir(parents=True, exist_ok=True)
+
+            root_skill = checkout_dir / "SKILL.md"
+            if root_skill.exists():
+                shutil.copy2(root_skill, dest_dir / "SKILL.md")
+
+            for aux_name in ("references", "scripts", "assets"):
+                aux_src = checkout_dir / aux_name
+                if aux_src.exists() and aux_src.is_dir():
+                    shutil.copytree(
+                        aux_src,
+                        dest_dir / aux_name,
+                        ignore=shutil.ignore_patterns(".git", ".git/*"),
+                    )
+        else:
+            src_dir = checkout_dir / src_parent
+            rel_dir = normalize_relative_skill_dir(skill_path)
+            dest_dir = dest_repo_root / rel_dir
+            if dest_dir.exists():
+                shutil.rmtree(dest_dir)
+            dest_dir.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(
+                src_dir,
+                dest_dir,
+                ignore=shutil.ignore_patterns(".git", ".git/*"),
+            )
         copied.append(str(dest_dir.relative_to(ROOT)))
     return copied
 

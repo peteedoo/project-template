@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-07-07T23:27:51.481109+00:00",
+  "updated_at": "2026-07-07T23:29:32.607977+00:00",
   "evaluations": [
     {
       "full_name": "elder-plinius/T3MP3ST",
       "html_url": "https://github.com/elder-plinius/T3MP3ST",
       "description": "autonomous red teaming platform; multi-agent offensive-security meta-harness",
-      "stargazers_count": 3281,
+      "stargazers_count": 3283,
       "language": "TypeScript",
       "license_spdx": "AGPL-3.0",
       "skill_paths": [],
@@ -17,7 +17,7 @@
         "Non-permissive or unclear license (AGPL-3.0).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -45,7 +45,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/stablyai--orca/computer-use",
         ".agents/skills/imported/stablyai--orca/linear-tickets",
@@ -61,7 +61,7 @@
       "full_name": "asgeirtj/system_prompts_leaks",
       "html_url": "https://github.com/asgeirtj/system_prompts_leaks",
       "description": "Extracted system prompts from Anthropic - Claude Fable 5, Opus 4.8, Claude Code, Claude Design. OpenAI - ChatGPT 5.5 Thinking, GPT 5.5 Instant, Codex. Google - Gemini 3.5 Flash, 3.1 Pro, Antigravity. xAI - Grok, Cursor, Copilot, VS Code, Perplexity, and more. Updated regularly.",
-      "stargazers_count": 52936,
+      "stargazers_count": 52939,
       "language": "JavaScript",
       "license_spdx": "CC0-1.0",
       "skill_paths": [
@@ -77,14 +77,14 @@
         "Non-permissive or unclear license (CC0-1.0).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
       "full_name": "MadsLorentzen/ai-job-search",
       "html_url": "https://github.com/MadsLorentzen/ai-job-search",
       "description": "AI-powered job application framework built on Claude Code. Fork it, fill in your profile, and let Claude evaluate jobs, tailor CVs, write cover letters, and prepare you for interviews.",
-      "stargazers_count": 10695,
+      "stargazers_count": 10696,
       "language": "TypeScript",
       "license_spdx": "MIT",
       "skill_paths": [
@@ -105,7 +105,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/madslorentzen--ai-job-search/jobbank-search",
         ".agents/skills/imported/madslorentzen--ai-job-search/jobdanmark-search",
@@ -133,7 +133,7 @@
         "Non-permissive or unclear license (CC0-1.0).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -151,7 +151,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -184,7 +184,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/leonxlnx--taste-skill/brandkit",
         ".agents/skills/imported/leonxlnx--taste-skill/brutalist-skill",
@@ -216,7 +216,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -237,7 +237,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/nutlope--hallmark/hallmark"
       ]
@@ -257,7 +257,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -275,7 +275,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -293,7 +293,7 @@
         "Strong social proof (500+ stars).",
         "Non-permissive or unclear license (AGPL-3.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -317,7 +317,7 @@
         "Permissive license (Apache-2.0).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/google-labs-code--design.md/agent-dx-cli-scale",
         ".agents/skills/imported/google-labs-code--design.md/ink",
@@ -340,7 +340,7 @@
         "Strong social proof (500+ stars).",
         "Non-permissive or unclear license (AGPL-3.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -358,7 +358,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (Apache-2.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -381,7 +381,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/anomalyco--opencode/effect",
         ".agents/skills/imported/anomalyco--opencode/agents-sdk",
@@ -405,7 +405,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -426,7 +426,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/mvanhorn--last30days-skill/last30days"
       ]
@@ -449,7 +449,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/panniantong--agent-reach/skill"
       ]
@@ -472,16 +472,16 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
-        ".agents/skills/imported/hardikpandya--stop-slop"
+        ".agents/skills/imported/hardikpandya--stop-slop/root-skill"
       ]
     },
     {
       "full_name": "ogulcancelik/herdr",
       "html_url": "https://github.com/ogulcancelik/herdr",
       "description": "agent multiplexer that lives in your terminal.",
-      "stargazers_count": 13528,
+      "stargazers_count": 13530,
       "language": "Rust",
       "license_spdx": "NOASSERTION",
       "skill_paths": [
@@ -498,7 +498,7 @@
         "No license metadata found.",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -519,7 +519,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/rohitg00--ai-engineering-from-scratch/check-understanding",
         ".agents/skills/imported/rohitg00--ai-engineering-from-scratch/find-your-level"
@@ -550,7 +550,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/egonex-ai--understand-anything/understand-chat",
         ".agents/skills/imported/egonex-ai--understand-anything/understand-dashboard",
@@ -577,7 +577,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (Apache-2.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -596,7 +596,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -614,7 +614,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -659,7 +659,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/bytedance--deer-flow/blocking-io-guard",
         ".agents/skills/imported/bytedance--deer-flow/deerflow-maintainer-orchestrator",
@@ -703,14 +703,14 @@
         "Strong social proof (500+ stars).",
         "Non-permissive or unclear license (GPL-3.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
       "full_name": "NousResearch/hermes-agent",
       "html_url": "https://github.com/NousResearch/hermes-agent",
       "description": "The agent that grows with you",
-      "stargazers_count": 210958,
+      "stargazers_count": 210959,
       "language": "Python",
       "license_spdx": "MIT",
       "skill_paths": [
@@ -898,7 +898,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/nousresearch--hermes-agent/antigravity-cli",
         ".agents/skills/imported/nousresearch--hermes-agent/blackbox",
@@ -1911,7 +1911,7 @@
         "Permissive license (Apache-2.0).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/mukul975--anthropic-cybersecurity-skills/abusing-dpapi-for-credential-access",
         ".agents/skills/imported/mukul975--anthropic-cybersecurity-skills/abusing-shadow-credentials-for-privesc",
@@ -2764,7 +2764,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -2793,7 +2793,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/shanraisshan--claude-code-best-practice/agent-browser",
         ".agents/skills/imported/shanraisshan--claude-code-best-practice/presentation/presentation-structure",
@@ -2821,7 +2821,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -2841,7 +2841,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (Apache-2.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/startrail-org--pixelrag/pixelbrowse"
       ]
@@ -2850,7 +2850,7 @@
       "full_name": "calesthio/OpenMontage",
       "html_url": "https://github.com/calesthio/OpenMontage",
       "description": "World's first open-source, agentic video production system. 12 pipelines, 52 tools, 500+ agent skills. Turn your AI coding assistant into a full video production studio.",
-      "stargazers_count": 34998,
+      "stargazers_count": 34999,
       "language": "Python",
       "license_spdx": "AGPL-3.0",
       "skill_paths": [
@@ -2988,7 +2988,7 @@
         "Non-permissive or unclear license (AGPL-3.0).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3006,7 +3006,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3024,7 +3024,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3042,7 +3042,7 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3062,7 +3062,7 @@
         "Strong social proof (500+ stars).",
         "Non-permissive or unclear license (CC0-1.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3106,7 +3106,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/addyosmani--agent-skills/api-and-interface-design",
         ".agents/skills/imported/addyosmani--agent-skills/browser-testing-with-devtools",
@@ -3219,7 +3219,7 @@
         "Permissive license (MIT).",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/phuryn--pm-skills/intended-vs-implemented",
         ".agents/skills/imported/phuryn--pm-skills/shipping-artifacts",
@@ -3307,7 +3307,7 @@
         "Permissive license (MIT).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3325,7 +3325,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (Unlicense)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3343,7 +3343,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (Apache-2.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3361,7 +3361,7 @@
         "Strong social proof (500+ stars).",
         "Permissive license (MIT)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3410,7 +3410,7 @@
         "Permissive license (Apache-2.0).",
         "Repository metadata partially aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": [
         ".agents/skills/imported/anthropics--claude-plugins-official/access",
         ".agents/skills/imported/anthropics--claude-plugins-official/configure",
@@ -3447,7 +3447,7 @@
       "full_name": "multica-ai/andrej-karpathy-skills",
       "html_url": "https://github.com/multica-ai/andrej-karpathy-skills",
       "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
-      "stargazers_count": 189066,
+      "stargazers_count": 189067,
       "language": "",
       "license_spdx": "",
       "skill_paths": [
@@ -3461,7 +3461,7 @@
         "No license metadata found.",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3490,7 +3490,7 @@
         "No license metadata found.",
         "Repository metadata aligns with agent-skill domain."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
@@ -3508,14 +3508,14 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
       "full_name": "vinta/awesome-python",
       "html_url": "https://github.com/vinta/awesome-python",
       "description": "An opinionated list of Python frameworks, libraries, tools, and resources",
-      "stargazers_count": 306869,
+      "stargazers_count": 306870,
       "language": "Python",
       "license_spdx": "NOASSERTION",
       "skill_paths": [],
@@ -3526,14 +3526,14 @@
         "Strong social proof (500+ stars).",
         "No license metadata found."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     },
     {
       "full_name": "sindresorhus/awesome",
       "html_url": "https://github.com/sindresorhus/awesome",
       "description": "\ud83d\ude0e Awesome lists about all kinds of interesting topics",
-      "stargazers_count": 482814,
+      "stargazers_count": 482815,
       "language": "",
       "license_spdx": "CC0-1.0",
       "skill_paths": [],
@@ -3544,7 +3544,7 @@
         "Strong social proof (500+ stars).",
         "Non-permissive or unclear license (CC0-1.0)."
       ],
-      "is_new_star": true,
+      "is_new_star": false,
       "copied_skill_dirs": []
     }
   ]
