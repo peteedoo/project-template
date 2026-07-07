@@ -2,8 +2,8 @@
 # Build a MiniFW setup USB. Run on any Mac, Windows (WSL), or Linux machine.
 #
 # Usage:
-#   ./build-setup-usb.sh /Volumes/MINIFW-SETUP     # macOS
-#   ./build-setup-usb.sh /media/user/MINIFW-SETUP  # Linux
+#   ./build-setup-usb.sh /Volumes/MINIFWSETUP     # macOS
+#   ./build-setup-usb.sh /media/user/MINIFWSETUP  # Linux
 #   ./build-setup-usb.sh /mnt/e                    # WSL
 #
 # The USB will be formatted separately by you (see docs/USB-SETUP.md).
@@ -13,8 +13,8 @@ TARGET="${1:-}"
 if [[ -z "${TARGET}" ]]; then
   echo "Usage: $0 <usb-mount-path>"
   echo
-  echo "Example (macOS):  $0 /Volumes/MINIFW-SETUP"
-  echo "Example (Linux):  $0 /media/\$USER/MINIFW-SETUP"
+  echo "Example (macOS):  $0 /Volumes/MINIFWSETUP"
+  echo "Example (Linux):  $0 /media/\$USER/MINIFWSETUP"
   exit 1
 fi
 
@@ -72,7 +72,7 @@ echo "minifw-setup-usb-v1" > "${TARGET}/.minifw-usb"
 echo
 echo "==> Done. USB is ready."
 echo
-echo "  Volume label:  MINIFW-SETUP (recommended)"
+echo "  Volume label:  MINIFWSETUP (recommended)"
 echo "  On Mac Mini:   sudo ./setup.sh"
 echo
 echo "  Full instructions: docs/USB-SETUP.md"

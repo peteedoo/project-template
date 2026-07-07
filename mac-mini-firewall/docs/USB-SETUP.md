@@ -22,17 +22,17 @@ You need a **8 GB+ USB stick** (any spare drive).
 
 ```bash
 # 1. Insert USB stick
-# 2. Open Disk Utility → Erase → Name: MINIFW-SETUP → Format: ExFAT
+# 2. Open Disk Utility → Erase → Name: MINIFWSETUP → Format: ExFAT
 # 3. Clone repo (or copy mac-mini-firewall folder)
 cd mac-mini-firewall
 chmod +x scripts/build-setup-usb.sh
-./scripts/build-setup-usb.sh /Volumes/MINIFW-SETUP
+./scripts/build-setup-usb.sh /Volumes/MINIFWSETUP
 ```
 
 ### Windows (WSL or Git Bash)
 
 ```bash
-# Format USB as exFAT, label MINIFW-SETUP
+# Format USB as exFAT, label MINIFWSETUP
 # Mounts as E: or similar
 cd mac-mini-firewall
 bash scripts/build-setup-usb.sh /mnt/e
@@ -41,12 +41,12 @@ bash scripts/build-setup-usb.sh /mnt/e
 ### Linux
 
 ```bash
-# Format: sudo mkfs.exfat -n MINIFW-SETUP /dev/sdX1
+# Format: sudo mkfs.exfat -n MINIFWSETUP /dev/sdX1
 cd mac-mini-firewall
-./scripts/build-setup-usb.sh /media/$USER/MINIFW-SETUP
+./scripts/build-setup-usb.sh /media/$USER/MINIFWSETUP
 ```
 
-Eject safely. Label the stick **"MINIFW SETUP"** with tape.
+Eject safely. Label the stick **MINIFWSETUP** with tape.
 
 ---
 
@@ -64,7 +64,7 @@ You still need a **separate** Ubuntu install USB for the first step:
 
 ## Part 3 — Run the setup USB on the Mac Mini
 
-1. Plug **MINIFW-SETUP** USB into Mac Mini
+1. Plug **MINIFWSETUP** USB into Mac Mini
 2. Plug in **USB Ethernet adapter** (WAN)
 3. Keyboard + monitor attached
 
@@ -74,7 +74,7 @@ ls /media/*/
 # or
 lsblk
 
-cd /media/*/MINIFW-SETUP
+cd /media/*/MINIFWSETUP
 sudo ./setup.sh
 ```
 
@@ -120,9 +120,9 @@ Tape the USB to the shelf next to the Network Box rollback kit.
 | USB | Purpose | When |
 |-----|---------|------|
 | Ubuntu Server installer | Install Linux | Once |
-| **MINIFW-SETUP** (this) | Configure firewall | Once + keep forever |
+| **MINIFWSETUP** (this) | Configure firewall | Once + keep forever |
 
-If you want **one physical USB** for both, use [Ventoy](https://ventoy.net): put the Ubuntu ISO and the MINIFW-SETUP folder on the same drive.
+If you want **one physical USB** for both, use [Ventoy](https://ventoy.net): put the Ubuntu ISO and the MINIFWSETUP folder on the same drive.
 
 ---
 

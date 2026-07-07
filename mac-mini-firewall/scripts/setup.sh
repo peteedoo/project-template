@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # MiniFW one-shot setup — run from the USB stick on the Mac Mini.
-#   cd /media/$USER/MINIFW-SETUP   (path varies)
+#   cd /media/$USER/MINIFWSETUP   (path varies)
 #   sudo ./setup.sh
 set -euo pipefail
 

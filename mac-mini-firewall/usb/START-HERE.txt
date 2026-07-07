@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════════════
-  MINIFW SETUP USB — START HERE
+  MINIFWSETUP USB — START HERE
 ═══════════════════════════════════════════════════════════════════
 
 This USB sets up your 2014 Mac Mini as a Google Fiber firewall.
@@ -15,10 +15,10 @@ STEP 1 — Plug this USB into the Mac Mini
 
 STEP 2 — Open a terminal and run ONE command:
 
-  cd /media/*/MINIFW-SETUP
+  cd /media/*/MINIFWSETUP
   sudo ./setup.sh
 
-  (Path may be /media/YOURUSER/MINIFW-SETUP — tab-complete it.)
+  (Path may be /media/YOURUSER/MINIFWSETUP — tab-complete it.)
 
 STEP 3 — Follow on-screen instructions for cutover.
 
