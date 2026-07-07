@@ -20,6 +20,7 @@ cd {project-name}
 ```
 .
 ├── src/           # Source code
+├── .agents/       # Agent skills and shared agent context
 ├── docs/          # Documentation, ADRs, runbooks
 ├── scripts/       # One-off scripts and utilities
 ├── tests/         # Test files
