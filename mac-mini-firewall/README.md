@@ -33,7 +33,17 @@ Open **`obsidian/`** as an Obsidian vault. Start at **[[Home]]** — the master 
 | [docs/TRIAGE.md](docs/TRIAGE.md) | Offline troubleshooting |
 | [docs/NETWORK.md](docs/NETWORK.md) | Topology reference |
 
-**Fastest path:** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
+## Fastest path — one command (Mac, USB plugged in)
+
+Plug in the USB stick, open **Terminal**, paste this, press Enter:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/make-usb.sh | bash
+```
+
+That's it. It finds `MINIFWSETUP` (or asks if you have multiple drives), downloads the project, and fills the stick.
+
+**Fastest path (manual clone):** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
 
 **Before cutover:** save `TRIAGE.md` and `BACKUP-AND-ROLLBACK.md` to your phone.
 

@@ -2,6 +2,16 @@
 
 One USB stick holds everything you need to configure the Mac Mini. Plug it in, run one command.
 
+## Easiest way (one paste, USB plugged in)
+
+Open Terminal on your Mac with the stick inserted:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/make-usb.sh | bash
+```
+
+Auto-finds `MINIFWSETUP` (or the only external drive). Done in ~30 seconds.
+
 ## What this USB does
 
 | Does | Does not |

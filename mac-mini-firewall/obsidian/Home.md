@@ -38,8 +38,8 @@ Flash Ubuntu Server 24.04 USB, install on Mac Mini, temporary internet via Netwo
 ⏱ ~1–2 hours
 
 ### [[Phase 2 - MINIFWSETUP USB]]
-Create the [[MINIFWSETUP USB]] on your laptop. Plug into Mac Mini, run one command.  
-⏱ ~20 min on Mac Mini
+Create the [[MINIFWSETUP USB]] — one Terminal paste on your Mac.  
+⏱ ~30 sec · Then plug into firewall Mac Mini → `sudo ./setup.sh`
 
 ### [[Phase 3 - Pre-Cutover Testing]]
 Mac Mini on test subnet while Network Box still runs house internet. Run [[Preflight Checklist]].  

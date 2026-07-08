@@ -9,6 +9,16 @@ aliases: [MINIFWSETUP, Setup USB]
 
 One USB stick configures the Mac Mini. Plug in, run `sudo ./setup.sh`.
 
+## Make the stick (one command)
+
+USB plugged into your Mac. Terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/make-usb.sh | bash
+```
+
+Auto-detects the drive. ~30 seconds. Then eject and label **MINIFWSETUP**.
+
 ---
 
 ## What it does / does not do
