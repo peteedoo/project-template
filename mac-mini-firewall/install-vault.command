@@ -1,46 +1,52 @@
 #!/usr/bin/env bash
-# Double-click this file on your Mac. It moves the vault off Desktop and opens Obsidian.
+# Double-click to open the MiniFW vault in Obsidian.
+# Vault lives at: ~/Documents/MiniFW
 set -euo pipefail
 
-DEST="${HOME}/Documents/MiniFW"
+VAULT="${HOME}/Documents/MiniFW"
 OBSIDIAN="/Applications/Obsidian.app"
 
-# Find vault on Desktop (common names)
-SRC=""
-for name in MiniFW obsidian mac-mini-firewall; do
-  if [[ -d "${HOME}/Desktop/${name}" && -f "${HOME}/Desktop/${name}/Home.md" ]]; then
-    SRC="${HOME}/Desktop/${name}"
-    break
+find_vault() {
+  if [[ -f "${VAULT}/Home.md" ]]; then
+    echo "${VAULT}"
+    return 0
   fi
-  if [[ -d "${HOME}/Desktop/${name}/obsidian" && -f "${HOME}/Desktop/${name}/obsidian/Home.md" ]]; then
-    SRC="${HOME}/Desktop/${name}/obsidian"
-    break
-  fi
-done
+  # Legacy / alternate locations
+  for path in \
+    "${HOME}/Documents/obsidian" \
+    "${HOME}/Documents/mac-mini-firewall/obsidian" \
+    "${HOME}/Desktop/MiniFW" \
+    "${HOME}/Desktop/obsidian"; do
+    if [[ -f "${path}/Home.md" ]]; then
+      echo "${path}"
+      return 0
+    fi
+  done
+  return 1
+}
 
-if [[ -z "${SRC}" ]]; then
-  osascript -e 'display dialog "Could not find MiniFW vault on Desktop.\n\nLook for a folder with Home.md inside." buttons {"OK"} default button 1 with icon caution'
+VAULT_PATH="$(find_vault)" || {
+  osascript -e 'display dialog "MiniFW vault not found.\n\nExpected: Documents/MiniFW/Home.md" buttons {"OK"} default button 1 with icon caution'
   exit 1
+}
+
+# If vault is somewhere else, move it to Documents/MiniFW
+if [[ "${VAULT_PATH}" != "${VAULT}" ]]; then
+  mkdir -p "$(dirname "${VAULT}")"
+  if [[ -d "${VAULT}" ]]; then
+    rsync -a "${VAULT_PATH}/" "${VAULT}/"
+    rm -rf "${VAULT_PATH}"
+  else
+    mv "${VAULT_PATH}" "${VAULT}"
+  fi
+  VAULT_PATH="${VAULT}"
 fi
 
-# Already in the right place?
-if [[ "$(cd "${SRC}" && pwd)" == "$(cd "${DEST}" 2>/dev/null && pwd)" ]]; then
-  :
-elif [[ -d "${DEST}" ]]; then
-  # Merge/update — Desktop copy wins for newer files
-  rsync -a "${SRC}/" "${DEST}/"
-  rm -rf "${SRC}"
-else
-  mkdir -p "$(dirname "${DEST}")"
-  mv "${SRC}" "${DEST}"
-fi
-
-# Open Obsidian
 if [[ -d "${OBSIDIAN}" ]]; then
-  open -a Obsidian "${DEST}"
+  open -a Obsidian "${VAULT_PATH}"
 else
-  osascript -e "display dialog \"Vault moved to:\n${DEST}\n\nInstall Obsidian from obsidian.md, then Open folder as vault.\" buttons {\"OK\"} default button 1"
-  open "${DEST}"
+  osascript -e "display dialog \"Open Obsidian, then:\nOpen folder as vault →\n${VAULT_PATH}\" buttons {\"OK\"} default button 1"
+  open "${VAULT_PATH}"
 fi
 
-osascript -e "display notification \"Vault is in Documents/MiniFW\" with title \"MiniFW\""
+osascript -e 'display notification "MiniFW vault opened" with title "Obsidian"'

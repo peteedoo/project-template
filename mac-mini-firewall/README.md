@@ -20,7 +20,7 @@ A 2014 Mac Mini has only one built-in Ethernet port. You need a second NIC (USB 
 
 ### Obsidian vault (recommended)
 
-Open **`obsidian/`** as an Obsidian vault. Start at **[[Home]]** — the master build guide links every phase, rollback step, and reference note.
+Open **`~/Documents/MiniFW`** in Obsidian (or double-click `install-vault.command`). Start at **[[Home]]**.
 
 ### Plain markdown
 

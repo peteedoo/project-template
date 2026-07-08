@@ -36,7 +36,7 @@ Shopping list, photograph wiring, save offline docs, prepare rollback kit.
 ⏱ ~30 min · **Do not skip**
 
 ### [[Phase 1 - Install Ubuntu]]
-Flash Ubuntu Server 24.04 USB, install on Mac Mini, temporary internet via Network Box.  
+Install Linux on the firewall Mac Mini. **Used/pawn shop?** → [[Start Fresh - Used Mac Mini]] first.  
 ⏱ ~1–2 hours
 
 ### [[Phase 2 - MINIFWSETUP USB]]
@@ -141,4 +141,6 @@ Home (you are here)
     └── Config Files
 ```
 
-**Open this folder in Obsidian:** `mac-mini-firewall/obsidian/`
+**Open this folder in Obsidian:** `~/Documents/MiniFW/` (double-click `install-vault.command`)
+
+Repo source: `mac-mini-firewall/obsidian/`

@@ -1,8 +1,10 @@
 # MiniFW Obsidian Vault
 
-Open this folder as an Obsidian vault:
+**Your vault:** `~/Documents/MiniFW/`
 
-**Folder:** `mac-mini-firewall/obsidian/`
+Open in Obsidian: double-click `install-vault.command` in the repo, or **Open folder as vault** → `Documents/MiniFW`.
+
+Source copy in repo: `mac-mini-firewall/obsidian/` (for git/USB — not where you edit day-to-day).
 
 ## Start here
 
