@@ -11,7 +11,7 @@ Reconciled fleet layout for the *arr appliance pivot. Source of truth for IPs an
 | Address | Host | Role |
 |---------|------|------|
 | `192.168.68.69` | **ILLMATIC** (UGREEN DH2300) | Primary NAS — SMB share `homelab` |
-| `192.168.68.70` | **DS223J** (Synology) | Backup NAS — SMB `backup` *(set static IP in DSM)* |
+| `192.168.68.70` | **DS223J** (Synology) | Backup NAS — reach via **Tailscale** (`100.x.y.z`), not public SMB |
 | `192.168.68.90` | **Le Potato** | AdGuard Home — primary LAN DNS |
 | `192.168.68.x` | Deco / LAN clients | Google Fiber household subnet |
 
@@ -32,7 +32,7 @@ See `iamfaulty-homelab/ops/DNS.md` for Cloudflare tunnel DNS (different layer �
 | **iamfaulty-mini** | Mac mini M4, 16 GB+, macOS, OrbStack | Jellyfin, agents, Caddy/NPM, work | **Retire** — configs at `~/homelab-data/arr/` today |
 | **Pawn-shop Mac Mini** | 2014, 16 GB, 256 GB HDD, Ubuntu Server | Sacrificial acquisition node | **Target** — Gluetun, qBit, full *arr stack |
 | **ILLMATIC** | UGREEN DH2300, 11 TB | `homelab` SMB share | **Primary** — media, downloads, appdata |
-| **DS223J** | Synology, 2-bay, 1 GB RAM | `backup` SMB share | **Backup** — Duplicati, mirrors, Time Machine |
+| **DS223J** | Synology, 2-bay, 1 GB RAM | `backup` over **Tailscale** | **Off-site / internet backup** — Duplicati, rsync |
 | **Le Potato** | Libre Computer, ~2 GB RAM | AdGuard Home @ `.90` | **DNS only** — do not add Lidarr here |
 | **Raspberry Pi 5** | — | WireGuard | Network VPN — not acquisition |
 | **Raspberry Pi 4** | — | Kodi media center | Playback — not acquisition |
@@ -50,7 +50,7 @@ Google Fiber / Deco (AP)
     │
     ├── Le Potato (.90)     → AdGuard DNS
     ├── ILLMATIC (.69)      → /homelab (primary media, *arr)
-    ├── DS223J (.70)        → /backup (Duplicati, mirrors)
+    ├── DS223J (Tailscale)  → /backup (off-site copy over internet)
     ├── Pawn-shop Mini      → Gluetun + qBit + *arr (Docker)
     ├── iamfaulty-mini M4   → Jellyfin, Plex, agents, NPM/Caddy
     └── Pi fleet            → WireGuard, Kodi, Home Assistant

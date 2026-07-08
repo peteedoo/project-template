@@ -1,170 +1,181 @@
 # Synology DS223J — setup for iamfaulty homelab
 
-Entry-level **2-bay** Synology. Good as a **backup / secondary** NAS alongside **ILLMATIC** (UGREEN DH2300).
+Entry-level **2-bay** Synology. Good as a **backup / off-site copy** alongside **ILLMATIC** (UGREEN DH2300 at home).
 
 | | ILLMATIC (UGREEN) | DS223J (Synology) |
 |--|-------------------|-------------------|
 | **Best role** | Primary — media, downloads, *arr appdata | Backup — Duplicati, Hyper Backup, snapshots |
+| **Network** | Home LAN (`192.168.68.69`) | **Internet-connected** (not on home LAN) — use **Tailscale** |
 | **RAM** | 4 GB | 1 GB (not upgradable) |
 | **Docker on NAS** | No (DH2300) | **No** — ARM, no Container Manager |
-| **Network** | 1 GbE | 1 GbE |
-| **Your data today** | ~3.9 TB used / 11 TB | New — size depends on drives |
+| **Your data today** | ~3.9 TB used / 11 TB | Fresh — size depends on drives |
 
-**Recommendation:** Do **not** move the live *arr library to the DS223J yet. Keep hot paths on ILLMATIC. Use Synology for **3-2-1 backups** and optional cold copies.
-
----
-
-## 1. Physical + DSM first boot
-
-1. Install **2 drives** (3.5" HDD or 2.5" with Synology caddy).
-2. **RAID choice:**
-   - **SHR-1** or **RAID 1** (mirror) — safest for 2 bays; you lose half capacity.
-   - **SHR** — Synology hybrid; flexible if you mix drive sizes.
-   - Avoid RAID 0 — one disk death kills the volume.
-3. Boot, open **find.synology.com** or Synology Assistant, install **DSM 7.2+**.
-4. Create **admin** password; enable **2FA** later.
-5. **Control Panel → Network → Network Interface** → set **static IP** (e.g. `192.168.68.70`) or DHCP reservation on Deco.
-
-Pick a hostname, e.g. **`SYNO223J`** or **`faulty-backup`**.
+**Recommendation:** Keep live *arr on ILLMATIC. Push **backups** to the Synology over **Tailscale** (or SFTP/rsync on the tailnet). Do **not** expose SMB to the public internet.
 
 ---
 
-## 2. Shared folders (suggested layout)
+## Fresh box + internet only (start here)
+
+If the DS223J is **new** and only reachable **over the internet** (different site, or not on your `192.168.68.x` LAN yet):
+
+### Hour 1 — DSM without opening dangerous ports
+
+1. Plug in drives + Ethernet (or Wi-Fi USB if you use it — wired preferred).
+2. On a laptop, go to **https://find.synology.com** or install **Synology Assistant** — discovers the NAS on its local network first; if you're remote, use whatever link/setup flow Synology gave you for initial admin.
+3. Install **DSM 7.2+**, set a **strong admin password**.
+4. **Control Panel → Security → Account** → enable **2FA** on admin.
+5. **Control Panel → Security → Firewall** → enable; allow only what you need later (Tailscale interface).
+6. **Do not** forward these on your router to the open internet:
+   - SMB `445`
+   - NFS `2049`
+   - DSM `5000/5001` (unless you know exactly what you're doing — prefer Tailscale instead)
+
+### Hour 2 — join your homelab mesh (Tailscale)
+
+You already use Tailscale on **iamfaulty-mini** and the Pi fleet. This is the right way to reach an internet-connected Synology.
+
+1. **Package Center** on DSM → search **Tailscale** → Install (available on many ARM Synology models including DS223j — if missing, use Synology's OpenVPN or WireGuard package toward your Pi 5 instead).
+2. Open **Tailscale** → log in with the **same tailnet** as home.
+3. Note the Synology **Tailscale IP** (e.g. `100.x.y.z`) in DSM or the Tailscale admin console.
+4. From **iamfaulty-mini**:
+   ```bash
+   tailscale ping 100.x.y.z
+   ```
+5. Open DSM securely: `https://100.x.y.z:5001` (accept Synology cert warning on first visit).
+
+**Optional:** Synology **QuickConnect** — fine for occasional browser access; prefer Tailscale for automated backups and SMB.
+
+### Hour 3 — shared folders + backup user
 
 **Control Panel → Shared Folder → Create**
 
 | Folder | Purpose |
 |--------|---------|
-| `backup` | Duplicati / restic / rsync targets from M4 and pawn-shop Mini |
-| `homelab-mirror` | Optional scheduled copy of critical ILLMATIC paths |
-| `photos` | Optional — phone/camera offload |
-| `timemachine` | Optional — Mac Time Machine (enable in DSM) |
+| `backup` | Duplicati / rsync targets from home homelab |
+| `homelab-mirror` | Optional copy of critical ILLMATIC paths |
 
-Enable **Recycle Bin** on `backup` for oops protection.
+Create user **`peteedoo`** — write access to `backup` only (not full admin).
 
-**Permissions:** Create user `peteedoo` (match homelab naming) with read/write on backup folders only.
+**Control Panel → File Services → SMB** — enable SMB2/3 for mounts **over Tailscale only**.
 
----
-
-## 3. Enable file services
-
-**Control Panel → File Services → SMB**
-
-- Enable SMB
-- Min protocol: **SMB2** (disable SMB1)
-- Max protocol: **SMB3**
-- Optional: enable **NFS** if you prefer Linux NFS mounts (Synology NFS is fine on Ubuntu)
-
-**Control Panel → File Services → rsync** — enable if you want `rsync` pull jobs from ILLMATIC or M4.
+**Control Panel → Terminal & SNMP → Terminal** — enable SSH if you want `rsync`/`sftp` backups (recommended for internet paths).
 
 ---
 
-## 4. Mount from Mac (iamfaulty-mini)
-
-Finder → **Connect to Server** (`Cmd+K`):
+## How home reaches Synology (internet path)
 
 ```
-smb://192.168.68.70/backup
+ILLMATIC / M4 / pawn-shop Mini  ──Tailscale──►  DS223J (100.x.y.z)
+                                              └── /backup
 ```
 
-Or auto-mount at login:
+| Method | Use when | Notes |
+|--------|----------|-------|
+| **Tailscale + SMB** | Duplicati, Finder mounts | `//100.x.y.z/backup` |
+| **Tailscale + SSH/rsync** | Large scheduled mirrors | Safer feel than SMB over WAN |
+| **Hyper Backup** | Synology-native jobs | Can target cloud too |
+| **QuickConnect** | Emergency DSM UI | Not ideal for bulk backup |
+| **Port-forward SMB** | **Never** | Ransomware magnet |
+
+---
+
+## Mount from Mac (over Tailscale)
+
+Replace `100.x.y.z` with the Synology Tailscale IP:
+
+```
+smb://100.x.y.z/backup
+```
 
 ```bash
-# Test
-osascript -e 'mount volume "smb://peteedoo:PASSWORD@192.168.68.70/backup"'
+osascript -e 'mount volume "smb://peteedoo:PASSWORD@100.x.y.z/backup"'
 ```
 
-Add to login workflow or document in `~/iamfaulty-homelab/ops/STARTUP.md` if you want it always mounted (optional — backups can run on schedule without permanent mount).
+No LAN IP required. Update `docs/HARDWARE.md` with Tailscale hostname/IP once assigned.
 
 ---
 
-## 5. Mount from pawn-shop Ubuntu Mini
+## Mount from pawn-shop Ubuntu (over Tailscale)
+
+Install Tailscale on the pawn-shop Mini first (`curl -fsSL https://tailscale.com/install.sh | sh`).
 
 ```bash
 sudo nano /etc/nas-credentials-synology
-```
+# username=peteedoo
+# password=...
 
-```
-username=peteedoo
-password=YOUR_SYNOLOGY_PASSWORD
-```
-
-```bash
-sudo chmod 600 /etc/nas-credentials-synology
 sudo mkdir -p /mnt/synology
-sudo mount -t cifs -o credentials=/etc/nas-credentials-synology,uid=1000,gid=1000,vers=3.0 //192.168.68.70/backup /mnt/synology
+sudo mount -t cifs -o credentials=/etc/nas-credentials-synology,uid=1000,gid=1000,vers=3.0 //100.x.y.z/backup /mnt/synology
 ```
 
-Add to `/etc/fstab` — see `config/fstab.synology-ds223j.example`.
+See `config/fstab.synology-ds223j.example` — use **Tailscale IP**, not `192.168.68.x`.
 
-**Note:** *arr stack should still use **ILLMATIC** (`/mnt/nas`) for active media. Synology mount is for backups, not daily Sonarr/Radarr paths.
+**\*arr stays on ILLMATIC** (`/mnt/nas`). Synology is backup destination only.
 
 ---
 
-## 6. Hook into existing homelab backups
+## Duplicati over internet (recommended pattern)
 
-You already run **Duplicati** (`/Volumes/homelab/compose/duplicati/`).
+On **iamfaulty-mini**, Duplicati job destination options:
 
-Point a Duplicati job at the Synology share:
+| Backend | Target |
+|---------|--------|
+| **SFTP** | `sftp://100.x.y.z/backup/...` (SSH enabled on DSM) |
+| **SMB** | `//100.x.y.z/backup` via Tailscale |
+| **Backblaze B2** | Keep as tertiary copy (you already use B2) |
+
+Example sources to push off-site:
 
 | Source | Destination on DS223J |
 |--------|------------------------|
-| `~/homelab-data/arr/` (before cutover) | `smb://…/backup/arr-config` |
+| `~/homelab-data/arr/` | `backup/arr-config` |
 | `/Volumes/homelab/personal/` | `backup/homelab-personal` |
-| M4 Time Machine (optional) | Shared folder `timemachine` |
 
-**Hyper Backup** (Synology app): can backup Synology → USB, or another NAS, or cloud (Backblaze B2 you already use).
-
----
-
-## 7. Optional — mirror critical data from ILLMATIC
-
-On **M4** or **pawn-shop Mini**, nightly `rsync` (not live *arr paths):
-
-```bash
-rsync -av --delete \
-  /Volumes/homelab/personal/arr-appliance/ \
-  /Volumes/backup/homelab-mirror/arr-appliance/
-```
-
-Or Synology **Shared Folder Sync** / **Snapshot Replication** if you add a second Synology later (DS223J only supports 2 sync tasks).
+Schedule overnight — 1 GbE upload at the Synology's site is usually the bottleneck.
 
 ---
 
-## 8. What not to put on DS223J
+## If the Synology is at home later
+
+You can **also** use a LAN IP (e.g. `192.168.68.70`) for faster local backups when on the same network. Tailscale still works from anywhere. Document both in HARDWARE.md if you end up dual-homed.
+
+---
+
+## Physical + DSM (local setup reference)
+
+1. Install **2 drives** → **SHR-1** or **RAID 1** (mirror).
+2. Hostname e.g. **`faulty-backup`** or **`syno223j`**.
+3. Enable **Recycle Bin** on `backup`.
+
+---
+
+## What not to put on DS223J
 
 | Avoid | Why |
 |-------|-----|
-| Primary Jellyfin library | ILLMATIC has capacity; DS223J is 2-bay / 1 GB |
-| Active qBittorrent downloads | Disk + LAN churn; keep on ILLMATIC |
-| Docker *arr stack on NAS | No Container Manager on DS223J |
-| Replacing ILLMATIC without migration plan | 3.9 TB used — need drives + copy window |
+| Primary Jellyfin / *arr library | ILLMATIC has capacity; DS223J is 2-bay / 1 GB |
+| Active qBittorrent downloads | Keep on ILLMATIC / pawn-shop Mini |
+| Docker *arr on NAS | No Container Manager on DS223j |
+| SMB exposed to public internet | Use Tailscale |
 
 ---
 
-## 9. Reserve IP in Deco
+## Checklist (internet-connected)
 
-In TP-Link Deco app: reserve **`192.168.68.70`** (example) for the Synology MAC address so SMB paths stay stable.
-
-Update `docs/HARDWARE.md` with the final IP once assigned.
-
----
-
-## 10. Checklist
-
-- [ ] DSM installed, RAID/SHR configured
-- [ ] Static IP or DHCP reservation
-- [ ] Shared folder `backup` created
-- [ ] User `peteedoo` with least-privilege access
-- [ ] SMB tested from M4
-- [ ] Duplicati job → Synology
-- [ ] HARDWARE.md updated with hostname + IP
-- [ ] ILLMATIC remains primary for *arr (`/mnt/nas`)
+- [ ] DSM installed, RAID/SHR configured, 2FA on admin
+- [ ] **Tailscale** installed on DSM, same tailnet as home
+- [ ] Tailscale IP recorded in `docs/HARDWARE.md`
+- [ ] Shared folder `backup` + user `peteedoo`
+- [ ] `tailscale ping` works from iamfaulty-mini
+- [ ] Test SMB or SFTP to `100.x.y.z`
+- [ ] Duplicati job → Synology over Tailscale
+- [ ] **No** router port-forward for 445 / 5000 / 5001
+- [ ] ILLMATIC remains primary for live *arr
 
 ---
 
 ## Related
 
-- `config/fstab.synology-ds223j.example` — Linux fstab line
+- `config/fstab.synology-ds223j.example` — Linux fstab (use Tailscale IP)
 - `docs/HARDWARE.md` — fleet map
-- `iamfaulty-homelab` — Duplicati compose on ILLMATIC
+- `iamfaulty-homelab/ops/DNS.md` — house DNS (Le Potato) — separate from NAS reachability
