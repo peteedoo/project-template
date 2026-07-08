@@ -12,7 +12,7 @@ aliases: [Master Build Guide, Start Here]
 
 Built-in Ethernet on this Mini appears **dead**, so the **firewall cutover is on hold**. The active project is **`arr-appliance/`** — run Prowlarr, Sonarr, Radarr, Bazarr, and qBittorrent on this box with **all data on NAS**, so disk drift stops hitting your main M4 Mac.
 
-**Start here:** [[Pivot - arr Appliance]] · Morning checklist in `arr-appliance/docs/MORNING-CHECKLIST.md`
+**Start here:** [[Pivot - arr Appliance]] · **[[ROADMAP]]** (`arr-appliance/docs/ROADMAP.md`) · Morning checklist in `arr-appliance/docs/MORNING-CHECKLIST.md`
 
 ---
 

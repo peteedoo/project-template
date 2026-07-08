@@ -21,8 +21,9 @@ The 2014 pawn-shop Mac Mini was originally planned as a **Google Fiber firewall*
 
 ## Start here
 
-1. [[MORNING-CHECKLIST]] — one-page setup on the Mini (also at `arr-appliance/docs/MORNING-CHECKLIST.md`)
-2. [[arr-appliance README]] — full reference (`arr-appliance/README.md`)
+1. **`[[ROADMAP]]`** — phased forward plan (`arr-appliance/docs/ROADMAP.md`)
+2. [[MORNING-CHECKLIST]] — one-page setup on the Mini
+3. [[arr-appliance README]] — full reference (`arr-appliance/README.md`)
 
 ## Install one-liner (on the Mini)
 

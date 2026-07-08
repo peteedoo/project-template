@@ -122,7 +122,10 @@ Le Potato is **house DNS**. Coupling download or library management there risks 
 
 ## Related docs
 
-- `docs/MORNING-CHECKLIST.md` — pawn-shop setup steps
+| Doc | Use |
+|-----|-----|
+| **`ROADMAP.md`** | **Forward plan — start here for sequencing** |
+| `MORNING-CHECKLIST.md` | Phase 2 step-by-step |
 - `docs/MIGRATE-FROM-M4.md` — rsync configs off M4 SSD
 - `docs/SYNOLOGY-DS223J.md` — backup NAS setup
 - `iamfaulty-homelab/ops/DNS.md` — resolver + tunnel DNS
