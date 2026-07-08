@@ -18,7 +18,7 @@ This is the **start page** for the Obsidian vault. Follow the phases in order. E
 ## Quick path (TL;DR)
 
 1. [[Phase 0 - Before You Start]] — buy parts, photo wiring, prep rollback kit
-2. [[Phase 1 - Install Ubuntu]] — install Linux on the firewall Mac Mini
+2. [[Phase 1 - Install Ubuntu]] — wipe pawn-shop Mac, install Linux on firewall Mac Mini
 3. [[Plug and Play Firewall]] — enable auto-run, plug [[MINIFWSETUP USB]]
 4. [[Phase 3 - Pre-Cutover Testing]] — prove firewall works **before** touching Fiber Jack
 5. [[Phase 4 - Cutover]] — unplug Network Box, wire Fiber Jack → firewall
