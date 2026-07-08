@@ -32,7 +32,9 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 
 ## 3. Mount NAS
 
-**UGREEN NASync DH2300?** Use `config/fstab.ugreen-dh2300.example` — SMB share names are the folder names only (`//nas-ip/media`), not `/volume1/...`.
+**iamfaulty / ILLMATIC?** Use `config/fstab.iamfaulty.example` — one SMB share `homelab` at `//192.168.68.69/homelab` → `/mnt/nas`. Copy `config/env.iamfaulty.example` to `.env`.
+
+**UGREEN DH2300 (generic)?** Use `config/fstab.ugreen-dh2300.example`.
 
 Edit fstab from the example:
 
@@ -81,8 +83,8 @@ docker ps
 | App | Setting |
 |-----|---------|
 | qBittorrent | Default save path → `/downloads` |
-| Sonarr | Root folder → `/tv` |
-| Radarr | Root folder → `/movies` |
+| Sonarr | Root folder → `/tv` (maps to `NAS_TV`, e.g. `Shows`) |
+| Radarr | Root folder → `/movies` (maps to `NAS_MOVIES`, e.g. `Movies`) |
 | Prowlarr | Indexer manager only — no local storage |
 | Bazarr | Uses `/tv` and `/movies` |
 

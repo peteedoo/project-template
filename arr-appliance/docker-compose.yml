@@ -26,7 +26,7 @@ services:
       - TZ=${TZ:-America/Denver}
     volumes:
       - ${NAS_APPDATA}/sonarr:/config
-      - ${NAS_MEDIA}/tv:/tv
+      - ${NAS_TV:-${NAS_MEDIA}/tv}:/tv
       - ${NAS_DOWNLOADS}:/downloads
     ports:
       - "8989:8989"
@@ -43,7 +43,7 @@ services:
       - TZ=${TZ:-America/Denver}
     volumes:
       - ${NAS_APPDATA}/radarr:/config
-      - ${NAS_MEDIA}/movies:/movies
+      - ${NAS_MOVIES:-${NAS_MEDIA}/movies}:/movies
       - ${NAS_DOWNLOADS}:/downloads
     ports:
       - "7878:7878"
@@ -60,8 +60,8 @@ services:
       - TZ=${TZ:-America/Denver}
     volumes:
       - ${NAS_APPDATA}/bazarr:/config
-      - ${NAS_MEDIA}/tv:/tv
-      - ${NAS_MEDIA}/movies:/movies
+      - ${NAS_TV:-${NAS_MEDIA}/tv}:/tv
+      - ${NAS_MOVIES:-${NAS_MEDIA}/movies}:/movies
     ports:
       - "6767:6767"
     restart: unless-stopped

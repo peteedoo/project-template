@@ -12,15 +12,19 @@ if [[ -f "${ROOT_DIR}/.env" ]]; then
   set +a
 fi
 
+NAS_ROOT="${NAS_ROOT:-/mnt/nas}"
 NAS_APPDATA="${NAS_APPDATA:-/mnt/nas/appdata}"
 NAS_DOWNLOADS="${NAS_DOWNLOADS:-/mnt/nas/downloads}"
 NAS_MEDIA="${NAS_MEDIA:-/mnt/nas/media}"
+NAS_TV="${NAS_TV:-${NAS_MEDIA}/tv}"
+NAS_MOVIES="${NAS_MOVIES:-${NAS_MEDIA}/movies}"
 
 fail=0
 
 check_path() {
   local label="$1"
   local path="$2"
+  local require_mount="${3:-0}"
 
   if [[ ! -d "${path}" ]]; then
     echo "FAIL: ${label} missing — ${path}"
@@ -28,9 +32,14 @@ check_path() {
     return
   fi
 
-  if ! mountpoint -q "${path}" 2>/dev/null; then
-    echo "WARN: ${label} is not a mount point — ${path}"
-    echo "      (OK for first-time testing; production should use fstab mounts.)"
+  if [[ "${require_mount}" -eq 1 ]]; then
+    if ! mountpoint -q "${path}" 2>/dev/null; then
+      echo "FAIL: ${label} not mounted — ${path}"
+      fail=1
+      return
+    fi
+  elif ! mountpoint -q "${path}" 2>/dev/null; then
+    echo "      (${label} is under NAS share — OK if ${NAS_ROOT} is mounted)"
   fi
 
   if [[ ! -w "${path}" ]]; then
@@ -43,9 +52,11 @@ check_path() {
 }
 
 echo "Checking NAS paths before starting *arr stack..."
+check_path "NAS root" "${NAS_ROOT}" 1
 check_path "appdata"   "${NAS_APPDATA}"
 check_path "downloads" "${NAS_DOWNLOADS}"
-check_path "media"     "${NAS_MEDIA}"
+check_path "TV"        "${NAS_TV}"
+check_path "movies"    "${NAS_MOVIES}"
 
 if [[ "${fail}" -ne 0 ]]; then
   echo

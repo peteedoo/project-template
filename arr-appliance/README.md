@@ -84,6 +84,10 @@ docker compose -f /opt/arr-appliance/docker-compose.yml ps
 2. Point Sonarr/Radarr root folders and qBittorrent save path at NAS only.
 3. Remove or disable *arr on the M4 so drift cannot return there.
 
+## Migrate from iamfaulty-mini (M4)
+
+See `docs/MIGRATE-FROM-M4.md`. Your NAS is **ILLMATIC** (`192.168.68.69`), share **`homelab`**, media at `media/Movies` and `media/Shows`. Configs today live on the M4 SSD at `~/homelab-data/arr/` — rsync those to `/mnt/nas/personal/arr-appliance/` before cutover.
+
 ## Files
 
 ```

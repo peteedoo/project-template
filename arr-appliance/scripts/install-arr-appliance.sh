@@ -71,7 +71,7 @@ for f in check-nas.sh guard-disk.sh arr-up.sh arr-down.sh; do
   fi
 done
 
-for f in fstab.example netplan-usb-ethernet.yaml.example arr-appliance.service arr-disk-guard.service arr-disk-guard.timer; do
+for f in fstab.example fstab.ugreen-dh2300.example fstab.iamfaulty.example env.iamfaulty.example netplan-usb-ethernet.yaml.example arr-appliance.service arr-disk-guard.service arr-disk-guard.timer; do
   copy_file "config/${f}"
 done
 
@@ -81,11 +81,13 @@ else
   curl -fsSL "${REPO_RAW}/README.md" -o "${INSTALL_DIR}/docs/README.md"
 fi
 
-if [[ -n "${SOURCE_DIR}" && -f "${SOURCE_DIR}/docs/MORNING-CHECKLIST.md" ]]; then
-  install -m 0644 "${SOURCE_DIR}/docs/MORNING-CHECKLIST.md" "${INSTALL_DIR}/docs/MORNING-CHECKLIST.md"
-else
-  curl -fsSL "${REPO_RAW}/docs/MORNING-CHECKLIST.md" -o "${INSTALL_DIR}/docs/MORNING-CHECKLIST.md"
-fi
+for doc in MORNING-CHECKLIST.md MIGRATE-FROM-M4.md; do
+  if [[ -n "${SOURCE_DIR}" && -f "${SOURCE_DIR}/docs/${doc}" ]]; then
+    install -m 0644 "${SOURCE_DIR}/docs/${doc}" "${INSTALL_DIR}/docs/${doc}"
+  else
+    curl -fsSL "${REPO_RAW}/docs/${doc}" -o "${INSTALL_DIR}/docs/${doc}"
+  fi
+done
 
 if [[ ! -f "${INSTALL_DIR}/.env" ]]; then
   cp "${INSTALL_DIR}/.env.example" "${INSTALL_DIR}/.env"
