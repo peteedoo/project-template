@@ -32,7 +32,7 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 
 ## 3. Mount NAS
 
-**iamfaulty / ILLMATIC?** Use `config/fstab.iamfaulty.example` — one SMB share `homelab` at `//192.168.68.69/homelab` → `/mnt/nas`. Copy `config/env.iamfaulty.example` to `.env`.
+**iamfaulty / ILLMATIC?** Use `config/fstab.iamfaulty.example` — see also `docs/HARDWARE.md`.
 
 **UGREEN DH2300 (generic)?** Use `config/fstab.ugreen-dh2300.example`.
 

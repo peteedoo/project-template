@@ -4,11 +4,14 @@ Offload Prowlarr, Sonarr, Radarr, Bazarr, and qBittorrent from your main Mac ont
 
 ## Architecture
 
+Full hardware map: `docs/HARDWARE.md`
+
 | Machine | Role |
 |---------|------|
-| **2014 Mac Mini** (this box) | *arr stack in Docker; optional Tailscale |
-| **Main M4 Mac Mini** | Work, Plex, daily use — no *arr |
-| **NAS** | `/mnt/nas/media`, `/mnt/nas/downloads`, `/mnt/nas/appdata` |
+| **2014 Mac Mini** (pawn-shop) | *arr stack in Docker; optional Tailscale |
+| **Main M4 Mac Mini** (`iamfaulty-mini`) | Jellyfin, agents, work — no *arr after cutover |
+| **ILLMATIC NAS** (`192.168.68.69`) | `homelab` share — media, downloads, appdata |
+| **Le Potato** (`192.168.68.90`) | AdGuard DNS — do not move *arr here |
 
 Built-in Ethernet on the 2014 Mini is often dead. Use **Wi-Fi for initial setup** and a **USB Gigabit adapter** for stable wired LAN afterward.
 
@@ -86,7 +89,7 @@ docker compose -f /opt/arr-appliance/docker-compose.yml ps
 
 ## Migrate from iamfaulty-mini (M4)
 
-See `docs/MIGRATE-FROM-M4.md`. Your NAS is **ILLMATIC** (`192.168.68.69`), share **`homelab`**, media at `media/Movies` and `media/Shows`. Configs today live on the M4 SSD at `~/homelab-data/arr/` — rsync those to `/mnt/nas/personal/arr-appliance/` before cutover.
+See `docs/MIGRATE-FROM-M4.md` and `docs/HARDWARE.md`.
 
 ## Files
 
@@ -105,7 +108,9 @@ arr-appliance/
 │   ├── arr-up.sh
 │   └── arr-down.sh
 └── docs/
-    └── MORNING-CHECKLIST.md
+    ├── HARDWARE.md
+    ├── MORNING-CHECKLIST.md
+    └── MIGRATE-FROM-M4.md
 ```
 
 ## Firewall pivot
