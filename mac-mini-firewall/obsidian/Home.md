@@ -7,9 +7,20 @@ aliases: [Master Build Guide, Start Here]
 
 > **Hardware:** 2014 Mac Mini · 16 GB RAM · 256 GB HDD  
 > **ISP:** Google Fiber · **Wi-Fi:** TP-Link Deco XE75  
+
+## Current plan: *arr appliance (pivot)
+
+Built-in Ethernet on this Mini appears **dead**, so the **firewall cutover is on hold**. The active project is **`arr-appliance/`** — run Prowlarr, Sonarr, Radarr, Bazarr, and qBittorrent on this box with **all data on NAS**, so disk drift stops hitting your main M4 Mac.
+
+**Start here:** [[Pivot - arr Appliance]] · Morning checklist in `arr-appliance/docs/MORNING-CHECKLIST.md`
+
+---
+
+## Archived goal: home firewall
+
 > **Goal:** Mac Mini becomes your home **firewall** (replaces Google Fiber Network Box)
 
-This is the **start page** for the Obsidian vault. Follow the phases in order. Each step links to a detailed note.
+This is the **start page** for the Obsidian vault. Follow the phases in order when/if you return to the firewall path. Each step links to a detailed note.
 
 **Workflow:** [[Plug and Play Firewall]] — plug USB, firewall configures itself.
 

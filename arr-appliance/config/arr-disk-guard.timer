@@ -1,0 +1,10 @@
+[Unit]
+Description=Stop *arr stack if local disk is too full
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
