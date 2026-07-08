@@ -89,7 +89,7 @@ docker compose -f /opt/arr-appliance/docker-compose.yml ps
 
 ## Migrate from iamfaulty-mini (M4)
 
-See `docs/MIGRATE-FROM-M4.md` and `docs/HARDWARE.md`.
+See `docs/MIGRATE-FROM-M4.md`, `docs/HARDWARE.md`, and `docs/SYNOLOGY-DS223J.md` (backup NAS).
 
 ## Files
 

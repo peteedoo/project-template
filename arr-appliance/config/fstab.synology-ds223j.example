@@ -1,0 +1,19 @@
+# Synology DS223J — backup mount (not primary *arr storage)
+# Replace 192.168.68.70 with your DSM static IP or hostname.
+# Hostname example: SYNO223J.local
+#
+# Primary *arr/media stays on ILLMATIC — see fstab.iamfaulty.example
+#
+# sudo nano /etc/nas-credentials-synology
+#   username=peteedoo
+#   password=YOUR_SYNOLOGY_PASSWORD
+# sudo chmod 600 /etc/nas-credentials-synology
+# sudo mkdir -p /mnt/synology
+#
+# Test:
+#   sudo mount -t cifs -o credentials=/etc/nas-credentials-synology,uid=1000,gid=1000,vers=3.0 //192.168.68.70/backup /mnt/synology
+
+//192.168.68.70/backup  /mnt/synology  cifs  credentials=/etc/nas-credentials-synology,uid=1000,gid=1000,file_mode=0664,dir_mode=0775,vers=3.0,nofail,_netdev,x-systemd.automount  0  0
+
+# Optional NFS (enable NFS on shared folder in DSM first):
+# 192.168.68.70:/volume1/backup  /mnt/synology  nfs  rw,nfsvers=3,nofail,_netdev,x-systemd.automount  0  0

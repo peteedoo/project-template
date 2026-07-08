@@ -71,7 +71,7 @@ for f in check-nas.sh guard-disk.sh arr-up.sh arr-down.sh; do
   fi
 done
 
-for f in fstab.example fstab.ugreen-dh2300.example fstab.iamfaulty.example env.iamfaulty.example netplan-usb-ethernet.yaml.example arr-appliance.service arr-disk-guard.service arr-disk-guard.timer; do
+for f in fstab.example fstab.ugreen-dh2300.example fstab.iamfaulty.example fstab.synology-ds223j.example env.iamfaulty.example netplan-usb-ethernet.yaml.example arr-appliance.service arr-disk-guard.service arr-disk-guard.timer; do
   copy_file "config/${f}"
 done
 
@@ -81,7 +81,7 @@ else
   curl -fsSL "${REPO_RAW}/README.md" -o "${INSTALL_DIR}/docs/README.md"
 fi
 
-for doc in MORNING-CHECKLIST.md MIGRATE-FROM-M4.md HARDWARE.md; do
+for doc in MORNING-CHECKLIST.md MIGRATE-FROM-M4.md HARDWARE.md SYNOLOGY-DS223J.md; do
   if [[ -n "${SOURCE_DIR}" && -f "${SOURCE_DIR}/docs/${doc}" ]]; then
     install -m 0644 "${SOURCE_DIR}/docs/${doc}" "${INSTALL_DIR}/docs/${doc}"
   else
