@@ -61,11 +61,13 @@ copy "${PROJECT_DIR}/pyproject.toml" "${TARGET}/minifw/pyproject.toml"
 copy "${PROJECT_DIR}/tests"       "${TARGET}/minifw/tests"
 
 echo "==> Copying scripts"
-for f in setup.sh preflight.sh rollback-to-network-box.sh detect-interfaces.sh; do
+for f in setup.sh preflight.sh rollback-to-network-box.sh detect-interfaces.sh \
+         install-usb-watcher.sh usb-autorun.sh; do
   copy "${PROJECT_DIR}/scripts/${f}" "${TARGET}/${f}"
 done
 chmod +x "${TARGET}/setup.sh" "${TARGET}/preflight.sh" \
-         "${TARGET}/rollback-to-network-box.sh" "${TARGET}/detect-interfaces.sh"
+         "${TARGET}/rollback-to-network-box.sh" "${TARGET}/detect-interfaces.sh" \
+         "${TARGET}/install-usb-watcher.sh" "${TARGET}/usb-autorun.sh"
 
 echo "==> Writing START-HERE.txt"
 copy "${PROJECT_DIR}/usb/START-HERE.txt" "${TARGET}/START-HERE.txt"
@@ -78,7 +80,8 @@ echo
 echo "==> Done. USB is ready."
 echo
 echo "  Volume label:  MINIFWSETUP (recommended)"
-echo "  On Mac Mini:   sudo ./setup.sh"
+echo "  On Mac Mini:   plug in USB (auto-runs) or sudo ./setup.sh"
+echo "  Enable auto:   sudo ./install-usb-watcher.sh  (once, before first plug)"
 echo
 echo "  Full instructions: docs/USB-SETUP.md"
 du -sh "${TARGET}" 2>/dev/null || true

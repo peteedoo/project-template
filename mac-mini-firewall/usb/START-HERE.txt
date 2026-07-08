@@ -4,23 +4,31 @@
 
 This USB sets up your 2014 Mac Mini as a Google Fiber firewall.
 
-WHAT YOU NEED ON THE MAC MINI FIRST
+WHAT YOU NEED ON THE FIREWALL MAC MINI FIRST
   • Ubuntu Server 24.04 installed (see docs/USB-SETUP.md)
-  • USB keyboard + HDMI monitor (for first run)
+  • One-time: sudo ./install-usb-watcher.sh  (enables plug-and-play)
+  • USB keyboard + HDMI monitor (optional — headless auto-runs after 15s)
   • USB Gigabit Ethernet adapter (for WAN)
 
 ───────────────────────────────────────────────────────────────────
-STEP 1 — Plug this USB into the Mac Mini
+PLUG AND PLAY (recommended)
 ───────────────────────────────────────────────────────────────────
 
-STEP 2 — Open a terminal and run ONE command:
+  1. sudo ./install-usb-watcher.sh     (once, on firewall Mac Mini)
+  2. Plug this USB in                → setup runs automatically
+  3. Or manually: sudo ./setup.sh
+
+───────────────────────────────────────────────────────────────────
+STEP 1 — Plug this USB into the firewall Mac Mini
+───────────────────────────────────────────────────────────────────
+
+STEP 2 — If plug-and-play not enabled yet, run ONCE:
 
   cd /media/*/MINIFWSETUP
+  sudo ./install-usb-watcher.sh
   sudo ./setup.sh
 
-  (Path may be /media/YOURUSER/MINIFWSETUP — tab-complete it.)
-
-STEP 3 — Follow on-screen instructions for cutover.
+  (After watcher is installed, just plugging in the USB is enough.)
 
 ───────────────────────────────────────────────────────────────────
 IF INTERNET IS DOWN (read this anytime)
@@ -35,8 +43,9 @@ IF INTERNET IS DOWN (read this anytime)
 FILES ON THIS USB
 ───────────────────────────────────────────────────────────────────
 
-  setup.sh              ← run this
-  preflight.sh          ← run before cutover
+  setup.sh                  ← full setup (or auto-runs on plug-in)
+  install-usb-watcher.sh    ← run once for plug-and-play
+  preflight.sh              ← run before cutover
   rollback-to-network-box.sh
   obsidian/Home.md      ← master build guide (open obsidian/ in Obsidian app)
   docs/                 ← plain markdown copies

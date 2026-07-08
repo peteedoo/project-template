@@ -7,19 +7,21 @@ aliases: [Master Build Guide, Start Here]
 
 > **Hardware:** 2014 Mac Mini · 16 GB RAM · 256 GB HDD  
 > **ISP:** Google Fiber · **Wi-Fi:** TP-Link Deco XE75  
-> **Goal:** Mac Mini replaces Google Fiber Network Box as firewall/router
+> **Goal:** Mac Mini becomes your home **firewall** (replaces Google Fiber Network Box)
 
 This is the **start page** for the Obsidian vault. Follow the phases in order. Each step links to a detailed note.
+
+**Workflow:** [[Plug and Play Firewall]] — plug USB, firewall configures itself.
 
 ---
 
 ## Quick path (TL;DR)
 
 1. [[Phase 0 - Before You Start]] — buy parts, photo wiring, prep rollback kit
-2. [[Phase 1 - Install Ubuntu]] — boot from Ubuntu USB, install Server 24.04
-3. [[Phase 2 - MINIFWSETUP USB]] — build stick on laptop, run `sudo ./setup.sh` on Mac Mini
-4. [[Phase 3 - Pre-Cutover Testing]] — prove Mac Mini works **before** touching Fiber Jack
-5. [[Phase 4 - Cutover]] — unplug Network Box, wire Fiber Jack → Mac Mini
+2. [[Phase 1 - Install Ubuntu]] — install Linux on the firewall Mac Mini
+3. [[Plug and Play Firewall]] — enable auto-run, plug [[MINIFWSETUP USB]]
+4. [[Phase 3 - Pre-Cutover Testing]] — prove firewall works **before** touching Fiber Jack
+5. [[Phase 4 - Cutover]] — unplug Network Box, wire Fiber Jack → firewall
 6. [[Phase 5 - Post-Cutover]] — harden, label cables, reboot test
 7. [[Phase 6 - Maintenance]] — monthly tasks
 
@@ -38,8 +40,8 @@ Flash Ubuntu Server 24.04 USB, install on Mac Mini, temporary internet via Netwo
 ⏱ ~1–2 hours
 
 ### [[Phase 2 - MINIFWSETUP USB]]
-Create the [[MINIFWSETUP USB]] — one Terminal paste on your Mac.  
-⏱ ~30 sec · Then plug into firewall Mac Mini → `sudo ./setup.sh`
+Build [[MINIFWSETUP USB]] on your Mac (one paste).  
+Enable [[Plug and Play Firewall]] on the firewall Mac Mini → plug USB → auto-runs.
 
 ### [[Phase 3 - Pre-Cutover Testing]]
 Mac Mini on test subnet while Network Box still runs house internet. Run [[Preflight Checklist]].  
@@ -97,6 +99,7 @@ See [[Google Fiber and Deco XE75]] for wiring photos and LED meanings.
 | `minifw` CLI | [[minifw Commands]] |
 | netplan, firewall.yaml | [[Config Files]] |
 | USB stick contents | [[MINIFWSETUP USB]] |
+| Plug-and-play auto-run | [[Plug and Play Firewall]] |
 | Vet checklist | [[Preflight Checklist]] |
 
 ---

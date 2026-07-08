@@ -72,21 +72,30 @@ You still need a **separate** Ubuntu install USB for the first step:
 
 ---
 
-## Part 3 — Run the setup USB on the Mac Mini
+## Part 3 — Run on the firewall Mac Mini
 
-1. Plug **MINIFWSETUP** USB into Mac Mini
-2. Plug in **USB Ethernet adapter** (WAN)
-3. Keyboard + monitor attached
+### Option A — Plug and play (recommended)
+
+One-time on the firewall Mac Mini:
 
 ```bash
-# Find the USB (usually auto-mounts)
-ls /media/*/
-# or
-lsblk
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/install-usb-watcher.sh | sudo bash
+```
 
+Then just **plug in MINIFWSETUP** — setup runs automatically. See `obsidian/Reference/Plug and Play Firewall.md`.
+
+### Option B — Manual
+
+1. Plug **MINIFWSETUP** USB into firewall Mac Mini
+2. Plug in **USB Ethernet adapter** (WAN)
+3. Keyboard + monitor attached (optional)
+
+```bash
 cd /media/*/MINIFWSETUP
 sudo ./setup.sh
 ```
+
+`setup.sh` also installs the plug-and-play watcher (step 8) for future inserts.
 
 Takes about 5 minutes. It will:
 

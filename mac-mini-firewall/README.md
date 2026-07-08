@@ -1,6 +1,6 @@
 # MiniFW — Mac Mini Home Firewall
 
-A lightweight firewall manager for turning a **2014 Mac Mini** (16 GB RAM, 256 GB drive) into a home router and firewall running **Ubuntu Server** or **Debian**.
+A lightweight firewall manager for turning a **2014 Mac Mini** (16 GB RAM, 256 GB drive) into a home **firewall** running **Ubuntu Server** or **Debian**.
 
 MiniFW generates `nftables` rules, DHCP/DNS config (`dnsmasq`), and kernel hardening (`sysctl`) from a single YAML file.
 
@@ -27,7 +27,8 @@ Open **`obsidian/`** as an Obsidian vault. Start at **[[Home]]** — the master 
 | Doc | When to use |
 |-----|-------------|
 | **[obsidian/Home.md](obsidian/Home.md)** | **Master build guide** (linked) |
-| [docs/USB-SETUP.md](docs/USB-SETUP.md) | Create the plug-in setup USB |
+| **[obsidian/Reference/Plug and Play Firewall.md](obsidian/Reference/Plug%20and%20Play%20Firewall.md)** | Plug USB → firewall auto-configures |
+| [docs/USB-SETUP.md](docs/USB-SETUP.md) | Create the MINIFWSETUP stick |
 | [docs/SETUP-PLAN.md](docs/SETUP-PLAN.md) | Full setup (plain markdown) |
 | [docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md) | Restore Network Box in 5 min |
 | [docs/TRIAGE.md](docs/TRIAGE.md) | Offline troubleshooting |
@@ -44,6 +45,8 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 That's it. It finds `MINIFWSETUP` (or asks if you have multiple drives), downloads the project, and fills the stick.
 
 **Fastest path (manual clone):** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
+
+**Plug-and-play:** install watcher once on the firewall Mac Mini, then USB auto-runs setup. See `obsidian/Reference/Plug and Play Firewall.md`.
 
 **Before cutover:** save `TRIAGE.md` and `BACKUP-AND-ROLLBACK.md` to your phone.
 

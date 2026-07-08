@@ -18,7 +18,8 @@ done_msg() {
   echo "╚══════════════════════════════════════════════════════════╝"
   echo
   echo "  Stick:     ${TARGET}"
-  echo "  Next:      Plug into firewall Mac Mini → sudo ./setup.sh"
+  echo "  Next:      Plug into firewall Mac Mini (auto-runs if watcher installed)"
+  echo "  One-time:  sudo bash install-usb-watcher.sh  on the firewall Mac Mini"
   echo "  Obsidian:  open ${TARGET}/obsidian in Obsidian app"
   echo "  Emergency: ${TARGET}/EMERGENCY-CARD.txt"
   echo
