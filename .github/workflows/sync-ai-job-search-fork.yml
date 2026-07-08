@@ -1,0 +1,57 @@
+name: Sync AI Job Search Fork
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: Fork or upstream repo slug (owner/repo)
+        required: false
+        default: MadsLorentzen/ai-job-search
+      source_ref:
+        description: Branch/tag/commit to sync
+        required: false
+        default: master
+  schedule:
+    - cron: "41 3 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync AI Job Search assets
+        env:
+          JOB_SEARCH_SKILL_SOURCE_REPO: ${{ github.event.inputs.source_repo || vars.JOB_SEARCH_SKILL_SOURCE_REPO || 'MadsLorentzen/ai-job-search' }}
+          JOB_SEARCH_SKILL_SOURCE_REF: ${{ github.event.inputs.source_ref || vars.JOB_SEARCH_SKILL_SOURCE_REF || 'master' }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/sync_ai_job_search_fork.py
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/sync-ai-job-search-fork
+          title: "chore: sync AI Job Search fork assets"
+          commit-message: "chore: sync AI Job Search fork assets"
+          body: |
+            Automated sync from configured AI Job Search source repo.
+
+            Updated:
+            - `.claude/commands/ai-job-search/**`
+            - `.claude/skills/ai-job-search/**`
+            - `.agents/skills/ai-job-search/**`
+            - `.agents/state/ai-job-search-source.json`
+          labels: |
+            automation
+            skills
