@@ -81,7 +81,7 @@ else
   curl -fsSL "${REPO_RAW}/README.md" -o "${INSTALL_DIR}/docs/README.md"
 fi
 
-for doc in MORNING-CHECKLIST.md MIGRATE-FROM-M4.md HARDWARE.md SYNOLOGY-DS223J.md; do
+for doc in MORNING-CHECKLIST.md MIGRATE-FROM-M4.md HARDWARE.md SYNOLOGY-DS223J.md NOTE-dual-projects.md; do
   if [[ -n "${SOURCE_DIR}" && -f "${SOURCE_DIR}/docs/${doc}" ]]; then
     install -m 0644 "${SOURCE_DIR}/docs/${doc}" "${INSTALL_DIR}/docs/${doc}"
   else

@@ -42,6 +42,10 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 
 Only if you add a **second** USB Ethernet adapter (WAN + LAN) or replace/fix built-in Ethernet. MiniFW docs remain in `mac-mini-firewall/`.
 
+## Repo note (2026-07-08)
+
+This branch carries **two projects**: `mac-mini-firewall/` (archived firewall intent, merged to `main` in PR #2) and `arr-appliance/` (active). Obsidian [[Home]] reflects the pivot; `mac-mini-firewall/README.md` still describes firewall duty — that is intentional, not a merge mistake. See `arr-appliance/docs/NOTE-dual-projects.md`.
+
 ## Related
 
 - [[Start Fresh - Used Mac Mini]] — Ubuntu install (still valid)

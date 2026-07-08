@@ -1,5 +1,7 @@
 # MiniFW — Mac Mini Home Firewall
 
+> **Repo note:** This folder is the **firewall** project. The **active plan** for the pawn-shop 2014 Mini is `arr-appliance/` (*arr sidecar). See `arr-appliance/docs/NOTE-dual-projects.md` and Obsidian [[Pivot - arr Appliance]].
+
 A lightweight firewall manager for turning a **2014 Mac Mini** (16 GB RAM, 256 GB drive) into a home **firewall** running **Ubuntu Server** or **Debian**.
 
 MiniFW generates `nftables` rules, DHCP/DNS config (`dnsmasq`), and kernel hardening (`sysctl`) from a single YAML file.
