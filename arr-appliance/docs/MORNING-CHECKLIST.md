@@ -32,6 +32,8 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 
 ## 3. Mount NAS
 
+**UGREEN NASync DH2300?** Use `config/fstab.ugreen-dh2300.example` — SMB share names are the folder names only (`//nas-ip/media`), not `/volume1/...`.
+
 Edit fstab from the example:
 
 ```bash
