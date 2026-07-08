@@ -14,11 +14,16 @@ die()  { echo "ERROR: $*" >&2; exit 1; }
 
 [[ "$(uname -s)" == "Darwin" ]] || die "macOS only. On Linux: use dd or balenaEtcher manually."
 
-# ── Find external USB ─────────────────────────────────────────────────────────
+# ── Find external USB (bash 3.2 safe — macOS default) ─────────────────────────
 say "Looking for USB drives..."
 echo
 
-mapfile -t USBS < <(diskutil list external physical 2>/dev/null | awk '/^\/dev\/disk[0-9]+/ {print $1}')
+USBS=()
+while IFS= read -r line; do
+  [[ -n "${line}" ]] && USBS[${#USBS[@]}]="${line}"
+done <<EOF
+$(diskutil list external physical 2>/dev/null | awk '/^\/dev\/disk[0-9]+/ {print $1}')
+EOF
 
 if [[ ${#USBS[@]} -eq 0 ]]; then
   die "No USB drive found. Plug it in and run again."
