@@ -72,8 +72,8 @@ find_usb() {
       echo "  ${i}) /Volumes/${vol}" >&2
       ((i++)) || true
     done
-    echo -n "Which one? [1-${#candidates[@]}]: " >&2
-    read -r pick
+    printf 'Which one? [1-%s]: ' "${#candidates[@]}" >&2
+    read -r pick </dev/tty
     if [[ "${pick}" =~ ^[0-9]+$ ]] && (( pick >= 1 && pick <= ${#candidates[@]} )); then
       echo "/Volumes/${candidates[$((pick-1))]}"
       return 0
