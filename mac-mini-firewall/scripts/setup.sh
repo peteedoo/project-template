@@ -43,6 +43,16 @@ if [[ "${UPDATE_MODE}" -eq 1 ]]; then
   cp -f "${USB_DIR}/docs/"*.md /opt/minifw/docs/ 2>/dev/null || true
   cp -Rf "${USB_DIR}/obsidian/." /opt/minifw/obsidian/ 2>/dev/null || true
   cp -f "${USB_DIR}/EMERGENCY-CARD.txt" /root/INTERNET-DOWN.txt
+  echo
+  echo "==> [0/8] Checking internet route (1.1.1.1)..."
+  if ! ip route get 1.1.1.1 >/dev/null 2>&1; then
+    echo "No route to the internet from this Mac Mini yet."
+    echo "Fix: ensure WAN link is up (use the USB Ethernet adapter as WAN if your built-in link isn't coming up)."
+    echo "Then re-run:"
+    echo "  cd /media/*/MINIFWSETUP && sudo ./setup.sh"
+    exit 1
+  fi
+
   apt-get update -qq
   python3 -m pip install --break-system-packages "${USB_DIR}/minifw" -q
   if [[ -f /etc/minifw/firewall.yaml ]]; then
@@ -56,6 +66,16 @@ if [[ "${UPDATE_MODE}" -eq 1 ]]; then
 fi
 
 # ── 1. Packages ──────────────────────────────────────────────────────────────
+echo
+echo "==> [0/8] Checking internet route (1.1.1.1)..."
+if ! ip route get 1.1.1.1 >/dev/null 2>&1; then
+  echo "No route to the internet from this Mac Mini yet."
+  echo "Fix: ensure WAN link is up (use the USB Ethernet adapter as WAN if your built-in link isn't coming up)."
+  echo "Then re-run:"
+  echo "  cd /media/*/MINIFWSETUP && sudo ./setup.sh"
+  exit 1
+fi
+
 echo "==> [1/8] Installing system packages"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
