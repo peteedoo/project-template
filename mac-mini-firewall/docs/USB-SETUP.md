@@ -2,6 +2,16 @@
 
 One USB stick holds everything you need to configure the Mac Mini. Plug it in, run one command.
 
+## Easiest way (one paste, USB plugged in)
+
+Open Terminal on your Mac with the stick inserted:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/make-usb.sh | bash
+```
+
+Auto-finds `MINIFWSETUP` (or the only external drive). Done in ~30 seconds.
+
 ## What this USB does
 
 | Does | Does not |
@@ -22,17 +32,17 @@ You need a **8 GB+ USB stick** (any spare drive).
 
 ```bash
 # 1. Insert USB stick
-# 2. Open Disk Utility → Erase → Name: MINIFW-SETUP → Format: ExFAT
+# 2. Open Disk Utility → Erase → Name: MINIFWSETUP → Format: ExFAT
 # 3. Clone repo (or copy mac-mini-firewall folder)
 cd mac-mini-firewall
 chmod +x scripts/build-setup-usb.sh
-./scripts/build-setup-usb.sh /Volumes/MINIFW-SETUP
+./scripts/build-setup-usb.sh /Volumes/MINIFWSETUP
 ```
 
 ### Windows (WSL or Git Bash)
 
 ```bash
-# Format USB as exFAT, label MINIFW-SETUP
+# Format USB as exFAT, label MINIFWSETUP
 # Mounts as E: or similar
 cd mac-mini-firewall
 bash scripts/build-setup-usb.sh /mnt/e
@@ -41,12 +51,12 @@ bash scripts/build-setup-usb.sh /mnt/e
 ### Linux
 
 ```bash
-# Format: sudo mkfs.exfat -n MINIFW-SETUP /dev/sdX1
+# Format: sudo mkfs.exfat -n MINIFWSETUP /dev/sdX1
 cd mac-mini-firewall
-./scripts/build-setup-usb.sh /media/$USER/MINIFW-SETUP
+./scripts/build-setup-usb.sh /media/$USER/MINIFWSETUP
 ```
 
-Eject safely. Label the stick **"MINIFW SETUP"** with tape.
+Eject safely. Label the stick **MINIFWSETUP** with tape.
 
 ---
 
@@ -62,21 +72,30 @@ You still need a **separate** Ubuntu install USB for the first step:
 
 ---
 
-## Part 3 — Run the setup USB on the Mac Mini
+## Part 3 — Run on the firewall Mac Mini
 
-1. Plug **MINIFW-SETUP** USB into Mac Mini
-2. Plug in **USB Ethernet adapter** (WAN)
-3. Keyboard + monitor attached
+### Option A — Plug and play (recommended)
+
+One-time on the firewall Mac Mini:
 
 ```bash
-# Find the USB (usually auto-mounts)
-ls /media/*/
-# or
-lsblk
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/install-usb-watcher.sh | sudo bash
+```
 
-cd /media/*/MINIFW-SETUP
+Then just **plug in MINIFWSETUP** — setup runs automatically. See `obsidian/Reference/Plug and Play Firewall.md`.
+
+### Option B — Manual
+
+1. Plug **MINIFWSETUP** USB into firewall Mac Mini
+2. Plug in **USB Ethernet adapter** (WAN)
+3. Keyboard + monitor attached (optional)
+
+```bash
+cd /media/*/MINIFWSETUP
 sudo ./setup.sh
 ```
+
+`setup.sh` also installs the plug-and-play watcher (step 8) for future inserts.
 
 Takes about 5 minutes. It will:
 
@@ -120,9 +139,9 @@ Tape the USB to the shelf next to the Network Box rollback kit.
 | USB | Purpose | When |
 |-----|---------|------|
 | Ubuntu Server installer | Install Linux | Once |
-| **MINIFW-SETUP** (this) | Configure firewall | Once + keep forever |
+| **MINIFWSETUP** (this) | Configure firewall | Once + keep forever |
 
-If you want **one physical USB** for both, use [Ventoy](https://ventoy.net): put the Ubuntu ISO and the MINIFW-SETUP folder on the same drive.
+If you want **one physical USB** for both, use [Ventoy](https://ventoy.net): put the Ubuntu ISO and the MINIFWSETUP folder on the same drive.
 
 ---
 

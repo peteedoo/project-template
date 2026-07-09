@@ -1,0 +1,16 @@
+network:
+  version: 2
+  renderer: networkd
+  # Built-in enp*s on 2014 Mac Mini is often dead — use USB adapter for wired LAN.
+  ethernets:
+    usb-lan:
+      match:
+        name: "enx*"
+      dhcp4: true
+      optional: true
+    # Fallback: some adapters show up as eth* instead of enx*
+    usb-lan-eth:
+      match:
+        name: "eth*"
+      dhcp4: true
+      optional: true

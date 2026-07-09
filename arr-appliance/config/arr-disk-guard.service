@@ -1,0 +1,6 @@
+[Unit]
+Description=Run arr disk guard
+
+[Service]
+Type=oneshot
+ExecStart=/opt/arr-appliance/scripts/guard-disk.sh

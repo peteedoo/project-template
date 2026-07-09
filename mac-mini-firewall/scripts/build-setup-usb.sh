@@ -2,8 +2,8 @@
 # Build a MiniFW setup USB. Run on any Mac, Windows (WSL), or Linux machine.
 #
 # Usage:
-#   ./build-setup-usb.sh /Volumes/MINIFW-SETUP     # macOS
-#   ./build-setup-usb.sh /media/user/MINIFW-SETUP  # Linux
+#   ./build-setup-usb.sh /Volumes/MINIFWSETUP     # macOS
+#   ./build-setup-usb.sh /media/user/MINIFWSETUP  # Linux
 #   ./build-setup-usb.sh /mnt/e                    # WSL
 #
 # The USB will be formatted separately by you (see docs/USB-SETUP.md).
@@ -13,8 +13,8 @@ TARGET="${1:-}"
 if [[ -z "${TARGET}" ]]; then
   echo "Usage: $0 <usb-mount-path>"
   echo
-  echo "Example (macOS):  $0 /Volumes/MINIFW-SETUP"
-  echo "Example (Linux):  $0 /media/\$USER/MINIFW-SETUP"
+  echo "Example (macOS):  $0 /Volumes/MINIFWSETUP"
+  echo "Example (Linux):  $0 /media/\$USER/MINIFWSETUP"
   exit 1
 fi
 
@@ -44,6 +44,11 @@ copy "${PROJECT_DIR}/docs/TRIAGE.md"              "${TARGET}/docs/TRIAGE.md"
 copy "${PROJECT_DIR}/docs/BACKUP-AND-ROLLBACK.md" "${TARGET}/docs/BACKUP-AND-ROLLBACK.md"
 copy "${PROJECT_DIR}/docs/SETUP-PLAN.md"          "${TARGET}/docs/SETUP-PLAN.md"
 copy "${PROJECT_DIR}/docs/NETWORK.md"             "${TARGET}/docs/NETWORK.md"
+copy "${PROJECT_DIR}/docs/USB-SETUP.md"         "${TARGET}/docs/USB-SETUP.md"
+copy "${PROJECT_DIR}/docs/README.md"              "${TARGET}/docs/README.md"
+
+echo "==> Copying Obsidian vault (open obsidian/ folder in Obsidian app)"
+copy "${PROJECT_DIR}/obsidian"                    "${TARGET}/obsidian"
 
 echo "==> Copying configs"
 copy "${PROJECT_DIR}/config/netplan.example.yaml"        "${TARGET}/config/netplan.example.yaml"
@@ -56,11 +61,13 @@ copy "${PROJECT_DIR}/pyproject.toml" "${TARGET}/minifw/pyproject.toml"
 copy "${PROJECT_DIR}/tests"       "${TARGET}/minifw/tests"
 
 echo "==> Copying scripts"
-for f in setup.sh preflight.sh rollback-to-network-box.sh detect-interfaces.sh; do
+for f in setup.sh preflight.sh rollback-to-network-box.sh detect-interfaces.sh \
+         install-usb-watcher.sh usb-autorun.sh; do
   copy "${PROJECT_DIR}/scripts/${f}" "${TARGET}/${f}"
 done
 chmod +x "${TARGET}/setup.sh" "${TARGET}/preflight.sh" \
-         "${TARGET}/rollback-to-network-box.sh" "${TARGET}/detect-interfaces.sh"
+         "${TARGET}/rollback-to-network-box.sh" "${TARGET}/detect-interfaces.sh" \
+         "${TARGET}/install-usb-watcher.sh" "${TARGET}/usb-autorun.sh"
 
 echo "==> Writing START-HERE.txt"
 copy "${PROJECT_DIR}/usb/START-HERE.txt" "${TARGET}/START-HERE.txt"
@@ -72,8 +79,9 @@ echo "minifw-setup-usb-v1" > "${TARGET}/.minifw-usb"
 echo
 echo "==> Done. USB is ready."
 echo
-echo "  Volume label:  MINIFW-SETUP (recommended)"
-echo "  On Mac Mini:   sudo ./setup.sh"
+echo "  Volume label:  MINIFWSETUP (recommended)"
+echo "  On Mac Mini:   plug in USB (auto-runs) or sudo ./setup.sh"
+echo "  Enable auto:   sudo ./install-usb-watcher.sh  (once, before first plug)"
 echo
 echo "  Full instructions: docs/USB-SETUP.md"
 du -sh "${TARGET}" 2>/dev/null || true

@@ -1,6 +1,8 @@
 # MiniFW — Mac Mini Home Firewall
 
-A lightweight firewall manager for turning a **2014 Mac Mini** (16 GB RAM, 256 GB drive) into a home router and firewall running **Ubuntu Server** or **Debian**.
+> **Repo note:** This folder is the **firewall** project. The **active plan** for the pawn-shop 2014 Mini is `arr-appliance/` (*arr sidecar). See `arr-appliance/docs/NOTE-dual-projects.md` and Obsidian [[Pivot - arr Appliance]].
+
+A lightweight firewall manager for turning a **2014 Mac Mini** (16 GB RAM, 256 GB drive) into a home **firewall** running **Ubuntu Server** or **Debian**.
 
 MiniFW generates `nftables` rules, DHCP/DNS config (`dnsmasq`), and kernel hardening (`sysctl`) from a single YAML file.
 
@@ -18,15 +20,35 @@ A 2014 Mac Mini has only one built-in Ethernet port. You need a second NIC (USB 
 
 ## Documentation
 
+### Obsidian vault (recommended)
+
+Open **`~/Documents/MiniFW`** in Obsidian (or double-click `install-vault.command`). Start at **[[Home]]**.
+
+### Plain markdown
+
 | Doc | When to use |
 |-----|-------------|
-| **[docs/USB-SETUP.md](docs/USB-SETUP.md)** | **Create the plug-in setup USB** |
-| **[docs/SETUP-PLAN.md](docs/SETUP-PLAN.md)** | Full step-by-step build, netplan, vet checklist, cutover |
-| **[docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md)** | Restore Google Fiber Network Box in 5 min |
-| **[docs/TRIAGE.md](docs/TRIAGE.md)** | **Save on your phone** — offline troubleshooting |
-| [docs/NETWORK.md](docs/NETWORK.md) | Topology (Google Fiber + Deco XE75) |
+| **[obsidian/Home.md](obsidian/Home.md)** | **Master build guide** (linked) |
+| **[obsidian/Reference/Plug and Play Firewall.md](obsidian/Reference/Plug%20and%20Play%20Firewall.md)** | Plug USB → firewall auto-configures |
+| [docs/USB-SETUP.md](docs/USB-SETUP.md) | Create the MINIFWSETUP stick |
+| [docs/SETUP-PLAN.md](docs/SETUP-PLAN.md) | Full setup (plain markdown) |
+| [docs/BACKUP-AND-ROLLBACK.md](docs/BACKUP-AND-ROLLBACK.md) | Restore Network Box in 5 min |
+| [docs/TRIAGE.md](docs/TRIAGE.md) | Offline troubleshooting |
+| [docs/NETWORK.md](docs/NETWORK.md) | Topology reference |
 
-**Fastest path:** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
+## Fastest path — one command (Mac, USB plugged in)
+
+Plug in the USB stick, open **Terminal**, paste this, press Enter:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/mac-mini-firewall/scripts/make-usb.sh | bash
+```
+
+That's it. It finds `MINIFWSETUP` (or asks if you have multiple drives), downloads the project, and fills the stick.
+
+**Fastest path (manual clone):** build the setup USB on your laptop, install Ubuntu on the Mac Mini, plug in the USB, run `sudo ./setup.sh`.
+
+**Plug-and-play:** install watcher once on the firewall Mac Mini, then USB auto-runs setup. See `obsidian/Reference/Plug and Play Firewall.md`.
 
 **Before cutover:** save `TRIAGE.md` and `BACKUP-AND-ROLLBACK.md` to your phone.
 
@@ -63,14 +85,16 @@ See [docs/NETWORK.md](docs/NETWORK.md) for the full topology diagram, physical w
 
 ```
 mac-mini-firewall/
+├── obsidian/            # Obsidian vault — start at Home.md
+│   ├── Home.md          # Master build guide (MOC)
+│   ├── Build/           # Phases 0–6
+│   ├── Network/
+│   ├── Operations/
+│   └── Reference/
 ├── src/minifw/          # Python CLI and rule generator
 ├── config/              # firewall.yaml, netplan examples
-├── scripts/             # install, preflight, rollback helpers
-└── docs/
-    ├── SETUP-PLAN.md       # Full implementation plan
-    ├── BACKUP-AND-ROLLBACK.md
-    ├── TRIAGE.md           # Offline runbook
-    └── NETWORK.md
+├── scripts/             # install, preflight, rollback, build-setup-usb
+└── docs/                # Plain markdown copies
 ```
 
 ## Security defaults

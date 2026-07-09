@@ -1,5 +1,7 @@
 # Full setup plan — Google Fiber + Mac Mini + Deco XE75
 
+> **Obsidian vault:** See [[Home]] in `obsidian/` for the linked master guide. This file is the plain-markdown equivalent.
+
 This is the complete implementation plan for your 2014 Mac Mini (16 GB RAM, 256 GB HDD) as firewall/router with Google Fiber and a TP-Link Deco XE75 mesh.
 
 **Read this in order.** Do not skip the backup section or preflight checks.
