@@ -250,7 +250,7 @@ Reference: [TP-Link Deco AP mode FAQ](https://www.tp-link.com/us/support/faq/184
 | Deco satellites | DHCP from Mac Mini | Assigned automatically |
 | Phones / laptops | `192.168.10.100+` | DHCP pool from MiniFW |
 
-If your fiber gateway previously used `192.168.68.x` (Deco's default subnet), switching to `192.168.10.0/24` on the Mac Mini avoids conflicts.
+If your ISP gateway or mesh router uses a different default subnet, switching to `192.168.10.0/24` on the Mac Mini avoids conflicts.
 
 ### Deco features in AP mode
 

@@ -6,7 +6,7 @@ tags: [reference, network]
 
 ← [[Home]] · Network → [[Google Fiber and Deco XE75]]
 
-Subnet: **`192.168.10.0/24`** (avoids conflict with Deco's default `192.168.68.x`)
+Subnet: **`192.168.10.0/24`** (avoids conflict with the mesh router's default subnet)
 
 ---
 

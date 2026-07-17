@@ -1,22 +1,22 @@
 # Synology DS223J — setup for iamfaulty homelab
 
-Entry-level **2-bay** Synology. Good as a **backup / off-site copy** alongside **ILLMATIC** (UGREEN DH2300 at home).
+Entry-level **2-bay** Synology. Good as a **backup / off-site copy** alongside **NAS1** (2-bay NAS at home).
 
-| | ILLMATIC (UGREEN) | DS223J (Synology) |
+| | NAS1 (2-bay NAS) | DS223J (Synology) |
 |--|-------------------|-------------------|
 | **Best role** | Primary — media, downloads, *arr appdata | Backup — Duplicati, Hyper Backup, snapshots |
-| **Network** | Home LAN (`192.168.68.69`) | **Internet-connected** (not on home LAN) — use **Tailscale** |
+| **Network** | Home LAN (`192.168.1.50`) | **Internet-connected** (not on home LAN) — use **Tailscale** |
 | **RAM** | 4 GB | 1 GB (not upgradable) |
-| **Docker on NAS** | No (DH2300) | **No** — ARM, no Container Manager |
+| **Docker on NAS** | No (2-bay NAS) | **No** — ARM, no Container Manager |
 | **Your data today** | ~3.9 TB used / 11 TB | Fresh — size depends on drives |
 
-**Recommendation:** Keep live *arr on ILLMATIC. Push **backups** to the Synology over **Tailscale** (or SFTP/rsync on the tailnet). Do **not** expose SMB to the public internet.
+**Recommendation:** Keep live *arr on NAS1. Push **backups** to the Synology over **Tailscale** (or SFTP/rsync on the tailnet). Do **not** expose SMB to the public internet.
 
 ---
 
 ## Fresh box + internet only (start here)
 
-If the DS223J is **new** and only reachable **over the internet** (different site, or not on your `192.168.68.x` LAN yet):
+If the DS223J is **new** and only reachable **over the internet** (different site, or not on your `192.168.1.x` LAN yet):
 
 ### Hour 1 — DSM without opening dangerous ports
 
@@ -32,12 +32,12 @@ If the DS223J is **new** and only reachable **over the internet** (different sit
 
 ### Hour 2 — join your homelab mesh (Tailscale)
 
-You already use Tailscale on **iamfaulty-mini** and the Pi fleet. This is the right way to reach an internet-connected Synology.
+You already use Tailscale on **main-mini** and the utility SBCs. This is the right way to reach an internet-connected Synology.
 
-1. **Package Center** on DSM → search **Tailscale** → Install (available on many ARM Synology models including DS223j — if missing, use Synology's OpenVPN or WireGuard package toward your Pi 5 instead).
+1. **Package Center** on DSM → search **Tailscale** → Install (available on many ARM Synology models including DS223j — if missing, use Synology's OpenVPN or WireGuard package toward an always-on SBC instead).
 2. Open **Tailscale** → log in with the **same tailnet** as home.
 3. Note the Synology **Tailscale IP** (e.g. `100.x.y.z`) in DSM or the Tailscale admin console.
-4. From **iamfaulty-mini**:
+4. From **main-mini**:
    ```bash
    tailscale ping 100.x.y.z
    ```
@@ -52,7 +52,7 @@ You already use Tailscale on **iamfaulty-mini** and the Pi fleet. This is the ri
 | Folder | Purpose |
 |--------|---------|
 | `backup` | Duplicati / rsync targets from home homelab |
-| `homelab-mirror` | Optional copy of critical ILLMATIC paths |
+| `homelab-mirror` | Optional copy of critical NAS1 paths |
 
 Create user **`peteedoo`** — write access to `backup` only (not full admin).
 
@@ -65,7 +65,7 @@ Create user **`peteedoo`** — write access to `backup` only (not full admin).
 ## How home reaches Synology (internet path)
 
 ```
-ILLMATIC / M4 / pawn-shop Mini  ──Tailscale──►  DS223J (100.x.y.z)
+NAS1 / main Mac / pawn-shop Mini  ──Tailscale──►  DS223J (100.x.y.z)
                                               └── /backup
 ```
 
@@ -108,15 +108,15 @@ sudo mkdir -p /mnt/synology
 sudo mount -t cifs -o credentials=/etc/nas-credentials-synology,uid=1000,gid=1000,vers=3.0 //100.x.y.z/backup /mnt/synology
 ```
 
-See `config/fstab.synology-ds223j.example` — use **Tailscale IP**, not `192.168.68.x`.
+See `config/fstab.synology-ds223j.example` — use **Tailscale IP**, not `192.168.1.x`.
 
-**\*arr stays on ILLMATIC** (`/mnt/nas`). Synology is backup destination only.
+**\*arr stays on NAS1** (`/mnt/nas`). Synology is backup destination only.
 
 ---
 
 ## Duplicati over internet (recommended pattern)
 
-On **iamfaulty-mini**, Duplicati job destination options:
+On **main-mini**, Duplicati job destination options:
 
 | Backend | Target |
 |---------|--------|
@@ -137,7 +137,7 @@ Schedule overnight — 1 GbE upload at the Synology's site is usually the bottle
 
 ## If the Synology is at home later
 
-You can **also** use a LAN IP (e.g. `192.168.68.70`) for faster local backups when on the same network. Tailscale still works from anywhere. Document both in HARDWARE.md if you end up dual-homed.
+You can **also** use a LAN IP (e.g. `192.168.1.51`) for faster local backups when on the same network. Tailscale still works from anywhere. Document both in HARDWARE.md if you end up dual-homed.
 
 ---
 
@@ -153,8 +153,8 @@ You can **also** use a LAN IP (e.g. `192.168.68.70`) for faster local backups wh
 
 | Avoid | Why |
 |-------|-----|
-| Primary Jellyfin / *arr library | ILLMATIC has capacity; DS223J is 2-bay / 1 GB |
-| Active qBittorrent downloads | Keep on ILLMATIC / pawn-shop Mini |
+| Primary Jellyfin / *arr library | NAS1 has capacity; DS223J is 2-bay / 1 GB |
+| Active qBittorrent downloads | Keep on NAS1 / pawn-shop Mini |
 | Docker *arr on NAS | No Container Manager on DS223j |
 | SMB exposed to public internet | Use Tailscale |
 
@@ -166,11 +166,11 @@ You can **also** use a LAN IP (e.g. `192.168.68.70`) for faster local backups wh
 - [ ] **Tailscale** installed on DSM, same tailnet as home
 - [ ] Tailscale IP recorded in `docs/HARDWARE.md`
 - [ ] Shared folder `backup` + user `peteedoo`
-- [ ] `tailscale ping` works from iamfaulty-mini
+- [ ] `tailscale ping` works from main-mini
 - [ ] Test SMB or SFTP to `100.x.y.z`
 - [ ] Duplicati job → Synology over Tailscale
 - [ ] **No** router port-forward for 445 / 5000 / 5001
-- [ ] ILLMATIC remains primary for live *arr
+- [ ] NAS1 remains primary for live *arr
 
 ---
 

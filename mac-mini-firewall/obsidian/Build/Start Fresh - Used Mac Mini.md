@@ -98,7 +98,7 @@ For MiniFW, skip this — go straight to Ubuntu.
 
 ## Step 5 — Continue firewall setup
 
-1. [[MINIFWSETUP USB]] — build stick on your M4 Mac
+1. [[MINIFWSETUP USB]] — build stick on your main Mac
 2. [[Plug and Play Firewall]] — enable watcher, plug USB
 3. [[Phase 3 - Pre-Cutover Testing]] → [[Phase 4 - Cutover]]
 

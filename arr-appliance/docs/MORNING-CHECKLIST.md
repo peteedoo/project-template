@@ -32,9 +32,9 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 
 ## 3. Mount NAS
 
-**iamfaulty / ILLMATIC?** Use `config/fstab.iamfaulty.example` — see also `docs/HARDWARE.md`.
+**Home lab NAS (NAS1)?** Use `config/fstab.iamfaulty.example` — see also `docs/HARDWARE.md`.
 
-**UGREEN DH2300 (generic)?** Use `config/fstab.ugreen-dh2300.example`.
+**2-bay NAS (generic)?** Use `config/fstab.smb-nfs.example`.
 
 Edit fstab from the example:
 
@@ -94,11 +94,11 @@ Link apps together (localhost URLs work inside Docker network):
 - Bazarr → Sonarr: `http://sonarr:8989`, Radarr: `http://radarr:7878`
 - *arr → qBittorrent: `http://qbittorrent:8080`
 
-## 7. Retire *arr on main M4 Mac
+## 7. Retire *arr on main Mac
 
-- [ ] Stop/remove Docker *arr containers on **faulty-mini** (your M4)
+- [ ] Stop/remove Docker *arr containers on **main-mini** (your main Mac)
 - [ ] Confirm new grabs land on NAS under `/mnt/nas/downloads`
-- [ ] Plex on M4 can keep reading media from NAS — no *arr needed there
+- [ ] Plex on main Mac can keep reading media from NAS — no *arr needed there
 
 ## If local disk fills
 

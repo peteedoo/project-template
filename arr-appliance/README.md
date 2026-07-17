@@ -1,6 +1,6 @@
 # *arr Appliance (Sacrificial Mac Mini)
 
-Offload Prowlarr, Sonarr, Radarr, Bazarr, and qBittorrent from your main Mac onto the pawn-shop 2014 Mac Mini. **All media, downloads, and app config live on NAS.** The Mini's 256 GB disk is sacrificial — if it drifts full, the stack stops itself instead of eating your M4.
+Offload Prowlarr, Sonarr, Radarr, Bazarr, and qBittorrent from your main Mac onto the pawn-shop 2014 Mac Mini. **All media, downloads, and app config live on NAS.** The Mini's 256 GB disk is sacrificial — if it drifts full, the stack stops itself instead of eating your main Mac.
 
 ## Architecture
 
@@ -9,9 +9,9 @@ Full hardware map: `docs/HARDWARE.md`
 | Machine | Role |
 |---------|------|
 | **2014 Mac Mini** (pawn-shop) | *arr stack in Docker; optional Tailscale |
-| **Main M4 Mac Mini** (`iamfaulty-mini`) | Jellyfin, agents, work — no *arr after cutover |
-| **ILLMATIC NAS** (`192.168.68.69`) | `homelab` share — media, downloads, appdata |
-| **Le Potato** (`192.168.68.90`) | AdGuard DNS — do not move *arr here |
+| **Main Mac** (`main-mini`) | Jellyfin, agents, work — no *arr after cutover |
+| **NAS1** (primary NAS, `192.168.1.50`) | `homelab` share — media, downloads, appdata |
+| **Le Potato** (`192.168.1.52`) | AdGuard DNS — do not move *arr here |
 
 Built-in Ethernet on the 2014 Mini is often dead. Use **Wi-Fi for initial setup** and a **USB Gigabit adapter** for stable wired LAN afterward.
 
@@ -83,13 +83,13 @@ docker compose -f /opt/arr-appliance/docker-compose.yml ps
 
 ## Migrate from main Mac
 
-1. Export or copy existing `*arr` config from the M4 into NAS `appdata/` folders (or start fresh).
+1. Export or copy existing `*arr` config from the main Mac into NAS `appdata/` folders (or start fresh).
 2. Point Sonarr/Radarr root folders and qBittorrent save path at NAS only.
-3. Remove or disable *arr on the M4 so drift cannot return there.
+3. Remove or disable *arr on the main Mac so drift cannot return there.
 
-## Migrate from iamfaulty-mini (M4)
+## Migrate from main-mini
 
-See `docs/MIGRATE-FROM-M4.md`, `docs/HARDWARE.md`, `docs/SYNOLOGY-DS223J.md`, and **`docs/ROADMAP.md`** for the full forward plan.
+See `docs/MIGRATE.md`, `docs/HARDWARE.md`, `docs/SYNOLOGY-DS223J.md`, and **`docs/ROADMAP.md`** for the full forward plan.
 
 ## Files
 
@@ -110,7 +110,7 @@ arr-appliance/
 └── docs/
     ├── HARDWARE.md
     ├── MORNING-CHECKLIST.md
-    └── MIGRATE-FROM-M4.md
+    └── MIGRATE.md
 ```
 
 ## Firewall pivot

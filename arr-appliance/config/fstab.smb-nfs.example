@@ -1,5 +1,5 @@
-# UGREEN NASync DH2300 (UGOS Pro) — merge into /etc/fstab
-# Replace 192.168.1.50 with your NAS IP (UGREEN app or router DHCP list).
+# 2-bay NAS — merge into /etc/fstab
+# Replace 192.168.1.50 with your NAS IP (NAS app or router DHCP list).
 #
 # On the NAS first:
 #   Control Panel → File Service → SMB → Enable

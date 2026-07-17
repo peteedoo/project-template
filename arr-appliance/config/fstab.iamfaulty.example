@@ -1,5 +1,5 @@
-# ILLMATIC (UGREEN DH2300) — iamfaulty homelab
-# truth.iamfaulty.com: host 192.168.68.69, share "homelab"
+# NAS1 (2-bay NAS) — iamfaulty homelab
+# host 192.168.1.50, share "homelab"
 #
 # On the pawn-shop Mac Mini:
 #   sudo nano /etc/nas-credentials
@@ -9,12 +9,12 @@
 #   sudo mkdir -p /mnt/nas
 #
 # Test:
-#   sudo mount -t cifs -o credentials=/etc/nas-credentials,uid=1000,gid=1000,vers=3.0 //192.168.68.69/homelab /mnt/nas
+#   sudo mount -t cifs -o credentials=/etc/nas-credentials,uid=1000,gid=1000,vers=3.0 //192.168.1.50/homelab /mnt/nas
 #   ls /mnt/nas/media/Movies /mnt/nas/media/Shows
 #
 # Then add this line to /etc/fstab:
 
-//192.168.68.69/homelab  /mnt/nas  cifs  credentials=/etc/nas-credentials,uid=1000,gid=1000,file_mode=0664,dir_mode=0775,vers=3.0,nofail,_netdev,x-systemd.automount  0  0
+//192.168.1.50/homelab  /mnt/nas  cifs  credentials=/etc/nas-credentials,uid=1000,gid=1000,file_mode=0664,dir_mode=0775,vers=3.0,nofail,_netdev,x-systemd.automount  0  0
 
 # After mount, create arr paths (if missing):
 #   mkdir -p /mnt/nas/personal/arr-appliance/{prowlarr,sonarr,radarr,bazarr,qbittorrent}

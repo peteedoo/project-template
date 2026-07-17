@@ -33,9 +33,9 @@ Both target the **same hardware** (2014 Mac Mini) but **not at the same time** f
 
 ## Hardware context (summary)
 
-- **ILLMATIC** (UGREEN) — primary NAS / *arr paths
+- **NAS1** (2-bay NAS) — primary NAS / *arr paths
 - **DS223J** (Synology) — off-site backup over Tailscale
-- **Le Potato** @ `192.168.68.90` — AdGuard DNS
-- **M4** — Jellyfin, agents; retire `~/homelab-data/arr/` after cutover
+- **Le Potato** @ `192.168.1.52` — AdGuard DNS
+- **main Mac** — Jellyfin, agents; retire `~/homelab-data/arr/` after cutover
 
 Full map: `arr-appliance/docs/HARDWARE.md`

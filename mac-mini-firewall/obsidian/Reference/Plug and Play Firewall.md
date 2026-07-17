@@ -71,7 +71,7 @@ echo 'MINIFW_NO_PROMPT=1' | sudo tee -a /etc/environment
 | Auto on macOS | Plug-and-play watcher runs on **Ubuntu on the firewall Mac Mini** |
 | Auto on first Ubuntu install | Watcher needs one-time install (above) |
 
-macOS cannot auto-run USB scripts (security). Your **M4 Mac** builds the stick; the **firewall Mac Mini** runs it.
+macOS cannot auto-run USB scripts (security). Your **main Mac** builds the stick; the **firewall Mac Mini** runs it.
 
 ---
 

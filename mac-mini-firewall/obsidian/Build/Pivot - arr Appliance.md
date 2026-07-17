@@ -2,7 +2,7 @@
 
 The 2014 pawn-shop Mac Mini was originally planned as a **Google Fiber firewall** (MiniFW). Built-in Ethernet appears **dead** (no link light). Firewall duty needs WAN + LAN; one USB adapter is not enough for that role without Wi-Fi WAN (fragile).
 
-**New plan:** use this box as a dedicated ***arr sidecar*** so download/config drift fills *its* 256 GB disk (or stops at 85%) instead of your **main M4 Mac Mini**.
+**New plan:** use this box as a dedicated ***arr sidecar*** so download/config drift fills *its* 256 GB disk (or stops at 85%) instead of your **main Mac**.
 
 ## What stays the same
 
@@ -36,7 +36,7 @@ curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/ma
 | Machine | Role |
 |---------|------|
 | 2014 Mac Mini | *arr stack; sacrificial local disk |
-| M4 Mac Mini (faulty-mini) | Work, Plex — remove *arr from here |
+| main Mac (main-mini) | Work, Plex — remove *arr from here |
 | NAS | Source of truth for media + downloads + config |
 
 ## Revisit firewall later?

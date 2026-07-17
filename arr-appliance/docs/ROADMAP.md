@@ -12,11 +12,11 @@ This is the ordered plan from **today** to **stable steady state**. Each phase h
 
 | Goal | How we get there |
 |------|------------------|
-| Stop M4 SSD drift | Move acquisition stack off `iamfaulty-mini` |
-| Keep media on NAS | ILLMATIC stays primary; paths unchanged for Jellyfin |
+| Stop main Mac SSD drift | Move acquisition stack off `main-mini` |
+| Keep media on NAS | NAS1 stays primary; paths unchanged for Jellyfin |
 | Sacrificial local disk | Pawn-shop Mini + 85% disk guard |
 | Off-site backup | DS223J over Tailscale |
-| House DNS stable | Le Potato @ `.90` — do not load with *arr |
+| House DNS stable | Le Potato @ `.52` — do not load with *arr |
 
 ---
 
@@ -27,10 +27,10 @@ This is the ordered plan from **today** to **stable steady state**. Each phase h
 | Pawn-shop Mini | Ubuntu Server installed; Wi-Fi works; built-in Ethernet dead; USB adapter available |
 | `arr-appliance` repo | Compose + install scripts + docs — **not yet run on the Mini** |
 | Gluetun in compose | **Not implemented** — qBit currently exposed without VPN kill switch |
-| M4 *arr stack | Still live at `~/homelab-data/arr/` — **still drifting SSD** |
-| ILLMATIC | Primary NAS — `homelab` share, `media/Movies`, `media/Shows` |
+| main Mac *arr stack | Still live at `~/homelab-data/arr/` — **still drifting SSD** |
+| NAS1 | Primary NAS — `homelab` share, `media/Movies`, `media/Shows` |
 | DS223J | Fresh — **not set up**; internet-connected; needs Tailscale |
-| Le Potato | AdGuard @ `192.168.68.90` |
+| Le Potato | AdGuard @ `192.168.1.52` |
 | PR #5 | Merged with `main`; ready to merge when you are |
 | `iamfaulty-homelab` HARDWARE.md | Written locally — **push to that repo still manual** |
 
@@ -50,7 +50,7 @@ This is the ordered plan from **today** to **stable steady state**. Each phase h
 
 ## Phase 1 — Synology DS223J (parallel, ~1–2 hours)
 
-**Gate:** Tailscale ping works from M4 to Synology.
+**Gate:** Tailscale ping works from main Mac to Synology.
 
 Can run while the pawn-shop Mini work happens elsewhere.
 
@@ -61,7 +61,7 @@ Can run while the pawn-shop Mini work happens elsewhere.
 5. [ ] Create shared folder `backup`, user `peteedoo`
 6. [ ] Enable SMB + SSH (for rsync/SFTP backups)
 7. [ ] **Do not** port-forward SMB or DSM to the public internet
-8. [ ] Test from M4: `tailscale ping 100.x.y.z`, mount `//100.x.y.z/backup`
+8. [ ] Test from main Mac: `tailscale ping 100.x.y.z`, mount `//100.x.y.z/backup`
 
 Guide: `docs/SYNOLOGY-DS223J.md`
 
@@ -79,7 +79,7 @@ Guide: `docs/SYNOLOGY-DS223J.md`
    ```bash
    curl -fsSL https://raw.githubusercontent.com/peteedoo/project-template/cursor/mac-mini-firewall-2baf/arr-appliance/scripts/install-arr-appliance.sh | bash
    ```
-4. [ ] Configure `/etc/nas-credentials` for ILLMATIC
+4. [ ] Configure `/etc/nas-credentials` for NAS1
 5. [ ] Add `fstab.iamfaulty.example` line → `sudo mount -a`
 6. [ ] `sudo cp /opt/arr-appliance/config/env.iamfaulty.example /opt/arr-appliance/.env`
 7. [ ] `sudo /opt/arr-appliance/scripts/check-nas.sh`
@@ -91,7 +91,7 @@ Guide: `docs/SYNOLOGY-DS223J.md`
 
 Guide: `docs/MORNING-CHECKLIST.md`
 
-**Done when:** ILLMATIC mounted, writable, and install dir exists at `/opt/arr-appliance`.
+**Done when:** NAS1 mounted, writable, and install dir exists at `/opt/arr-appliance`.
 
 ---
 
@@ -99,9 +99,9 @@ Guide: `docs/MORNING-CHECKLIST.md`
 
 **Gate:** qBittorrent WebUI works **only** when VPN is up; stops when VPN is down.
 
-**Why before cutover:** M4 stack uses VPN kill switch today. Moving qBit without Gluetun changes your security posture.
+**Why before cutover:** main Mac stack uses VPN kill switch today. Moving qBit without Gluetun changes your security posture.
 
-- [ ] Add Gluetun service to `docker-compose.yml` (WireGuard provider env from M4 `arr-stack/.env`)
+- [ ] Add Gluetun service to `docker-compose.yml` (WireGuard provider env from main Mac `arr-stack/.env`)
 - [ ] Route qBittorrent `network_mode: service:gluetun` (or equivalent)
 - [ ] Prowlarr can stay on bridge; qBit must not leak WAN IP
 - [ ] Test: stop VPN container → qBit has no connectivity
@@ -113,11 +113,11 @@ Guide: `docs/MORNING-CHECKLIST.md`
 
 ---
 
-## Phase 4 — Migrate configs & cutover *arr (blocker for stopping M4 drift)
+## Phase 4 — Migrate configs & cutover *arr (blocker for stopping main Mac drift)
 
-**Gate:** All grabs land on ILLMATIC; M4 `~/homelab-data/arr` containers stopped.
+**Gate:** All grabs land on NAS1; main Mac `~/homelab-data/arr` containers stopped.
 
-### 4a — Copy configs (on M4, NAS mounted)
+### 4a — Copy configs (on main Mac, NAS mounted)
 
 ```bash
 rsync -av ~/homelab-data/arr/prowlarr/    /Volumes/homelab/personal/arr-appliance/prowlarr/
@@ -144,7 +144,7 @@ docker ps
 | Lidarr | `:8686` *(add to compose first)* |
 | qBittorrent | `:8080` |
 
-### 4d — Stop M4 drift
+### 4d — Stop main Mac drift
 
 ```bash
 docker compose -f ~/homelab-data/arr-stack/docker-compose.yml down
@@ -156,9 +156,9 @@ docker compose -f ~/homelab-data/arr-stack/docker-compose.yml down
 - [ ] Download client → `http://qbittorrent:8080`
 - [ ] Prowlarr → Sonarr/Radarr/Lidarr sync URLs use Docker hostnames
 
-Guide: `docs/MIGRATE-FROM-M4.md`
+Guide: `docs/MIGRATE.md`
 
-**Done when:** new grab imports to `/mnt/nas/media/...` and M4 disk stops growing from *arr.
+**Done when:** new grab imports to `/mnt/nas/media/...` and main Mac disk stops growing from *arr.
 
 ---
 
@@ -168,14 +168,14 @@ Add in order of value; all NAS-backed.
 
 | Priority | Service | Notes |
 |----------|---------|-------|
-| 1 | **Lidarr** | In M4 reference compose; add to pawn-shop compose |
-| 2 | **Jellyseerr** | Stays useful; points at Jellyfin on M4 |
+| 1 | **Lidarr** | In main Mac reference compose; add to pawn-shop compose |
+| 2 | **Jellyseerr** | Stays useful; points at Jellyfin on main Mac |
 | 3 | **FlareSolverr** | If indexers need it |
 | 4 | **Readarr** | Books |
 | 5 | **Unpackerr** | Post-download extract |
-| 6 | slskd / soularr / MeTube | Heavier ops — add if you still use them on M4 |
+| 6 | slskd / soularr / MeTube | Heavier ops — add if you still use them on main Mac |
 
-**Done when:** feature parity with M4 `reference/arr-stack-docker-compose.yml` for services you actually use.
+**Done when:** feature parity with main Mac `reference/arr-stack-docker-compose.yml` for services you actually use.
 
 ---
 
@@ -183,11 +183,11 @@ Add in order of value; all NAS-backed.
 
 | Task | Where |
 |------|-------|
-| Duplicati → DS223J over Tailscale | M4 Duplicati compose |
-| Nightly `rsync` critical `personal/arr-appliance` | M4 cron or Synology task |
-| Repoint `sonarr.iamfaulty.com` etc. | NPM/Caddy on M4 → pawn-shop LAN IP or Tailscale |
+| Duplicati → DS223J over Tailscale | main Mac Duplicati compose |
+| Nightly `rsync` critical `personal/arr-appliance` | main Mac cron or Synology task |
+| Repoint `sonarr.iamfaulty.com` etc. | NPM/Caddy on main Mac → pawn-shop LAN IP or Tailscale |
 | Optional: Tailscale on pawn-shop Mini | Remote admin without opening ports |
-| Beszel / disk alert | Watch pawn-shop `/` and ILLMATIC free space |
+| Beszel / disk alert | Watch pawn-shop `/` and NAS1 free space |
 
 **Done when:** config + NAS personal folder has off-site copy; you can reach UIs from phone/laptop securely.
 
@@ -197,8 +197,8 @@ Add in order of value; all NAS-backed.
 
 - [ ] Monthly: `docker image prune` on pawn-shop Mini (disk guard helps)
 - [ ] Quarterly: verify Duplicati restore test from DS223J
-- [ ] Update `truth.iamfaulty.com` / HARDWARE when IPs change
-- [ ] Keep Jellyfin + agents on M4 only
+- [ ] Update the internal inventory site / HARDWARE when IPs change
+- [ ] Keep Jellyfin + agents on main Mac only
 - [ ] Le Potato: DNS only — no scope creep
 
 ---
@@ -208,8 +208,8 @@ Add in order of value; all NAS-backed.
 | Item | Condition to revisit |
 |------|----------------------|
 | **MiniFW firewall cutover** | Fix built-in Ethernet **or** add 2nd USB NIC for WAN+LAN |
-| **Primary library on DS223J** | Only if you outgrow ILLMATIC *and* buy large mirrored drives |
-| **Lidarr on Le Potato / Pi Zero** | Don't |
+| **Primary library on DS223J** | Only if you outgrow NAS1 *and* buy large mirrored drives |
+| **Lidarr on Le Potato / utility SBCs** | Don't |
 | **Docker on DS223J** | Not supported (ARM, 1 GB) |
 
 ---
@@ -217,7 +217,7 @@ Add in order of value; all NAS-backed.
 ## Decision log (already made)
 
 1. **Pawn-shop Mini = acquisition node**, not firewall (dead NIC).
-2. **ILLMATIC = primary storage**; Synology = backup over internet.
+2. **NAS1 = primary storage**; Synology = backup over internet.
 3. **Gluetun moves with qBit** — not optional if keeping current VPN policy.
 4. **Two projects in one repo** — MiniFW archived, arr-appliance active (`NOTE-dual-projects.md`).
 
@@ -226,21 +226,19 @@ Add in order of value; all NAS-backed.
 ## Quick reference — who does what
 
 ```
-Le Potato (.90)     → DNS only
-ILLMATIC (.69)      → media + downloads + *arr config (live)
-DS223J (Tailscale)  → off-site backup
-Pawn-shop Mini      → Gluetun + qBit + *arr (Docker)
-M4 iamfaulty-mini   → Jellyfin, Plex, agents, NPM, Duplicati orchestration
-Pi 5                → WireGuard
-Pi 4                → Kodi
-Pi 3B               → Home Assistant
+Le Potato (.52)       → DNS only
+NAS1 (.50)            → media + downloads + *arr config (live)
+DS223J (Tailscale)    → off-site backup
+Pawn-shop Mini        → Gluetun + qBit + *arr (Docker)
+main-mini             → Jellyfin, Plex, agents, NPM, Duplicati orchestration
+Utility SBCs          → WireGuard, Kodi, Home Assistant
 ```
 
 ---
 
 ## Next three actions (if you only do three things)
 
-1. **Phase 2** — Install `arr-appliance` on pawn-shop Mini + mount ILLMATIC  
+1. **Phase 2** — Install `arr-appliance` on pawn-shop Mini + mount NAS1  
 2. **Phase 3** — Add Gluetun to compose before moving qBit  
 3. **Phase 1** — Tailscale on DS223J while waiting on downloads/tests  
 
@@ -251,7 +249,7 @@ Pi 3B               → Home Assistant
 | Doc | Use |
 |-----|-----|
 | `MORNING-CHECKLIST.md` | Phase 2 step-by-step |
-| `MIGRATE-FROM-M4.md` | Phase 4 |
+| `MIGRATE.md` | Phase 4 |
 | `SYNOLOGY-DS223J.md` | Phase 1 |
 | `HARDWARE.md` | Fleet map |
 | `NOTE-dual-projects.md` | Repo scope |
