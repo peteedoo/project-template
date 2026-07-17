@@ -47,6 +47,10 @@ Only if you add a **second** USB Ethernet adapter (WAN + LAN) or replace/fix bui
 
 This branch carries **two projects**: `mac-mini-firewall/` (archived firewall intent, merged to `main` in PR #2) and `arr-appliance/` (active). Obsidian [[Home]] reflects the pivot; `mac-mini-firewall/README.md` still describes firewall duty — that is intentional, not a merge mistake. See `arr-appliance/docs/NOTE-dual-projects.md`.
 
+## Dev environment docs (2026-07-17)
+
+PR [#6](https://github.com/peteedoo/project-template/pull/6) merged root `AGENTS.md` updates documenting arr-appliance dev VM setup (Docker daemon, local `.env` paths, compose commands). Approval agent approved: docs-only, no Bugbot run on that PR.
+
 ## Related
 
 - [[Start Fresh - Used Mac Mini]] — Ubuntu install (still valid)
