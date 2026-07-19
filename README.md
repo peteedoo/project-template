@@ -21,7 +21,7 @@ cd {project-name}
 .
 ├── src/           # Source code
 ├── .agents/       # Agent skills and shared agent context
-├── docs/          # Documentation, ADRs, runbooks
+├── docs/          # Documentation, ADRs, runbooks, ROADMAP.md
 ├── scripts/       # One-off scripts and utilities
 ├── tests/         # Test files
 └── README.md      # This file
@@ -45,6 +45,10 @@ gh repo create peteedoo/my-project-name --public --template=peteedoo/project-tem
 - **Branches:** `feat/description`, `fix/description`, `docs/description`, `refactor/description`
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/) — `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`
 - **Issues:** Every change starts with an issue. Close with `Closes #N` in the PR body.
+
+## Roadmap
+
+Copy [docs/ROADMAP.template.md](docs/ROADMAP.template.md) to `docs/ROADMAP.md` and fill it in — the ordered plan from today to steady state, with a gate on every phase.
 
 ## Decisions
 
