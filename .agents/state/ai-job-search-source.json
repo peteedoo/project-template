@@ -1,0 +1,10 @@
+{
+  "source_repo": "MadsLorentzen/ai-job-search",
+  "source_ref": "master",
+  "synced_at": "2026-07-08T00:26:15.523753+00:00",
+  "copied": {
+    "commands": true,
+    "claude_skills": true,
+    "agent_skills": true
+  }
+}
