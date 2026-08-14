@@ -18,3 +18,12 @@ vendor/
 dist/
 build/
 *.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/

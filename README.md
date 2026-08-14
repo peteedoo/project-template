@@ -23,7 +23,7 @@ cd {project-name}
 ├── .agents/       # Agent skills and shared agent context
 ├── .claude/       # Claude commands and Claude-scoped skills
 ├── .github/       # Automation workflows (including star sync)
-├── docs/          # Documentation, ADRs, runbooks
+├── docs/          # Documentation, ADRs, runbooks, ROADMAP.md
 ├── scripts/       # One-off scripts and utilities
 ├── tests/         # Test files
 └── README.md      # This file
@@ -107,6 +107,10 @@ Recommended setup:
 
 This lets you customize the job-application framework in your own fork while
 keeping this repo synced automatically.
+
+## Roadmap
+
+Copy [docs/ROADMAP.template.md](docs/ROADMAP.template.md) to `docs/ROADMAP.md` and fill it in — the ordered plan from today to steady state, with a gate on every phase.
 
 ## Decisions
 
