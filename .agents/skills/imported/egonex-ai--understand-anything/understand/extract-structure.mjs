@@ -20,9 +20,15 @@ import { createRequire } from 'node:module';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
-import { buildResult as buildExtractResult } from './extract-structure-result.mjs';
+import {
+  analyzeFileWithOutcomes,
+  buildResult as buildExtractResult,
+} from './extract-structure-result.mjs';
 
-export { buildResult } from './extract-structure-result.mjs';
+export {
+  analyzeFileWithOutcomes,
+  buildResult,
+} from './extract-structure-result.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // skills/understand/ -> plugin root is two dirs up
@@ -77,6 +83,10 @@ async function main() {
 
   const results = [];
   const filesSkipped = [];
+  const analysisOutcomes = {
+    structure: { succeeded: 0, failed: 0 },
+    callGraph: { succeeded: 0, failed: 0, skipped: 0 },
+  };
 
   for (const file of batchFiles) {
     const absolutePath = join(projectRoot, file.path);
@@ -97,30 +107,16 @@ async function main() {
     const totalLines = content.endsWith('\n') ? Math.max(0, lines.length - 1) : lines.length;
     const nonEmptyLines = lines.filter(l => l.trim().length > 0).length;
 
-    // Structural analysis via registry
-    let analysis = null;
-    try {
-      analysis = registry.analyzeFile(file.path, content);
-    } catch {
-      // If analysis throws, treat as degraded — still include basic metrics
+    const { analysis, callGraph, structureOutcome, callGraphOutcome } =
+      analyzeFileWithOutcomes(registry, file, content);
+
+    if (structureOutcome === 'skipped') {
+      filesSkipped.push(file.path);
+      continue;
     }
 
-    // Call graph extraction (code files only)
-    let callGraph = null;
-    if (file.fileCategory === 'code' || file.fileCategory === 'script') {
-      try {
-        const cg = registry.extractCallGraph(file.path, content);
-        if (cg && cg.length > 0) {
-          callGraph = cg.map(entry => ({
-            caller: entry.caller,
-            callee: entry.callee,
-            lineNumber: entry.lineNumber,
-          }));
-        }
-      } catch {
-        // Call graph extraction failed — non-fatal
-      }
-    }
+    analysisOutcomes.structure[structureOutcome] += 1;
+    analysisOutcomes.callGraph[callGraphOutcome] += 1;
 
     // Build result object
     const result = buildExtractResult(file, totalLines, nonEmptyLines, analysis, callGraph, batchImportData);
@@ -132,6 +128,7 @@ async function main() {
     scriptCompleted: true,
     filesAnalyzed: results.length,
     filesSkipped,
+    analysisOutcomes,
     results,
   };
 

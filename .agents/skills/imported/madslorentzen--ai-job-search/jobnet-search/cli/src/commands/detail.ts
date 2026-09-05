@@ -2,7 +2,7 @@ import { defineCommand, option } from "@bunli/core"
 import { z } from "zod"
 import { apiFetch, writeError, stripHtml } from "../helpers.js"
 
-interface DetailApiResponse {
+export interface DetailApiResponse {
   id: string
   title: string
   body: string
@@ -59,6 +59,23 @@ interface DetailApiResponse {
   user: string | null
 }
 
+/**
+ * Normalize a raw detail response before any output format sees it.
+ *
+ * The API's "deadline not disclosed" sentinel is 1900-01-01 (it arrives with
+ * isApplicationDeadlineASAP / an applicationDeadlineStatus of NotDisclosed).
+ * The search command already maps that sentinel to null; detail must agree,
+ * or an undisclosed deadline reads as 126 years expired and /rank's expiry
+ * sweep retires the job the moment it is stored.
+ */
+export function prepareDetail(data: DetailApiResponse): DetailApiResponse {
+  const deadline = data.application.deadlineDate
+  if (deadline && deadline.startsWith("1900-01-01")) {
+    data.application.deadlineDate = null
+  }
+  return data
+}
+
 export const detail = defineCommand({
   name: "detail",
   description: "Full detail for a single job ad",
@@ -77,9 +94,10 @@ export const detail = defineCommand({
     }
 
     try {
-      const data = await apiFetch<DetailApiResponse>(
-        `/FindJob/JobAdDetails/${id}`,
-        { incrementViews: "false" }
+      const data = prepareDetail(
+        await apiFetch<DetailApiResponse>(`/FindJob/JobAdDetails/${id}`, {
+          incrementViews: "false",
+        }),
       )
 
       if (signal.aborted) return
@@ -118,15 +136,23 @@ function outputTable(data: DetailApiResponse): void {
 }
 
 function outputPlain(data: DetailApiResponse): void {
-  console.log(`Title: ${data.title}`)
-  console.log(`Employer: ${data.employer.name}`)
-  console.log(`Location: ${data.job.address.city ?? "-"}, ${data.job.address.countryName}`)
-  console.log(`Published: ${data.publicationDateTime}`)
-  console.log(`Deadline: ${data.application.deadlineDate ?? "-"}`)
-  console.log(`Positions: ${data.application.availablePositions}`)
+  console.log(formatDetailPlain(data))
+}
+
+export function formatDetailPlain(data: DetailApiResponse): string {
+  const lines = [
+    `Title: ${data.title}`,
+    `Employer: ${data.employer.name}`,
+    `Location: ${data.job.address.city ?? "-"}, ${data.job.address.countryName}`,
+    `Published: ${data.publicationDateTime}`,
+    `Deadline: ${data.application.deadlineDate ?? "-"}`,
+    `Positions: ${data.application.availablePositions}`,
+  ]
+
   if (data.application.url) {
-    console.log(`Apply: ${data.application.url}`)
+    lines.push(`Apply: ${data.application.url}`)
   }
-  console.log("")
-  console.log(stripHtml(data.body))
+
+  lines.push("", stripHtml(data.body))
+  return lines.join("\n")
 }

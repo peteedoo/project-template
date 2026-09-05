@@ -1,6 +1,435 @@
 {
-  "updated_at": "2026-07-08T00:20:51.146051+00:00",
+  "updated_at": "2026-09-05T07:48:27.763901+00:00",
   "repos": [
+    {
+      "full_name": "f/prompts.chat"
+    },
+    {
+      "full_name": "prawnpdf/pdf-inspector"
+    },
+    {
+      "full_name": "pandao/editor.md"
+    },
+    {
+      "full_name": "watson/awesome-computer-history"
+    },
+    {
+      "full_name": "K-Dense-AI/scientific-agent-skills"
+    },
+    {
+      "full_name": "NationalSecurityAgency/ghidra"
+    },
+    {
+      "full_name": "ConardLi/garden-skills"
+    },
+    {
+      "full_name": "JetBrains/go-modern-guidelines"
+    },
+    {
+      "full_name": "apache/maka"
+    },
+    {
+      "full_name": "omacom/omarchy"
+    },
+    {
+      "full_name": "tinyhumansai/openhuman"
+    },
+    {
+      "full_name": "makeplane/plane"
+    },
+    {
+      "full_name": "Alishahryar1/free-claude-code"
+    },
+    {
+      "full_name": "VoltAgent/awesome-agent-skills"
+    },
+    {
+      "full_name": "ruvnet/ruflo"
+    },
+    {
+      "full_name": "AprilNEA/OpenLogi"
+    },
+    {
+      "full_name": "n8n-io/n8n"
+    },
+    {
+      "full_name": "PostHog/posthog"
+    },
+    {
+      "full_name": "nullclaw/nullclaw"
+    },
+    {
+      "full_name": "browser-use/browser-harness"
+    },
+    {
+      "full_name": "cactus-compute/needle"
+    },
+    {
+      "full_name": "public-apis/public-apis"
+    },
+    {
+      "full_name": "infiniflow/ragflow"
+    },
+    {
+      "full_name": "cursor/plugins"
+    },
+    {
+      "full_name": "rustdesk/rustdesk"
+    },
+    {
+      "full_name": "ToolJet/ToolJet"
+    },
+    {
+      "full_name": "brillout/awesome-react-components"
+    },
+    {
+      "full_name": "DovAmir/awesome-design-patterns"
+    },
+    {
+      "full_name": "serhii-londar/open-source-mac-os-apps"
+    },
+    {
+      "full_name": "vitali87/code-graph-rag"
+    },
+    {
+      "full_name": "semantica-agi/semantica"
+    },
+    {
+      "full_name": "TencentCloud/TencentDB-Agent-Memory"
+    },
+    {
+      "full_name": "LadybirdBrowser/ladybird"
+    },
+    {
+      "full_name": "goabstract/Awesome-Design-Tools"
+    },
+    {
+      "full_name": "DataExpert-io/data-engineer-handbook"
+    },
+    {
+      "full_name": "sonichi/sutando"
+    },
+    {
+      "full_name": "dkhamsing/open-source-ios-apps"
+    },
+    {
+      "full_name": "VoltAgent/awesome-openclaw-skills"
+    },
+    {
+      "full_name": "prakhar1989/awesome-courses"
+    },
+    {
+      "full_name": "embabel/embabel-agent"
+    },
+    {
+      "full_name": "Comfy-Org/ComfyUI"
+    },
+    {
+      "full_name": "drawdb-io/drawdb"
+    },
+    {
+      "full_name": "jdx/mise"
+    },
+    {
+      "full_name": "unclebob/swarm-forge"
+    },
+    {
+      "full_name": "PrimeIntellect-ai/prime-agent"
+    },
+    {
+      "full_name": "Significant-Gravitas/AutoGPT"
+    },
+    {
+      "full_name": "666ghj/MiroFish"
+    },
+    {
+      "full_name": "pranshuparmar/witr"
+    },
+    {
+      "full_name": "emilkowalski/skills"
+    },
+    {
+      "full_name": "zhaoxuya520/reverse-skill"
+    },
+    {
+      "full_name": "bradautomates/claude-video"
+    },
+    {
+      "full_name": "HKUDS/DeepTutor"
+    },
+    {
+      "full_name": "huangruiteng/loopx"
+    },
+    {
+      "full_name": "goauthentik/authentik"
+    },
+    {
+      "full_name": "uber/ADR"
+    },
+    {
+      "full_name": "vercel/next.js"
+    },
+    {
+      "full_name": "agentskills/agentskills"
+    },
+    {
+      "full_name": "lyogavin/airllm"
+    },
+    {
+      "full_name": "livekit/agents"
+    },
+    {
+      "full_name": "cypress-io/cypress"
+    },
+    {
+      "full_name": "angular/angular"
+    },
+    {
+      "full_name": "tailwindlabs/tailwindcss"
+    },
+    {
+      "full_name": "elder-plinius/GL4SS"
+    },
+    {
+      "full_name": "oso95/scroll-world"
+    },
+    {
+      "full_name": "firecrawl/pdf-inspector"
+    },
+    {
+      "full_name": "jamiepine/voicebox"
+    },
+    {
+      "full_name": "usekaneo/kaneo"
+    },
+    {
+      "full_name": "jenkinsci/jenkins"
+    },
+    {
+      "full_name": "jray2123/zen-mcp-server"
+    },
+    {
+      "full_name": "grafana/synthetic-monitoring-agent"
+    },
+    {
+      "full_name": "Leonxlnx/taste-skill"
+    },
+    {
+      "full_name": "pbakaus/impeccable"
+    },
+    {
+      "full_name": "virgiliojr94/book-to-skill"
+    },
+    {
+      "full_name": "yorukot/superfile"
+    },
+    {
+      "full_name": "opengeos/GeoLibre"
+    },
+    {
+      "full_name": "julep-ai/julep"
+    },
+    {
+      "full_name": "PrefectHQ/marvin"
+    },
+    {
+      "full_name": "huggingface/smolagents"
+    },
+    {
+      "full_name": "deepset-ai/haystack"
+    },
+    {
+      "full_name": "block/buzz"
+    },
+    {
+      "full_name": "anthropics/claude-cookbooks"
+    },
+    {
+      "full_name": "permissionlesstech/bitchat"
+    },
+    {
+      "full_name": "alibaba/open-code-review"
+    },
+    {
+      "full_name": "Automattic/harper"
+    },
+    {
+      "full_name": "CoreBunch/Instatic"
+    },
+    {
+      "full_name": "OtterMind/Chat2DB"
+    },
+    {
+      "full_name": "browseros-ai/BrowserOS"
+    },
+    {
+      "full_name": "raullenchai/Rapid-MLX"
+    },
+    {
+      "full_name": "JCodesMore/ai-website-cloner-template"
+    },
+    {
+      "full_name": "likec4/likec4"
+    },
+    {
+      "full_name": "ComposioHQ/awesome-claude-skills"
+    },
+    {
+      "full_name": "diegosouzapw/OmniRoute"
+    },
+    {
+      "full_name": "shiyu-coder/Kronos"
+    },
+    {
+      "full_name": "jellyfin/jellyfin"
+    },
+    {
+      "full_name": "citrolabs/ego-lite"
+    },
+    {
+      "full_name": "hyprwm/Hyprland"
+    },
+    {
+      "full_name": "OCA/server-backend"
+    },
+    {
+      "full_name": "uasoft-indonesia/badaso"
+    },
+    {
+      "full_name": "illacloud/illa-builder"
+    },
+    {
+      "full_name": "Curbob/LobsterBoard"
+    },
+    {
+      "full_name": "AlexsJones/llmfit"
+    },
+    {
+      "full_name": "chrislgarry/Apollo-11"
+    },
+    {
+      "full_name": "KnockOutEZ/wigolo"
+    },
+    {
+      "full_name": "gabime/spdlog"
+    },
+    {
+      "full_name": "usestrix/strix"
+    },
+    {
+      "full_name": "ibelick/ui-skills"
+    },
+    {
+      "full_name": "tt-a1i/archify"
+    },
+    {
+      "full_name": "bojieli/ai-agent-book"
+    },
+    {
+      "full_name": "1jehuang/jcode"
+    },
+    {
+      "full_name": "topoteretes/cognee"
+    },
+    {
+      "full_name": "tokio-rs/topcoat"
+    },
+    {
+      "full_name": "oblien/openship"
+    },
+    {
+      "full_name": "getsentry/skills"
+    },
+    {
+      "full_name": "OCA/helpdesk"
+    },
+    {
+      "full_name": "injaneity/pi-computer-use"
+    },
+    {
+      "full_name": "mattpocock/skills"
+    },
+    {
+      "full_name": "KeyArgo/custodian-kernel"
+    },
+    {
+      "full_name": "papers-we-love/papers-we-love"
+    },
+    {
+      "full_name": "Hack-with-Github/Awesome-Hacking"
+    },
+    {
+      "full_name": "JustVugg/colibri"
+    },
+    {
+      "full_name": "Shubhamsaboo/awesome-llm-apps"
+    },
+    {
+      "full_name": "coreyhaines31/marketingskills"
+    },
+    {
+      "full_name": "HKUDS/Vibe-Trading"
+    },
+    {
+      "full_name": "Graphify-Labs/graphify"
+    },
+    {
+      "full_name": "github/spec-kit"
+    },
+    {
+      "full_name": "moeru-ai/airi"
+    },
+    {
+      "full_name": "vxcontrol/pentagi"
+    },
+    {
+      "full_name": "Textualize/rich"
+    },
+    {
+      "full_name": "huggingface/tau"
+    },
+    {
+      "full_name": "huggingface/tokenizers"
+    },
+    {
+      "full_name": "huggingface/speech-to-speech"
+    },
+    {
+      "full_name": "dotnet/skills"
+    },
+    {
+      "full_name": "ChromeDevTools/chrome-devtools-mcp"
+    },
+    {
+      "full_name": "browser-use/video-use"
+    },
+    {
+      "full_name": "immich-app/immich"
+    },
+    {
+      "full_name": "obra/superpowers"
+    },
+    {
+      "full_name": "iOfficeAI/OfficeCLI"
+    },
+    {
+      "full_name": "ruvnet/RuView"
+    },
+    {
+      "full_name": "workos/auth.md"
+    },
+    {
+      "full_name": "hesreallyhim/awesome-claude-code"
+    },
+    {
+      "full_name": "Zackriya-Solutions/meetily"
+    },
+    {
+      "full_name": "alibaba/page-agent"
+    },
+    {
+      "full_name": "enaqx/awesome-pentest"
+    },
     {
       "full_name": "elder-plinius/T3MP3ST"
     },
@@ -18,9 +447,6 @@
     },
     {
       "full_name": "OpenCut-app/OpenCut"
-    },
-    {
-      "full_name": "Leonxlnx/taste-skill"
     },
     {
       "full_name": "microsoft/AI-For-Beginners"
@@ -62,7 +488,7 @@
       "full_name": "hardikpandya/stop-slop"
     },
     {
-      "full_name": "ogulcancelik/herdr"
+      "full_name": "herdrdev/herdr"
     },
     {
       "full_name": "rohitg00/ai-engineering-from-scratch"

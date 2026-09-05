@@ -1,36 +1,1008 @@
 # Star Skill Evaluation Report
 
-Generated: 2026-07-08T00:20:51.148128+00:00
+Generated: 2026-09-05T07:48:27.770374+00:00
 
-- Total starred repos scanned: 51
-- New stars since last snapshot: 0
-- Repos imported this run: 19
+- Total starred repos scanned: 193
+- New stars since last snapshot: 143
+- Repos imported this run: 83
 
 ## New stars
 
 | Repo | Score | Recommendation | Skills | Imported |
 | --- | ---: | --- | ---: | --- |
+| [K-Dense-AI/scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) | 100 | import-now | 163 | yes |
+| [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | 100 | import-now | 359 | yes |
+| [zhaoxuya520/reverse-skill](https://github.com/zhaoxuya520/reverse-skill) | 100 | import-now | 89 | yes |
+| [huangruiteng/loopx](https://github.com/huangruiteng/loopx) | 100 | import-now | 11 | yes |
+| [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | 100 | import-now | 1 | yes |
+| [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) | 100 | import-now | 47 | yes |
+| [citrolabs/ego-lite](https://github.com/citrolabs/ego-lite) | 100 | import-now | 1 | yes |
+| [tt-a1i/archify](https://github.com/tt-a1i/archify) | 100 | import-now | 1 | yes |
+| [getsentry/skills](https://github.com/getsentry/skills) | 100 | import-now | 27 | yes |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | 100 | import-now | 37 | yes |
+| [Shubhamsaboo/awesome-llm-apps](https://github.com/Shubhamsaboo/awesome-llm-apps) | 100 | import-now | 9 | yes |
+| [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 100 | import-now | 50 | yes |
+| [dotnet/skills](https://github.com/dotnet/skills) | 100 | import-now | 106 | yes |
+| [obra/superpowers](https://github.com/obra/superpowers) | 100 | import-now | 14 | yes |
+| [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) | 95 | import-now | 5 | yes |
+| [JetBrains/go-modern-guidelines](https://github.com/JetBrains/go-modern-guidelines) | 95 | import-now | 1 | yes |
+| [apache/maka](https://github.com/apache/maka) | 95 | import-now | 3 | yes |
+| [infiniflow/ragflow](https://github.com/infiniflow/ragflow) | 95 | import-now | 1 | yes |
+| [PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent) | 95 | import-now | 32 | yes |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) | 95 | import-now | 12 | yes |
+| [bradautomates/claude-video](https://github.com/bradautomates/claude-video) | 95 | import-now | 1 | yes |
+| [oso95/scroll-world](https://github.com/oso95/scroll-world) | 95 | import-now | 1 | yes |
+| [julep-ai/julep](https://github.com/julep-ai/julep) | 95 | import-now | 1 | yes |
+| [anthropics/claude-cookbooks](https://github.com/anthropics/claude-cookbooks) | 95 | import-now | 4 | yes |
+| [alibaba/open-code-review](https://github.com/alibaba/open-code-review) | 95 | import-now | 4 | yes |
+| [CoreBunch/Instatic](https://github.com/CoreBunch/Instatic) | 95 | import-now | 3 | yes |
+| [JCodesMore/ai-website-cloner-template](https://github.com/JCodesMore/ai-website-cloner-template) | 95 | import-now | 6 | yes |
+| [ibelick/ui-skills](https://github.com/ibelick/ui-skills) | 95 | import-now | 7 | yes |
+| [bojieli/ai-agent-book](https://github.com/bojieli/ai-agent-book) | 95 | import-now | 8 | yes |
+| [topoteretes/cognee](https://github.com/topoteretes/cognee) | 95 | import-now | 10 | yes |
+| [HKUDS/Vibe-Trading](https://github.com/HKUDS/Vibe-Trading) | 95 | import-now | 91 | yes |
+| [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | 95 | import-now | 7 | yes |
+| [browser-use/video-use](https://github.com/browser-use/video-use) | 95 | import-now | 2 | yes |
+| [iOfficeAI/OfficeCLI](https://github.com/iOfficeAI/OfficeCLI) | 95 | import-now | 12 | yes |
+| [alibaba/page-agent](https://github.com/alibaba/page-agent) | 95 | import-now | 5 | yes |
+| [herdrdev/herdr](https://github.com/herdrdev/herdr) | 95 | import-now | 5 | yes |
+| [omacom/omarchy](https://github.com/omacom/omarchy) | 90 | import-now | 2 | yes |
+| [AprilNEA/OpenLogi](https://github.com/AprilNEA/OpenLogi) | 90 | import-now | 1 | yes |
+| [browser-use/browser-harness](https://github.com/browser-use/browser-harness) | 90 | import-now | 3 | yes |
+| [semantica-agi/semantica](https://github.com/semantica-agi/semantica) | 90 | import-now | 18 | yes |
+| [jdx/mise](https://github.com/jdx/mise) | 90 | import-now | 1 | yes |
+| [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor) | 90 | import-now | 6 | yes |
+| [vercel/next.js](https://github.com/vercel/next.js) | 90 | import-now | 24 | yes |
+| [cypress-io/cypress](https://github.com/cypress-io/cypress) | 90 | import-now | 2 | yes |
+| [angular/angular](https://github.com/angular/angular) | 90 | import-now | 7 | yes |
+| [jamiepine/voicebox](https://github.com/jamiepine/voicebox) | 90 | import-now | 4 | yes |
+| [usekaneo/kaneo](https://github.com/usekaneo/kaneo) | 90 | import-now | 11 | yes |
+| [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | 90 | import-now | 22 | yes |
+| [opengeos/GeoLibre](https://github.com/opengeos/GeoLibre) | 90 | import-now | 1 | yes |
+| [block/buzz](https://github.com/block/buzz) | 90 | import-now | 9 | yes |
+| [likec4/likec4](https://github.com/likec4/likec4) | 90 | import-now | 10 | yes |
+| [AlexsJones/llmfit](https://github.com/AlexsJones/llmfit) | 90 | import-now | 1 | yes |
+| [usestrix/strix](https://github.com/usestrix/strix) | 90 | import-now | 9 | yes |
+| [1jehuang/jcode](https://github.com/1jehuang/jcode) | 90 | import-now | 1 | yes |
+| [tokio-rs/topcoat](https://github.com/tokio-rs/topcoat) | 90 | import-now | 6 | yes |
+| [oblien/openship](https://github.com/oblien/openship) | 90 | import-now | 1 | yes |
+| [github/spec-kit](https://github.com/github/spec-kit) | 90 | import-now | 1 | yes |
+| [moeru-ai/airi](https://github.com/moeru-ai/airi) | 90 | import-now | 29 | yes |
+| [ruvnet/RuView](https://github.com/ruvnet/RuView) | 90 | import-now | 53 | yes |
+| [KeyArgo/custodian-kernel](https://github.com/KeyArgo/custodian-kernel) | 87 | import-now | 106 | yes |
+| [sonichi/sutando](https://github.com/sonichi/sutando) | 82 | import-now | 66 | yes |
+| [ToolJet/ToolJet](https://github.com/ToolJet/ToolJet) | 80 | review-license | 3 | no |
+| [TencentCloud/TencentDB-Agent-Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory) | 80 | review-license | 2 | no |
+| [raullenchai/Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) | 80 | review-license | 1 | no |
+| [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | 80 | review-license | 864 | no |
+| [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) | 75 | review-license | 1 | no |
+| [PostHog/posthog](https://github.com/PostHog/posthog) | 75 | review-license | 260 | no |
+| [cursor/plugins](https://github.com/cursor/plugins) | 75 | review-license | 85 | no |
+| [browseros-ai/BrowserOS](https://github.com/browseros-ai/BrowserOS) | 75 | review-license | 7 | no |
+| [KnockOutEZ/wigolo](https://github.com/KnockOutEZ/wigolo) | 75 | review-license | 12 | no |
+| [f/prompts.chat](https://github.com/f/prompts.chat) | 70 | review-license | 4 | no |
+| [makeplane/plane](https://github.com/makeplane/plane) | 70 | review-license | 5 | no |
+| [n8n-io/n8n](https://github.com/n8n-io/n8n) | 70 | review-license | 38 | no |
+| [Significant-Gravitas/AutoGPT](https://github.com/Significant-Gravitas/AutoGPT) | 70 | review-license | 10 | no |
+| [Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code) | 50 | skip-no-skills | 0 | no |
+| [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills) | 50 | skip-no-skills | 0 | no |
+| [agentskills/agentskills](https://github.com/agentskills/agentskills) | 50 | skip-no-skills | 0 | no |
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | 50 | skip-no-skills | 0 | no |
+| [VoltAgent/awesome-openclaw-skills](https://github.com/VoltAgent/awesome-openclaw-skills) | 45 | skip-no-skills | 0 | no |
+| [embabel/embabel-agent](https://github.com/embabel/embabel-agent) | 45 | skip-no-skills | 0 | no |
+| [uber/ADR](https://github.com/uber/ADR) | 45 | skip-no-skills | 0 | no |
+| [livekit/agents](https://github.com/livekit/agents) | 45 | skip-no-skills | 0 | no |
+| [huggingface/smolagents](https://github.com/huggingface/smolagents) | 45 | skip-no-skills | 0 | no |
+| [deepset-ai/haystack](https://github.com/deepset-ai/haystack) | 45 | skip-no-skills | 0 | no |
+| [vxcontrol/pentagi](https://github.com/vxcontrol/pentagi) | 45 | skip-no-skills | 0 | no |
+| [huggingface/tau](https://github.com/huggingface/tau) | 45 | skip-no-skills | 0 | no |
+| [huggingface/speech-to-speech](https://github.com/huggingface/speech-to-speech) | 45 | skip-no-skills | 0 | no |
+| [workos/auth.md](https://github.com/workos/auth.md) | 45 | skip-no-skills | 0 | no |
+| [pandao/editor.md](https://github.com/pandao/editor.md) | 40 | skip-no-skills | 0 | no |
+| [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) | 40 | skip-no-skills | 0 | no |
+| [nullclaw/nullclaw](https://github.com/nullclaw/nullclaw) | 40 | skip-no-skills | 0 | no |
+| [cactus-compute/needle](https://github.com/cactus-compute/needle) | 40 | skip-no-skills | 0 | no |
+| [public-apis/public-apis](https://github.com/public-apis/public-apis) | 40 | skip-no-skills | 0 | no |
+| [vitali87/code-graph-rag](https://github.com/vitali87/code-graph-rag) | 40 | skip-no-skills | 0 | no |
+| [LadybirdBrowser/ladybird](https://github.com/LadybirdBrowser/ladybird) | 40 | skip-no-skills | 0 | no |
+| [goabstract/Awesome-Design-Tools](https://github.com/goabstract/Awesome-Design-Tools) | 40 | skip-no-skills | 0 | no |
+| [pranshuparmar/witr](https://github.com/pranshuparmar/witr) | 40 | skip-no-skills | 0 | no |
+| [lyogavin/airllm](https://github.com/lyogavin/airllm) | 40 | skip-no-skills | 0 | no |
+| [tailwindlabs/tailwindcss](https://github.com/tailwindlabs/tailwindcss) | 40 | skip-no-skills | 0 | no |
+| [firecrawl/pdf-inspector](https://github.com/firecrawl/pdf-inspector) | 40 | skip-no-skills | 0 | no |
+| [jenkinsci/jenkins](https://github.com/jenkinsci/jenkins) | 40 | skip-no-skills | 0 | no |
+| [yorukot/superfile](https://github.com/yorukot/superfile) | 40 | skip-no-skills | 0 | no |
+| [PrefectHQ/marvin](https://github.com/PrefectHQ/marvin) | 40 | skip-no-skills | 0 | no |
+| [permissionlesstech/bitchat](https://github.com/permissionlesstech/bitchat) | 40 | skip-no-skills | 0 | no |
+| [Automattic/harper](https://github.com/Automattic/harper) | 40 | skip-no-skills | 0 | no |
+| [shiyu-coder/Kronos](https://github.com/shiyu-coder/Kronos) | 40 | skip-no-skills | 0 | no |
+| [hyprwm/Hyprland](https://github.com/hyprwm/Hyprland) | 40 | skip-no-skills | 0 | no |
+| [uasoft-indonesia/badaso](https://github.com/uasoft-indonesia/badaso) | 40 | skip-no-skills | 0 | no |
+| [illacloud/illa-builder](https://github.com/illacloud/illa-builder) | 40 | skip-no-skills | 0 | no |
+| [injaneity/pi-computer-use](https://github.com/injaneity/pi-computer-use) | 40 | skip-no-skills | 0 | no |
+| [JustVugg/colibri](https://github.com/JustVugg/colibri) | 40 | skip-no-skills | 0 | no |
+| [Textualize/rich](https://github.com/Textualize/rich) | 40 | skip-no-skills | 0 | no |
+| [huggingface/tokenizers](https://github.com/huggingface/tokenizers) | 40 | skip-no-skills | 0 | no |
+| [Zackriya-Solutions/meetily](https://github.com/Zackriya-Solutions/meetily) | 40 | skip-no-skills | 0 | no |
+| [grafana/synthetic-monitoring-agent](https://github.com/grafana/synthetic-monitoring-agent) | 37 | skip-no-skills | 0 | no |
+| [hesreallyhim/awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code) | 30 | skip-no-skills | 0 | no |
+| [unclebob/swarm-forge](https://github.com/unclebob/swarm-forge) | 25 | skip-no-skills | 0 | no |
+| [watson/awesome-computer-history](https://github.com/watson/awesome-computer-history) | 20 | skip-no-skills | 0 | no |
+| [rustdesk/rustdesk](https://github.com/rustdesk/rustdesk) | 20 | skip-no-skills | 0 | no |
+| [brillout/awesome-react-components](https://github.com/brillout/awesome-react-components) | 20 | skip-no-skills | 0 | no |
+| [DovAmir/awesome-design-patterns](https://github.com/DovAmir/awesome-design-patterns) | 20 | skip-no-skills | 0 | no |
+| [serhii-londar/open-source-mac-os-apps](https://github.com/serhii-londar/open-source-mac-os-apps) | 20 | skip-no-skills | 0 | no |
+| [DataExpert-io/data-engineer-handbook](https://github.com/DataExpert-io/data-engineer-handbook) | 20 | skip-no-skills | 0 | no |
+| [dkhamsing/open-source-ios-apps](https://github.com/dkhamsing/open-source-ios-apps) | 20 | skip-no-skills | 0 | no |
+| [prakhar1989/awesome-courses](https://github.com/prakhar1989/awesome-courses) | 20 | skip-no-skills | 0 | no |
+| [Comfy-Org/ComfyUI](https://github.com/Comfy-Org/ComfyUI) | 20 | skip-no-skills | 0 | no |
+| [drawdb-io/drawdb](https://github.com/drawdb-io/drawdb) | 20 | skip-no-skills | 0 | no |
+| [666ghj/MiroFish](https://github.com/666ghj/MiroFish) | 20 | skip-no-skills | 0 | no |
+| [goauthentik/authentik](https://github.com/goauthentik/authentik) | 20 | skip-no-skills | 0 | no |
+| [OtterMind/Chat2DB](https://github.com/OtterMind/Chat2DB) | 20 | skip-no-skills | 0 | no |
+| [jellyfin/jellyfin](https://github.com/jellyfin/jellyfin) | 20 | skip-no-skills | 0 | no |
+| [Curbob/LobsterBoard](https://github.com/Curbob/LobsterBoard) | 20 | skip-no-skills | 0 | no |
+| [chrislgarry/Apollo-11](https://github.com/chrislgarry/Apollo-11) | 20 | skip-no-skills | 0 | no |
+| [gabime/spdlog](https://github.com/gabime/spdlog) | 20 | skip-no-skills | 0 | no |
+| [papers-we-love/papers-we-love](https://github.com/papers-we-love/papers-we-love) | 20 | skip-no-skills | 0 | no |
+| [Hack-with-Github/Awesome-Hacking](https://github.com/Hack-with-Github/Awesome-Hacking) | 20 | skip-no-skills | 0 | no |
+| [immich-app/immich](https://github.com/immich-app/immich) | 20 | skip-no-skills | 0 | no |
+| [enaqx/awesome-pentest](https://github.com/enaqx/awesome-pentest) | 20 | skip-no-skills | 0 | no |
+| [prawnpdf/pdf-inspector](https://github.com/prawnpdf/pdf-inspector) | 12 | skip-no-skills | 0 | no |
+| [elder-plinius/GL4SS](https://github.com/elder-plinius/GL4SS) | 12 | skip-no-skills | 0 | no |
+| [OCA/server-backend](https://github.com/OCA/server-backend) | 12 | skip-no-skills | 0 | no |
+| [OCA/helpdesk](https://github.com/OCA/helpdesk) | 12 | skip-no-skills | 0 | no |
+| [jray2123/zen-mcp-server](https://github.com/jray2123/zen-mcp-server) | 6 | skip-no-skills | 0 | no |
 
 ## Imported repositories (this run)
 
-- `stablyai/orca`
-  - `.agents/skills/imported/stablyai--orca/computer-use`
-  - `.agents/skills/imported/stablyai--orca/linear-tickets`
-  - `.agents/skills/imported/stablyai--orca/orca-cli`
-  - `.agents/skills/imported/stablyai--orca/orca-emulator-android`
-  - `.agents/skills/imported/stablyai--orca/orca-emulator`
-  - `.agents/skills/imported/stablyai--orca/orca-linear`
-  - `.agents/skills/imported/stablyai--orca/orca-per-workspace-env`
-  - `.agents/skills/imported/stablyai--orca/orchestration`
-- `MadsLorentzen/ai-job-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/jobbank-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/jobdanmark-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/jobindex-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/jobnet-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/linkedin-search`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/job-application-assistant`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/job-scraper`
-  - `.agents/skills/imported/madslorentzen--ai-job-search/upskill`
+- `K-Dense-AI/scientific-agent-skills`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/adaptyv`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/aeon`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/analytical-method-validation`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/anndata`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/arbor`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/arboreto`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/astropy`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/autoskill`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/benchling-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/bgpt-paper-search`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/bids`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/biopython`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/bioservices`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/bulk-rnaseq`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/cellxgene-census`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/cirq`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/citation-management`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/clinical-decision-support`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/clinical-reports`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/cobrapy`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/consciousness-council`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/dask`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/database-lookup`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/datamol`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/deepchem`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/deepspot-m`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/deeptools`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/depmap`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/dhdna-profiler`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/diffdock`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/dnanexus-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/docx`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/esm`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/etetoolkit`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/exa-search`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/experimental-design`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/exploratory-data-analysis`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/flowio`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/fluidsim`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/generate-image`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/geniml`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/genomic-coordinates`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/genomic-intelligence`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/geomaster`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/geopandas`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/get-available-resources`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/gget`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/ginkgo-cloud-lab`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/glycoengineering`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/gtars`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/histolab`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/hugging-science`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/hypogenic`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/hypothesis-generation`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/imaging-data-commons`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/infographics`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/iso-standards-readiness`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/lab-hardware-cad`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/labarchive-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/lamindb`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/latchbio-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/latex-posters`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/liteparse`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/literature-review`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/markdown-mermaid-writing`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/market-research-reports`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/markitdown`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/matchms`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/matlab`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/matplotlib`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/medchem`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/modal`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/molecular-dynamics`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/molfeat`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/ncats-arax`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/networkx`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/neurokit2`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/neuropixels-analysis`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/nextflow`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/omero-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/onekgpd`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/ontology-term-resolution`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/open-notebook`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/openpiv`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/opentrons-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/optimize-for-gpu`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pacsomatic`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/paper-lookup`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/paperclip`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/paperzilla`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/parallel-web`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pathml`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pathogen-variant-surveillance`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pathway-enrichment`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pdf`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/peer-review`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pennylane`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/phylogenetics`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pi-agent`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pkpd-modeling`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/polars-bio`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/polars`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pptx-posters`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pptx`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/primekg`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/protocolsio-integration`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pufferlib`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pydeseq2`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pydicom`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pyhealth`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pylabrobot`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pymatgen`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pymc`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pymoo`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pyopenms`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pysam`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pytdc`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pytorch-lightning`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/pyzotero`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/qiskit`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/qutip`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/rdkit`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/relsa-severity-assessment`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/research-grants`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/research-lookup`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/rowan`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scanpy`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scholar-evaluation`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-brainstorming`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-critical-thinking`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-schematics`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-slides`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-visualization`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scientific-writing`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scikit-bio`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scikit-learn`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scikit-survival`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scvelo`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/scvi-tools`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/seaborn`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/shap`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/simpy`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/stable-baselines3`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/statistical-analysis`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/statistical-power`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/statsmodels`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/sympy`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/tamarind`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/tiledbvcf`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/timesfm-forecasting`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/torch-geometric`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/torchdrug`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/transformers`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/treatment-plans`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/umap-learn`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/uncertainty-and-units`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/usfiscaldata`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/vaex`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/venue-templates`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/waypoint-bio`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/what-if-oracle`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/xlsx`
+  - `.agents/skills/imported/k-dense-ai--scientific-agent-skills/zarr-python`
+- `ConardLi/garden-skills`
+  - `.agents/skills/imported/conardli--garden-skills/beautiful-article`
+  - `.agents/skills/imported/conardli--garden-skills/gpt-image-2`
+  - `.agents/skills/imported/conardli--garden-skills/kb-retriever`
+  - `.agents/skills/imported/conardli--garden-skills/web-design-engineer`
+  - `.agents/skills/imported/conardli--garden-skills/web-video-presentation`
+- `JetBrains/go-modern-guidelines`
+  - `.agents/skills/imported/jetbrains--go-modern-guidelines/use-modern-go`
+- `apache/maka`
+  - `.agents/skills/imported/apache--maka/code-review`
+  - `.agents/skills/imported/apache--maka/computer-use`
+  - `.agents/skills/imported/apache--maka/maka-architecture-docs`
+- `omacom/omarchy`
+  - `.agents/skills/imported/omacom--omarchy/diagnose-crash`
+  - `.agents/skills/imported/omacom--omarchy/omarchy`
+- `ruvnet/ruflo`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-adaptive-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-agent`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-agentic-payments`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-analyze-code-quality`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-app-store`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-arch-system-design`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-architecture`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-authentication`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-automation-smart-agent`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-base-template-generator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-benchmark-suite`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-byzantine-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-challenges`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-code-analyzer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-code-goal-planner`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-code-review-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-coder`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-collective-intelligence-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-consensus-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-coordination`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-coordinator-swarm-init`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-crdt-synchronizer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-data-ml-model`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-dev-backend-api`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-docs-api-openapi`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-github-modes`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-github-pr-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-goal-planner`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-gossip-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-hierarchical-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-implementer-sparc-coder`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-issue-tracker`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-load-balancer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-matrix-optimizer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-memory-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-mesh-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-migration-plan`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-multi-repo-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-neural-network`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-ops-cicd-github`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-orchestrator-task`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-pagerank-analyzer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-payments`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-performance-analyzer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-performance-benchmarker`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-performance-monitor`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-performance-optimizer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-planner`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-pr-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-production-validator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-project-board-sync`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-pseudocode`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-queen-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-quorum-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-raft-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-refinement`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-release-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-release-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-repo-architect`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-researcher`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-resource-allocator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-reviewer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-safla-neural`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-sandbox`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-scout-explorer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-security-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-sona-learning-optimizer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-sparc-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-spec-mobile-react-native`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-specification`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-swarm-issue`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-swarm-memory-manager`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-swarm-pr`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-sync-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-tdd-london-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-test-long-runner`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-tester`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-topology-optimizer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-trading-predictor`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-user-tools`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-v3-integration-architect`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-v3-memory-specialist`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-v3-performance-engineer`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-v3-queen-coordinator`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-v3-security-architect`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-worker-specialist`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/agent-workflow`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-learning`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-memory-patterns`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-vector-search`
+  - `.agents/skills/imported/ruvnet--ruflo/agentic-jujutsu`
+  - `.agents/skills/imported/ruvnet--ruflo/claims`
+  - `.agents/skills/imported/ruvnet--ruflo/embeddings`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-neural`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-platform`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/github-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/github-code-review`
+  - `.agents/skills/imported/ruvnet--ruflo/github-multi-repo`
+  - `.agents/skills/imported/ruvnet--ruflo/github-project-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-release-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/hive-mind-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/hive-mind`
+  - `.agents/skills/imported/ruvnet--ruflo/hooks-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/memory-management`
+  - `.agents/skills/imported/ruvnet--ruflo/neural-training`
+  - `.agents/skills/imported/ruvnet--ruflo/pair-programming`
+  - `.agents/skills/imported/ruvnet--ruflo/performance-analysis`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-agentdb`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-intelligence`
+  - `.agents/skills/imported/ruvnet--ruflo/security-audit`
+  - `.agents/skills/imported/ruvnet--ruflo/skill-builder`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-methodology`
+  - `.agents/skills/imported/ruvnet--ruflo/stream-chain`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-orchestration`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-cli-modernization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-core-implementation`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-ddd-architecture`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-integration-deep`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-mcp-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-memory-unification`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-performance-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-security-overhaul`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-swarm-coordination`
+  - `.agents/skills/imported/ruvnet--ruflo/verification-quality`
+  - `.agents/skills/imported/ruvnet--ruflo/worker-benchmarks`
+  - `.agents/skills/imported/ruvnet--ruflo/worker-integration`
+  - `.agents/skills/imported/ruvnet--ruflo/workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-learning`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-memory-patterns`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-vector-search`
+  - `.agents/skills/imported/ruvnet--ruflo/agentic-jujutsu`
+  - `.agents/skills/imported/ruvnet--ruflo/browser`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-neural`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-platform`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/github-code-review`
+  - `.agents/skills/imported/ruvnet--ruflo/github-multi-repo`
+  - `.agents/skills/imported/ruvnet--ruflo/github-project-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-release-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/hive-mind-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/hooks-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/pair-programming`
+  - `.agents/skills/imported/ruvnet--ruflo/performance-analysis`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-agentdb`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-intelligence`
+  - `.agents/skills/imported/ruvnet--ruflo/skill-builder`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-methodology`
+  - `.agents/skills/imported/ruvnet--ruflo/stream-chain`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-orchestration`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-cli-modernization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-core-implementation`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-ddd-architecture`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-integration-deep`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-mcp-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-memory-unification`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-performance-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-security-overhaul`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-swarm-coordination`
+  - `.agents/skills/imported/ruvnet--ruflo/verification-quality`
+  - `.agents/skills/imported/ruvnet--ruflo/worker-benchmarks`
+  - `.agents/skills/imported/ruvnet--ruflo/worker-integration`
+  - `.agents/skills/imported/ruvnet--ruflo/root-skill`
+  - `.agents/skills/imported/ruvnet--ruflo/adr-create`
+  - `.agents/skills/imported/ruvnet--ruflo/adr-index`
+  - `.agents/skills/imported/ruvnet--ruflo/adr-reindex`
+  - `.agents/skills/imported/ruvnet--ruflo/adr-review`
+  - `.agents/skills/imported/ruvnet--ruflo/adr-verify`
+  - `.agents/skills/imported/ruvnet--ruflo/managed-agent`
+  - `.agents/skills/imported/ruvnet--ruflo/nested-subagents`
+  - `.agents/skills/imported/ruvnet--ruflo/wasm-agent`
+  - `.agents/skills/imported/ruvnet--ruflo/wasm-gallery`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-query`
+  - `.agents/skills/imported/ruvnet--ruflo/vector-search`
+  - `.agents/skills/imported/ruvnet--ruflo/agntcy-status`
+  - `.agents/skills/imported/ruvnet--ruflo/pii-detect`
+  - `.agents/skills/imported/ruvnet--ruflo/safety-scan`
+  - `.agents/skills/imported/ruvnet--ruflo/autopilot-loop`
+  - `.agents/skills/imported/ruvnet--ruflo/autopilot-predict`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-auth-flow`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-extract`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-form-fill`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-intent`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-login`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-record`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-replay`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-scrape`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-screenshot-diff`
+  - `.agents/skills/imported/ruvnet--ruflo/browser-test`
+  - `.agents/skills/imported/ruvnet--ruflo/pod-sales`
+  - `.agents/skills/imported/ruvnet--ruflo/discover-plugins`
+  - `.agents/skills/imported/ruvnet--ruflo/init-project`
+  - `.agents/skills/imported/ruvnet--ruflo/ruflo-doctor`
+  - `.agents/skills/imported/ruvnet--ruflo/ruflo-status`
+  - `.agents/skills/imported/ruvnet--ruflo/witness`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-anomaly`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-benchmark`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-booster-edit`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-booster-route`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-budget-check`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-burn`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-compact-context`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-conversation`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-counterfactual`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-diff`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-export`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-federation`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-health`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-optimize`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-projection`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-report`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-session`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-summary`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-track`
+  - `.agents/skills/imported/ruvnet--ruflo/cost-trend`
+  - `.agents/skills/imported/ruvnet--ruflo/cognitive-pattern`
+  - `.agents/skills/imported/ruvnet--ruflo/daa-agent`
+  - `.agents/skills/imported/ruvnet--ruflo/ddd-aggregate`
+  - `.agents/skills/imported/ruvnet--ruflo/ddd-context`
+  - `.agents/skills/imported/ruvnet--ruflo/ddd-validate`
+  - `.agents/skills/imported/ruvnet--ruflo/deepseek-chat`
+  - `.agents/skills/imported/ruvnet--ruflo/deepseek-reason`
+  - `.agents/skills/imported/ruvnet--ruflo/api-docs`
+  - `.agents/skills/imported/ruvnet--ruflo/doc-gen`
+  - `.agents/skills/imported/ruvnet--ruflo/federation-audit`
+  - `.agents/skills/imported/ruvnet--ruflo/federation-init`
+  - `.agents/skills/imported/ruvnet--ruflo/federation-status`
+  - `.agents/skills/imported/ruvnet--ruflo/deep-research`
+  - `.agents/skills/imported/ruvnet--ruflo/dossier-collect`
+  - `.agents/skills/imported/ruvnet--ruflo/goal-plan`
+  - `.agents/skills/imported/ruvnet--ruflo/horizon-track`
+  - `.agents/skills/imported/ruvnet--ruflo/research-synthesize`
+  - `.agents/skills/imported/ruvnet--ruflo/intelligence-route`
+  - `.agents/skills/imported/ruvnet--ruflo/intelligence-transfer`
+  - `.agents/skills/imported/ruvnet--ruflo/neural-train`
+  - `.agents/skills/imported/ruvnet--ruflo/iot-anomalies`
+  - `.agents/skills/imported/ruvnet--ruflo/iot-firmware`
+  - `.agents/skills/imported/ruvnet--ruflo/iot-fleet`
+  - `.agents/skills/imported/ruvnet--ruflo/iot-register`
+  - `.agents/skills/imported/ruvnet--ruflo/iot-witness-verify`
+  - `.agents/skills/imported/ruvnet--ruflo/diff-analyze`
+  - `.agents/skills/imported/ruvnet--ruflo/git-workflow`
+  - `.agents/skills/imported/ruvnet--ruflo/kg-extract`
+  - `.agents/skills/imported/ruvnet--ruflo/kg-traverse`
+  - `.agents/skills/imported/ruvnet--ruflo/cron-schedule`
+  - `.agents/skills/imported/ruvnet--ruflo/loop-worker`
+  - `.agents/skills/imported/ruvnet--ruflo/market-ingest`
+  - `.agents/skills/imported/ruvnet--ruflo/market-pattern`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-bench`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-drift-from-history`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-evolve`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-genome`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-gepa`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-learn`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-mcp-scan`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-mint`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-oia-audit`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-score`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-security-bench`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-similarity`
+  - `.agents/skills/imported/ruvnet--ruflo/harness-threat-model`
+  - `.agents/skills/imported/ruvnet--ruflo/migrate-create`
+  - `.agents/skills/imported/ruvnet--ruflo/migrate-validate`
+  - `.agents/skills/imported/ruvnet--ruflo/music-connect`
+  - `.agents/skills/imported/ruvnet--ruflo/music-generate`
+  - `.agents/skills/imported/ruvnet--ruflo/music-get`
+  - `.agents/skills/imported/ruvnet--ruflo/music-list`
+  - `.agents/skills/imported/ruvnet--ruflo/music-master`
+  - `.agents/skills/imported/ruvnet--ruflo/music-midi`
+  - `.agents/skills/imported/ruvnet--ruflo/music-stems`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-backtest`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-cloud-backtest`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-explain`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-portfolio-cg`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-portfolio`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-regime`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-risk`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-signal`
+  - `.agents/skills/imported/ruvnet--ruflo/trader-train`
+  - `.agents/skills/imported/ruvnet--ruflo/observe-metrics`
+  - `.agents/skills/imported/ruvnet--ruflo/observe-trace`
+  - `.agents/skills/imported/ruvnet--ruflo/create-plugin`
+  - `.agents/skills/imported/ruvnet--ruflo/validate-plugin`
+  - `.agents/skills/imported/ruvnet--ruflo/memory-bridge`
+  - `.agents/skills/imported/ruvnet--ruflo/memory-search`
+  - `.agents/skills/imported/ruvnet--ruflo/vector-cluster`
+  - `.agents/skills/imported/ruvnet--ruflo/vector-embed`
+  - `.agents/skills/imported/ruvnet--ruflo/vector-hyperbolic`
+  - `.agents/skills/imported/ruvnet--ruflo/vector-setup`
+  - `.agents/skills/imported/ruvnet--ruflo/chat-format`
+  - `.agents/skills/imported/ruvnet--ruflo/llm-config`
+  - `.agents/skills/imported/ruvnet--ruflo/rvf-manage`
+  - `.agents/skills/imported/ruvnet--ruflo/session-persist`
+  - `.agents/skills/imported/ruvnet--ruflo/dependency-check`
+  - `.agents/skills/imported/ruvnet--ruflo/security-scan`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-implement`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-refine`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-spec`
+  - `.agents/skills/imported/ruvnet--ruflo/monitor-stream`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-init`
+  - `.agents/skills/imported/ruvnet--ruflo/tdd-repair`
+  - `.agents/skills/imported/ruvnet--ruflo/tdd-workflow`
+  - `.agents/skills/imported/ruvnet--ruflo/test-gaps`
+  - `.agents/skills/imported/ruvnet--ruflo/gaia-architecture-comparison`
+  - `.agents/skills/imported/ruvnet--ruflo/gaia-debugging`
+  - `.agents/skills/imported/ruvnet--ruflo/gaia-submission`
+  - `.agents/skills/imported/ruvnet--ruflo/workflow-create`
+  - `.agents/skills/imported/ruvnet--ruflo/workflow-run`
+  - `.agents/skills/imported/ruvnet--ruflo/add-model-descriptions`
+  - `.agents/skills/imported/ruvnet--ruflo/browser`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-learning`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-memory-patterns`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/agentdb-vector-search`
+  - `.agents/skills/imported/ruvnet--ruflo/browser`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-neural`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-platform`
+  - `.agents/skills/imported/ruvnet--ruflo/flow-nexus-swarm`
+  - `.agents/skills/imported/ruvnet--ruflo/github-code-review`
+  - `.agents/skills/imported/ruvnet--ruflo/github-multi-repo`
+  - `.agents/skills/imported/ruvnet--ruflo/github-project-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-release-management`
+  - `.agents/skills/imported/ruvnet--ruflo/github-workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/hooks-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/pair-programming`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-agentdb`
+  - `.agents/skills/imported/ruvnet--ruflo/reasoningbank-intelligence`
+  - `.agents/skills/imported/ruvnet--ruflo/skill-builder`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-methodology`
+  - `.agents/skills/imported/ruvnet--ruflo/stream-chain`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-advanced`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-orchestration`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-cli-modernization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-core-implementation`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-ddd-architecture`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-integration-deep`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-mcp-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-memory-unification`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-performance-optimization`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-security-overhaul`
+  - `.agents/skills/imported/ruvnet--ruflo/v3-swarm-coordination`
+  - `.agents/skills/imported/ruvnet--ruflo/verification-quality`
+  - `.agents/skills/imported/ruvnet--ruflo/github-automation`
+  - `.agents/skills/imported/ruvnet--ruflo/memory-management`
+  - `.agents/skills/imported/ruvnet--ruflo/performance-analysis`
+  - `.agents/skills/imported/ruvnet--ruflo/security-audit`
+  - `.agents/skills/imported/ruvnet--ruflo/sparc-methodology`
+  - `.agents/skills/imported/ruvnet--ruflo/swarm-orchestration`
+- `AprilNEA/OpenLogi`
+  - `.agents/skills/imported/aprilnea--openlogi/openlogi-macos-permissions`
+- `browser-use/browser-harness`
+  - `.agents/skills/imported/browser-use--browser-harness/root-skill`
+  - `.agents/skills/imported/browser-use--browser-harness/browser-harness`
+  - `.agents/skills/imported/browser-use--browser-harness/browser_harness`
+- `infiniflow/ragflow`
+  - `.agents/skills/imported/infiniflow--ragflow/go-naming`
+- `semantica-agi/semantica`
+  - `.agents/skills/imported/semantica-agi--semantica/semantica`
+  - `.agents/skills/imported/semantica-agi--semantica/causal`
+  - `.agents/skills/imported/semantica-agi--semantica/change`
+  - `.agents/skills/imported/semantica-agi--semantica/decision`
+  - `.agents/skills/imported/semantica-agi--semantica/deduplicate`
+  - `.agents/skills/imported/semantica-agi--semantica/embed`
+  - `.agents/skills/imported/semantica-agi--semantica/explain`
+  - `.agents/skills/imported/semantica-agi--semantica/export`
+  - `.agents/skills/imported/semantica-agi--semantica/extract`
+  - `.agents/skills/imported/semantica-agi--semantica/ingest`
+  - `.agents/skills/imported/semantica-agi--semantica/ontology`
+  - `.agents/skills/imported/semantica-agi--semantica/policy`
+  - `.agents/skills/imported/semantica-agi--semantica/provenance`
+  - `.agents/skills/imported/semantica-agi--semantica/query`
+  - `.agents/skills/imported/semantica-agi--semantica/reason`
+  - `.agents/skills/imported/semantica-agi--semantica/temporal`
+  - `.agents/skills/imported/semantica-agi--semantica/validate`
+  - `.agents/skills/imported/semantica-agi--semantica/visualize`
+- `sonichi/sutando`
+  - `.agents/skills/imported/sonichi--sutando/agent-registry`
+  - `.agents/skills/imported/sonichi--sutando/agent-room-ops`
+  - `.agents/skills/imported/sonichi--sutando/answer-format`
+  - `.agents/skills/imported/sonichi--sutando/audio-transcribe`
+  - `.agents/skills/imported/sonichi--sutando/bee-actions`
+  - `.agents/skills/imported/sonichi--sutando/bot2bot-post`
+  - `.agents/skills/imported/sonichi--sutando/call-diagnostics`
+  - `.agents/skills/imported/sonichi--sutando/claude-codex`
+  - `.agents/skills/imported/sonichi--sutando/claude-gemini`
+  - `.agents/skills/imported/sonichi--sutando/claude-pi`
+  - `.agents/skills/imported/sonichi--sutando/claude-router`
+  - `.agents/skills/imported/sonichi--sutando/collaboration-intelligence`
+  - `.agents/skills/imported/sonichi--sutando/context-drop`
+  - `.agents/skills/imported/sonichi--sutando/context-reconstruct`
+  - `.agents/skills/imported/sonichi--sutando/db-browser`
+  - `.agents/skills/imported/sonichi--sutando/deal-finder`
+  - `.agents/skills/imported/sonichi--sutando/doc-ingest`
+  - `.agents/skills/imported/sonichi--sutando/electron-overlay-dimming`
+  - `.agents/skills/imported/sonichi--sutando/email-find`
+  - `.agents/skills/imported/sonichi--sutando/engine-conflict-resolve`
+  - `.agents/skills/imported/sonichi--sutando/gemini-tts`
+  - `.agents/skills/imported/sonichi--sutando/image-generation`
+  - `.agents/skills/imported/sonichi--sutando/local-workspace-server`
+  - `.agents/skills/imported/sonichi--sutando/macos-tools`
+  - `.agents/skills/imported/sonichi--sutando/macos-use`
+  - `.agents/skills/imported/sonichi--sutando/make-viral-video`
+  - `.agents/skills/imported/sonichi--sutando/media-transcript`
+  - `.agents/skills/imported/sonichi--sutando/meeting-prep`
+  - `.agents/skills/imported/sonichi--sutando/meeting-scheduler`
+  - `.agents/skills/imported/sonichi--sutando/mention-gate`
+  - `.agents/skills/imported/sonichi--sutando/model-switch`
+  - `.agents/skills/imported/sonichi--sutando/morning-briefing`
+  - `.agents/skills/imported/sonichi--sutando/ms365-connect`
+  - `.agents/skills/imported/sonichi--sutando/observe`
+  - `.agents/skills/imported/sonichi--sutando/obsidian-vault`
+  - `.agents/skills/imported/sonichi--sutando/open-sutando-ref`
+  - `.agents/skills/imported/sonichi--sutando/openai-tts`
+  - `.agents/skills/imported/sonichi--sutando/overlay-apps`
+  - `.agents/skills/imported/sonichi--sutando/phone-conversation`
+  - `.agents/skills/imported/sonichi--sutando/pr-shepherd-contract`
+  - `.agents/skills/imported/sonichi--sutando/proactive-loop`
+  - `.agents/skills/imported/sonichi--sutando/quota-tracker`
+  - `.agents/skills/imported/sonichi--sutando/regression-search`
+  - `.agents/skills/imported/sonichi--sutando/relay`
+  - `.agents/skills/imported/sonichi--sutando/release`
+  - `.agents/skills/imported/sonichi--sutando/report-feedback`
+  - `.agents/skills/imported/sonichi--sutando/review-preflight`
+  - `.agents/skills/imported/sonichi--sutando/schedule-crons`
+  - `.agents/skills/imported/sonichi--sutando/screen-companion`
+  - `.agents/skills/imported/sonichi--sutando/screen-record`
+  - `.agents/skills/imported/sonichi--sutando/self-diagnose`
+  - `.agents/skills/imported/sonichi--sutando/self-upgrade`
+  - `.agents/skills/imported/sonichi--sutando/session-recap`
+  - `.agents/skills/imported/sonichi--sutando/skill-usage-report`
+  - `.agents/skills/imported/sonichi--sutando/startup`
+  - `.agents/skills/imported/sonichi--sutando/submit-use-case`
+  - `.agents/skills/imported/sonichi--sutando/subscription-scanner`
+  - `.agents/skills/imported/sonichi--sutando/sutando-migrate`
+  - `.agents/skills/imported/sonichi--sutando/task-orphan-check`
+  - `.agents/skills/imported/sonichi--sutando/task-progress`
+  - `.agents/skills/imported/sonichi--sutando/task-workstream-grouping`
+  - `.agents/skills/imported/sonichi--sutando/trusted-capabilities`
+  - `.agents/skills/imported/sonichi--sutando/voice-agent-test-harness`
+  - `.agents/skills/imported/sonichi--sutando/whatsapp`
+  - `.agents/skills/imported/sonichi--sutando/x-twitter`
+  - `.agents/skills/imported/sonichi--sutando/zoom`
+- `jdx/mise`
+  - `.agents/skills/imported/jdx--mise/entire-search`
+- `PrimeIntellect-ai/prime-agent`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/dynamic-resources`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/agent-message`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/agent-observe`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/attach-image`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/compact`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/edit`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/goal`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/linear`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/notion`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/prime-intellect`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/refine`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/rlm-heartbeat`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/skill-creator`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/websearch`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/calendar`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/calendar`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/consecutive-hyphens`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/disable-model-invocation`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/invalid-name-chars`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/invalid-yaml`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/long-name`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/missing-description`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/multiline-description`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/name-mismatch`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/nested/child-skill`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/no-frontmatter`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/python-package-missing`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/python-skill`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/root-skill-preferred`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/root-skill-preferred/nested-child`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/unknown-field`
+  - `.agents/skills/imported/primeintellect-ai--prime-agent/valid-skill`
+- `emilkowalski/skills`
+  - `.agents/skills/imported/emilkowalski--skills/animate-expo`
+  - `.agents/skills/imported/emilkowalski--skills/animate`
+  - `.agents/skills/imported/emilkowalski--skills/animation-vocabulary`
+  - `.agents/skills/imported/emilkowalski--skills/apple-design`
+  - `.agents/skills/imported/emilkowalski--skills/ask-sonner`
+  - `.agents/skills/imported/emilkowalski--skills/emil-design-eng`
+  - `.agents/skills/imported/emilkowalski--skills/find-animation-opportunities`
+  - `.agents/skills/imported/emilkowalski--skills/improve-animations`
+  - `.agents/skills/imported/emilkowalski--skills/pick-ui-library`
+  - `.agents/skills/imported/emilkowalski--skills/prototype`
+  - `.agents/skills/imported/emilkowalski--skills/review-animations`
+  - `.agents/skills/imported/emilkowalski--skills/write-swift`
+- `zhaoxuya520/reverse-skill`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-ad-certificate-abuse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-agent-cloud`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-android-hooking`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-browser-persistence`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-bundle-sourcemap-recovery`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-cloud-metadata-path`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-container-runtime`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-crypto-mobile`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-custom-protocol-replay`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-dpapi-credential-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-file-parser-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-firmware-layout`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-forensic-timeline`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-graphql-rpc-drift`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-identity-windows`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-ios-runtime`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-jwt-claim-confusion`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-k8s-control-plane`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-kerberos-delegation`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-kernel-container-escape`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-linux-credential-pivot`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-lsass-ticket-material`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-mailbox-abuse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-malware-config`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-oauth-oidc-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-pcap-protocol`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-prompt-injection`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-queue-worker-drift`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-race-condition-state-drift`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-relay-coercion-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-request-normalization-smuggling`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-reverse-pwn`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-runtime-routing`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-ssrf-metadata-pivot`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-stego-media`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-supply-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-template-render-path`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-web-runtime`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-websocket-runtime`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-windows-pivot`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/competition-zip-archive`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/ctf-sandbox-orchestrator`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/reverse-skill-router`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/skills`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/api-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/apk-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/attack-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/binary-diff`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/binary-ninja-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/browser-automation`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/browser-extension-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/case-review`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/cloud-k8s`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/code-audit`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/ctf-sandbox`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/database-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/diagram-generator`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/digital-forensics`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/docs-generator`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/dotnet-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/edr-bypass-re`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/email-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/firmware-pentest`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/ghidra-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/go-rust-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/hardware-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/ida-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/identity-federation`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/js-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/llm-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/macos-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/malware-analysis`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/mobile-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/ot-ics`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/patch-diff-exploit`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/pentest-tools`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/pentest-tools/src-hunter`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/protocol-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/pwn-chain`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/radare2`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/radio-sdr`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/reverse-engineering`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/reverse-engineering/dsl-vm-reverse`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/supply-chain-security`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/thick-client`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/threat-hunting`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/threat-intelligence`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/wifi-wireless`
+  - `.agents/skills/imported/zhaoxuya520--reverse-skill/windows-ad`
+- `bradautomates/claude-video`
+  - `.agents/skills/imported/bradautomates--claude-video/watch`
+- `HKUDS/DeepTutor`
+  - `.agents/skills/imported/hkuds--deeptutor/root-skill`
+  - `.agents/skills/imported/hkuds--deeptutor/builtin/docx`
+  - `.agents/skills/imported/hkuds--deeptutor/builtin/pdf`
+  - `.agents/skills/imported/hkuds--deeptutor/builtin/pptx`
+  - `.agents/skills/imported/hkuds--deeptutor/builtin/skill-creator`
+  - `.agents/skills/imported/hkuds--deeptutor/builtin/xlsx`
+- `huangruiteng/loopx`
+  - `.agents/skills/imported/huangruiteng--loopx/swe-marathon-five-arm`
+  - `.agents/skills/imported/huangruiteng--loopx/tb4-five-arm`
+  - `.agents/skills/imported/huangruiteng--loopx/worker_skill`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-benchmark`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-change-quality`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-doc-registry`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-material`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-pr-program`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-pr-review`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-project`
+  - `.agents/skills/imported/huangruiteng--loopx/loopx-self-repair`
+- `vercel/next.js`
+  - `.agents/skills/imported/vercel--next.js/authoring-skills`
+  - `.agents/skills/imported/vercel--next.js/backport-pr`
+  - `.agents/skills/imported/vercel--next.js/create-pr`
+  - `.agents/skills/imported/vercel--next.js/dce-edge`
+  - `.agents/skills/imported/vercel--next.js/deploy-release-test`
+  - `.agents/skills/imported/vercel--next.js/flags`
+  - `.agents/skills/imported/vercel--next.js/gate-tests`
+  - `.agents/skills/imported/vercel--next.js/gh-stack`
+  - `.agents/skills/imported/vercel--next.js/insight-error-page`
+  - `.agents/skills/imported/vercel--next.js/next-rspack`
+  - `.agents/skills/imported/vercel--next.js/pr-status-triage`
+  - `.agents/skills/imported/vercel--next.js/react-sync`
+  - `.agents/skills/imported/vercel--next.js/react-vendoring`
+  - `.agents/skills/imported/vercel--next.js/router-act`
+  - `.agents/skills/imported/vercel--next.js/runtime-debug`
+  - `.agents/skills/imported/vercel--next.js/sandbox-bench`
+  - `.agents/skills/imported/vercel--next.js/update-docs`
+  - `.agents/skills/imported/vercel--next.js/v8-jit`
+  - `.agents/skills/imported/vercel--next.js/write-api-reference`
+  - `.agents/skills/imported/vercel--next.js/write-guide`
+  - `.agents/skills/imported/vercel--next.js/next-cache-components-adoption`
+  - `.agents/skills/imported/vercel--next.js/next-cache-components-optimizer`
+  - `.agents/skills/imported/vercel--next.js/next-dev-loop`
+  - `.agents/skills/imported/vercel--next.js/next-partial-prefetching-adoption`
+- `cypress-io/cypress`
+  - `.agents/skills/imported/cypress-io--cypress/building-cypress-binary`
+  - `.agents/skills/imported/cypress-io--cypress/debugging-cypress-artifacts`
+- `angular/angular`
+  - `.agents/skills/imported/angular--angular/adev-writing-guide`
+  - `.agents/skills/imported/angular--angular/pr_review`
+  - `.agents/skills/imported/angular--angular/reference-compiler-cli`
+  - `.agents/skills/imported/angular--angular/reference-core`
+  - `.agents/skills/imported/angular--angular/reference-signal-forms`
+  - `.agents/skills/imported/angular--angular/dev-skills/angular-developer`
+  - `.agents/skills/imported/angular--angular/dev-skills/angular-new-app`
+- `oso95/scroll-world`
+  - `.agents/skills/imported/oso95--scroll-world/scroll-world`
+- `jamiepine/voicebox`
+  - `.agents/skills/imported/jamiepine--voicebox/add-tts-engine`
+  - `.agents/skills/imported/jamiepine--voicebox/draft-release-notes`
+  - `.agents/skills/imported/jamiepine--voicebox/release-bump`
+  - `.agents/skills/imported/jamiepine--voicebox/triage-prs`
+- `usekaneo/kaneo`
+  - `.agents/skills/imported/usekaneo--kaneo/animate`
+  - `.agents/skills/imported/usekaneo--kaneo/animation-vocabulary`
+  - `.agents/skills/imported/usekaneo--kaneo/apple-design`
+  - `.agents/skills/imported/usekaneo--kaneo/coss`
+  - `.agents/skills/imported/usekaneo--kaneo/emil-design-eng`
+  - `.agents/skills/imported/usekaneo--kaneo/find-animation-opportunities`
+  - `.agents/skills/imported/usekaneo--kaneo/improve-animations`
+  - `.agents/skills/imported/usekaneo--kaneo/pick-ui-library`
+  - `.agents/skills/imported/usekaneo--kaneo/prototype`
+  - `.agents/skills/imported/usekaneo--kaneo/review-animations`
+  - `.agents/skills/imported/usekaneo--kaneo/verify`
 - `Leonxlnx/taste-skill`
   - `.agents/skills/imported/leonxlnx--taste-skill/brandkit`
   - `.agents/skills/imported/leonxlnx--taste-skill/brutalist-skill`
@@ -45,6 +1017,763 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/leonxlnx--taste-skill/stitch-skill`
   - `.agents/skills/imported/leonxlnx--taste-skill/taste-skill-v1`
   - `.agents/skills/imported/leonxlnx--taste-skill/taste-skill`
+- `pbakaus/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/audit`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+  - `.agents/skills/imported/pbakaus--impeccable/impeccable`
+- `virgiliojr94/book-to-skill`
+  - `.agents/skills/imported/virgiliojr94--book-to-skill/root-skill`
+- `opengeos/GeoLibre`
+  - `.agents/skills/imported/opengeos--geolibre/geolibre`
+- `julep-ai/julep`
+  - `.agents/skills/imported/julep-ai--julep/natural-writing`
+- `block/buzz`
+  - `.agents/skills/imported/block--buzz/desktop-screenshot`
+  - `.agents/skills/imported/block--buzz/sprout-cli`
+  - `.agents/skills/imported/block--buzz/desktop-screenshot`
+  - `.agents/skills/imported/block--buzz/sprout-cli`
+  - `.agents/skills/imported/block--buzz/desktop-screenshot`
+  - `.agents/skills/imported/block--buzz/sprout-cli`
+  - `.agents/skills/imported/block--buzz/desktop-screenshot`
+  - `.agents/skills/imported/block--buzz/sprout-cli`
+  - `.agents/skills/imported/block--buzz/github-research`
+- `anthropics/claude-cookbooks`
+  - `.agents/skills/imported/anthropics--claude-cookbooks/cookbook-audit`
+  - `.agents/skills/imported/anthropics--claude-cookbooks/custom_skills/analyzing-financial-statements`
+  - `.agents/skills/imported/anthropics--claude-cookbooks/custom_skills/applying-brand-guidelines`
+  - `.agents/skills/imported/anthropics--claude-cookbooks/custom_skills/creating-financial-models`
+- `alibaba/open-code-review`
+  - `.agents/skills/imported/alibaba--open-code-review/open-code-review-delegate`
+  - `.agents/skills/imported/alibaba--open-code-review/open-code-review`
+  - `.agents/skills/imported/alibaba--open-code-review/open-code-review-delegate`
+  - `.agents/skills/imported/alibaba--open-code-review/open-code-review`
+- `CoreBunch/Instatic`
+  - `.agents/skills/imported/corebunch--instatic/agent-browser`
+  - `.agents/skills/imported/corebunch--instatic/instatic-user-e2e`
+  - `.agents/skills/imported/corebunch--instatic/skill-creator`
+- `JCodesMore/ai-website-cloner-template`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+  - `.agents/skills/imported/jcodesmore--ai-website-cloner-template/clone-website`
+- `likec4/likec4`
+  - `.agents/skills/imported/likec4--likec4/add-new-element-shape`
+  - `.agents/skills/imported/likec4--likec4/changeset-generator`
+  - `.agents/skills/imported/likec4--likec4/dispatching-parallel-agents`
+  - `.agents/skills/imported/likec4--likec4/likec4-cli-codegen-regression`
+  - `.agents/skills/imported/likec4--likec4/likec4-gh-pr-triage`
+  - `.agents/skills/imported/likec4--likec4/likec4-issue-repro`
+  - `.agents/skills/imported/likec4--likec4/likec4-project-config-workflow`
+  - `.agents/skills/imported/likec4--likec4/refactor`
+  - `.agents/skills/imported/likec4--likec4/vscode-extension-screenshot-evidence`
+  - `.agents/skills/imported/likec4--likec4/likec4-dsl`
+- `diegosouzapw/OmniRoute`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-a2a`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-backup-sync`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-batches`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-chat`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-compression`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-contexts`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-cost-usage`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-eval`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-health`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-keys`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-mcp`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-models`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-plugins-skills`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-policy-audit`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-providers`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-resilience`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-routing`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-serve`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-setup`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-skill-collector`
+  - `.agents/skills/imported/diegosouzapw--omniroute/cli-tunnel`
+  - `.agents/skills/imported/diegosouzapw--omniroute/config-codex-cli`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-agents-a2a`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-api-keys`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-auth`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-budget`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-cache`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-cli-tools`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-combos-routing`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-compression`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-context-rtk`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-db-backups`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-github-skills`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-inference`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-mcp`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-models`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-providers`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-proxies`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-resilience`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-settings`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-sync-cloud`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-tunnels`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-usage-logs`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-version-manager`
+  - `.agents/skills/imported/diegosouzapw--omniroute/omni-webhooks`
+  - `.agents/skills/imported/diegosouzapw--omniroute/ponytail`
+  - `.agents/skills/imported/diegosouzapw--omniroute/bridge-proof`
+- `citrolabs/ego-lite`
+  - `.agents/skills/imported/citrolabs--ego-lite/ego-browser`
+- `AlexsJones/llmfit`
+  - `.agents/skills/imported/alexsjones--llmfit/llmfit-advisor`
+- `usestrix/strix`
+  - `.agents/skills/imported/usestrix--strix/api-security-testing`
+  - `.agents/skills/imported/usestrix--strix/application-security-testing`
+  - `.agents/skills/imported/usestrix--strix/ci-security-scanning-with-strix`
+  - `.agents/skills/imported/usestrix--strix/find-security-vulnerabilities-in-code`
+  - `.agents/skills/imported/usestrix--strix/fix-security-vulnerabilities-with-strix`
+  - `.agents/skills/imported/usestrix--strix/managed-pentesting-with-strix`
+  - `.agents/skills/imported/usestrix--strix/owasp-top-10-testing`
+  - `.agents/skills/imported/usestrix--strix/penetration-testing-with-strix`
+  - `.agents/skills/imported/usestrix--strix/web-app-penetration-testing`
+- `ibelick/ui-skills`
+  - `.agents/skills/imported/ibelick--ui-skills/baseline-ui`
+  - `.agents/skills/imported/ibelick--ui-skills/create-design-md`
+  - `.agents/skills/imported/ibelick--ui-skills/fixing-accessibility`
+  - `.agents/skills/imported/ibelick--ui-skills/fixing-metadata`
+  - `.agents/skills/imported/ibelick--ui-skills/fixing-motion-performance`
+  - `.agents/skills/imported/ibelick--ui-skills/improve-ui`
+  - `.agents/skills/imported/ibelick--ui-skills/ui-skills-root`
+- `tt-a1i/archify`
+  - `.agents/skills/imported/tt-a1i--archify/archify`
+- `bojieli/ai-agent-book`
+  - `.agents/skills/imported/bojieli--ai-agent-book/coding`
+  - `.agents/skills/imported/bojieli--ai-agent-book/data_analysis`
+  - `.agents/skills/imported/bojieli--ai-agent-book/research`
+  - `.agents/skills/imported/bojieli--ai-agent-book/triage`
+  - `.agents/skills/imported/bojieli--ai-agent-book/writing`
+  - `.agents/skills/imported/bojieli--ai-agent-book/pptx`
+  - `.agents/skills/imported/bojieli--ai-agent-book/curly-quote-sft`
+  - `.agents/skills/imported/bojieli--ai-agent-book/skill`
+- `1jehuang/jcode`
+  - `.agents/skills/imported/1jehuang--jcode/optimization`
+- `topoteretes/cognee`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-cli`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-community`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-docker`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-install`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-integrations`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-permissions`
+  - `.agents/skills/imported/topoteretes--cognee/cognee-server`
+  - `.agents/skills/imported/topoteretes--cognee/diff-risk-explainer`
+  - `.agents/skills/imported/topoteretes--cognee/pr-comment-evaluator`
+  - `.agents/skills/imported/topoteretes--cognee/skill-feedback-writer`
+- `tokio-rs/topcoat`
+  - `.agents/skills/imported/tokio-rs--topcoat/check`
+  - `.agents/skills/imported/tokio-rs--topcoat/commit`
+  - `.agents/skills/imported/tokio-rs--topcoat/macro`
+  - `.agents/skills/imported/tokio-rs--topcoat/pr`
+  - `.agents/skills/imported/tokio-rs--topcoat/prose`
+  - `.agents/skills/imported/tokio-rs--topcoat/style`
+- `oblien/openship`
+  - `.agents/skills/imported/oblien--openship/openship-config`
+- `getsentry/skills`
+  - `.agents/skills/imported/getsentry--skills/agents-md`
+  - `.agents/skills/imported/getsentry--skills/blog-writing-guide`
+  - `.agents/skills/imported/getsentry--skills/brand-guidelines`
+  - `.agents/skills/imported/getsentry--skills/claude-settings-audit`
+  - `.agents/skills/imported/getsentry--skills/code-review`
+  - `.agents/skills/imported/getsentry--skills/code-simplifier`
+  - `.agents/skills/imported/getsentry--skills/commit`
+  - `.agents/skills/imported/getsentry--skills/create-branch`
+  - `.agents/skills/imported/getsentry--skills/django-access-review`
+  - `.agents/skills/imported/getsentry--skills/django-perf-review`
+  - `.agents/skills/imported/getsentry--skills/doc-coauthoring`
+  - `.agents/skills/imported/getsentry--skills/document-api-endpoint`
+  - `.agents/skills/imported/getsentry--skills/find-bugs`
+  - `.agents/skills/imported/getsentry--skills/gh-review-requests`
+  - `.agents/skills/imported/getsentry--skills/gha-security-review`
+  - `.agents/skills/imported/getsentry--skills/iterate-pr`
+  - `.agents/skills/imported/getsentry--skills/pr-link-issue`
+  - `.agents/skills/imported/getsentry--skills/pr-writer`
+  - `.agents/skills/imported/getsentry--skills/presentation-creator`
+  - `.agents/skills/imported/getsentry--skills/prompt-optimizer`
+  - `.agents/skills/imported/getsentry--skills/security-review`
+  - `.agents/skills/imported/getsentry--skills/skill-scanner`
+  - `.agents/skills/imported/getsentry--skills/skill-writer`
+  - `.agents/skills/imported/getsentry--skills/sred-project-organizer`
+  - `.agents/skills/imported/getsentry--skills/sred-work-summary`
+  - `.agents/skills/imported/getsentry--skills/triage-frontend-issues`
+  - `.agents/skills/imported/getsentry--skills/typing-exclusion-worker`
+- `mattpocock/skills`
+  - `.agents/skills/imported/mattpocock--skills/engineering/ask-matt`
+  - `.agents/skills/imported/mattpocock--skills/engineering/code-review`
+  - `.agents/skills/imported/mattpocock--skills/engineering/codebase-design`
+  - `.agents/skills/imported/mattpocock--skills/engineering/diagnosing-bugs`
+  - `.agents/skills/imported/mattpocock--skills/engineering/domain-modeling`
+  - `.agents/skills/imported/mattpocock--skills/engineering/grill-with-docs`
+  - `.agents/skills/imported/mattpocock--skills/engineering/implement`
+  - `.agents/skills/imported/mattpocock--skills/engineering/improve-codebase-architecture`
+  - `.agents/skills/imported/mattpocock--skills/engineering/prototype`
+  - `.agents/skills/imported/mattpocock--skills/engineering/research`
+  - `.agents/skills/imported/mattpocock--skills/engineering/resolving-merge-conflicts`
+  - `.agents/skills/imported/mattpocock--skills/engineering/setup-matt-pocock-skills`
+  - `.agents/skills/imported/mattpocock--skills/engineering/tdd`
+  - `.agents/skills/imported/mattpocock--skills/engineering/to-spec`
+  - `.agents/skills/imported/mattpocock--skills/engineering/to-tickets`
+  - `.agents/skills/imported/mattpocock--skills/engineering/triage`
+  - `.agents/skills/imported/mattpocock--skills/engineering/wayfinder`
+  - `.agents/skills/imported/mattpocock--skills/engineering/wizard`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/claude-handoff`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/implement-spec`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/loop-me`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/retro`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/setup-ts-deep-modules`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/writing-beats`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/writing-fragments`
+  - `.agents/skills/imported/mattpocock--skills/in-progress/writing-shape`
+  - `.agents/skills/imported/mattpocock--skills/misc/git-guardrails-claude-code`
+  - `.agents/skills/imported/mattpocock--skills/misc/migrate-to-shoehorn`
+  - `.agents/skills/imported/mattpocock--skills/misc/scaffold-exercises`
+  - `.agents/skills/imported/mattpocock--skills/misc/setup-pre-commit`
+  - `.agents/skills/imported/mattpocock--skills/productivity/grill-me`
+  - `.agents/skills/imported/mattpocock--skills/productivity/grilling`
+  - `.agents/skills/imported/mattpocock--skills/productivity/handoff`
+  - `.agents/skills/imported/mattpocock--skills/productivity/teach`
+  - `.agents/skills/imported/mattpocock--skills/productivity/to-questionnaire`
+  - `.agents/skills/imported/mattpocock--skills/productivity/wait-what`
+  - `.agents/skills/imported/mattpocock--skills/productivity/writing-for-agents`
+- `KeyArgo/custodian-kernel`
+  - `.agents/skills/imported/keyargo--custodian-kernel/anthropic-chat`
+  - `.agents/skills/imported/keyargo--custodian-kernel/cohere-embed`
+  - `.agents/skills/imported/keyargo--custodian-kernel/openai-chat`
+  - `.agents/skills/imported/keyargo--custodian-kernel/replicate-run`
+  - `.agents/skills/imported/keyargo--custodian-kernel/together-infer`
+  - `.agents/skills/imported/keyargo--custodian-kernel/pagerduty-alert`
+  - `.agents/skills/imported/keyargo--custodian-kernel/telegram-send`
+  - `.agents/skills/imported/keyargo--custodian-kernel/twilio-voice-call`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-delete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-event-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-event-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/calendar-update`
+  - `.agents/skills/imported/keyargo--custodian-kernel/s3-delete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/s3-get`
+  - `.agents/skills/imported/keyargo--custodian-kernel/s3-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/s3-put`
+  - `.agents/skills/imported/keyargo--custodian-kernel/discord-webhook`
+  - `.agents/skills/imported/keyargo--custodian-kernel/email-send`
+  - `.agents/skills/imported/keyargo--custodian-kernel/push-notification`
+  - `.agents/skills/imported/keyargo--custodian-kernel/slack-channel-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/slack-message`
+  - `.agents/skills/imported/keyargo--custodian-kernel/sms-send`
+  - `.agents/skills/imported/keyargo--custodian-kernel/webhook-post`
+  - `.agents/skills/imported/keyargo--custodian-kernel/custodian-anchor`
+  - `.agents/skills/imported/keyargo--custodian-kernel/custodian-status`
+  - `.agents/skills/imported/keyargo--custodian-kernel/paladin-vault-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/mongodb-find`
+  - `.agents/skills/imported/keyargo--custodian-kernel/mysql-query`
+  - `.agents/skills/imported/keyargo--custodian-kernel/postgres-query`
+  - `.agents/skills/imported/keyargo--custodian-kernel/redis-delete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/redis-get`
+  - `.agents/skills/imported/keyargo--custodian-kernel/redis-set`
+  - `.agents/skills/imported/keyargo--custodian-kernel/design-impeccable`
+  - `.agents/skills/imported/keyargo--custodian-kernel/design-taste`
+  - `.agents/skills/imported/keyargo--custodian-kernel/docker-exec`
+  - `.agents/skills/imported/keyargo--custodian-kernel/docker-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/docker-logs`
+  - `.agents/skills/imported/keyargo--custodian-kernel/docker-start`
+  - `.agents/skills/imported/keyargo--custodian-kernel/docker-stop`
+  - `.agents/skills/imported/keyargo--custodian-kernel/file-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/file-read`
+  - `.agents/skills/imported/keyargo--custodian-kernel/file-write`
+  - `.agents/skills/imported/keyargo--custodian-kernel/shell-exec`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-comment`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-commit-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-file-read`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-issue-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-issue-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-pr-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-release-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-release-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/github-repo-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/kv-delete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/kv-get`
+  - `.agents/skills/imported/keyargo--custodian-kernel/kv-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/kv-set`
+  - `.agents/skills/imported/keyargo--custodian-kernel/sqlite-query`
+  - `.agents/skills/imported/keyargo--custodian-kernel/modal-deploy`
+  - `.agents/skills/imported/keyargo--custodian-kernel/modal-function-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/modal-invoke`
+  - `.agents/skills/imported/keyargo--custodian-kernel/dns-lookup`
+  - `.agents/skills/imported/keyargo--custodian-kernel/http-health-check`
+  - `.agents/skills/imported/keyargo--custodian-kernel/ip-geolocation`
+  - `.agents/skills/imported/keyargo--custodian-kernel/ping-host`
+  - `.agents/skills/imported/keyargo--custodian-kernel/port-scan`
+  - `.agents/skills/imported/keyargo--custodian-kernel/ssl-cert-check`
+  - `.agents/skills/imported/keyargo--custodian-kernel/whois-lookup`
+  - `.agents/skills/imported/keyargo--custodian-kernel/huggingface-infer`
+  - `.agents/skills/imported/keyargo--custodian-kernel/nim-job-status`
+  - `.agents/skills/imported/keyargo--custodian-kernel/nim-job-submit`
+  - `.agents/skills/imported/keyargo--custodian-kernel/nim-model-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/openai-complete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-spend`
+  - `.agents/skills/imported/keyargo--custodian-kernel/cron-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/cron-delete`
+  - `.agents/skills/imported/keyargo--custodian-kernel/cron-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/task-queue-add`
+  - `.agents/skills/imported/keyargo--custodian-kernel/task-queue-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/hmac-verify`
+  - `.agents/skills/imported/keyargo--custodian-kernel/jwt-decode`
+  - `.agents/skills/imported/keyargo--custodian-kernel/paladin-import`
+  - `.agents/skills/imported/keyargo--custodian-kernel/secrets-scan`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-balance`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-charge-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-customer-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-customer-lookup`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-invoice-send`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-payout`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-price-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-refund-list`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-subscription-cancel`
+  - `.agents/skills/imported/keyargo--custodian-kernel/stripe-subscription-create`
+  - `.agents/skills/imported/keyargo--custodian-kernel/base64-decode`
+  - `.agents/skills/imported/keyargo--custodian-kernel/base64-encode`
+  - `.agents/skills/imported/keyargo--custodian-kernel/currency-convert`
+  - `.agents/skills/imported/keyargo--custodian-kernel/hash-sha256`
+  - `.agents/skills/imported/keyargo--custodian-kernel/json-transform`
+  - `.agents/skills/imported/keyargo--custodian-kernel/timezone-lookup`
+  - `.agents/skills/imported/keyargo--custodian-kernel/url-parse`
+  - `.agents/skills/imported/keyargo--custodian-kernel/http-get`
+  - `.agents/skills/imported/keyargo--custodian-kernel/http-post`
+  - `.agents/skills/imported/keyargo--custodian-kernel/news-search`
+  - `.agents/skills/imported/keyargo--custodian-kernel/web-scrape`
+  - `.agents/skills/imported/keyargo--custodian-kernel/web-search`
+- `Shubhamsaboo/awesome-llm-apps`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/advisor-orchestrator-worker`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/commit-archaeologist`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/dependency-doctor`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/project-graveyard`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/scope-creep-detector`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/thinking-out-loud`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/chatgpt-app-builder`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/mcp-apps-builder`
+  - `.agents/skills/imported/shubhamsaboo--awesome-llm-apps/mcp-builder`
+- `coreyhaines31/marketingskills`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/ab-testing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/ad-creative`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/ads`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/ai-seo`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/analytics`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/aso`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/attribution`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/churn-prevention`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/co-marketing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/cold-email`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/community-marketing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/competitor-profiling`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/competitors`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/content-strategy`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/copy-editing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/copywriting`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/cro`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/customer-research`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/directory-submissions`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/emails`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/events`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/free-tools`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/image`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/influencer-marketing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/launch`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/lead-magnets`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/marketing-council`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/marketing-ideas`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/marketing-loops`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/marketing-plan`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/marketing-psychology`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/offers`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/onboarding`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/paywalls`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/popups`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/pricing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/product-marketing`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/programmatic-seo`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/prospecting`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/public-relations`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/referrals`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/revops`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/sales-enablement`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/schema`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/seo-audit`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/signup`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/site-architecture`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/sms`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/social`
+  - `.agents/skills/imported/coreyhaines31--marketingskills/video`
+- `HKUDS/Vibe-Trading`
+  - `.agents/skills/imported/hkuds--vibe-trading/agent`
+  - `.agents/skills/imported/hkuds--vibe-trading/adr-hshare`
+  - `.agents/skills/imported/hkuds--vibe-trading/akshare`
+  - `.agents/skills/imported/hkuds--vibe-trading/alpha-zoo`
+  - `.agents/skills/imported/hkuds--vibe-trading/ashare-pre-st-filter`
+  - `.agents/skills/imported/hkuds--vibe-trading/asset-allocation`
+  - `.agents/skills/imported/hkuds--vibe-trading/backtest-diagnose`
+  - `.agents/skills/imported/hkuds--vibe-trading/behavioral-finance`
+  - `.agents/skills/imported/hkuds--vibe-trading/bottleneck-hunter`
+  - `.agents/skills/imported/hkuds--vibe-trading/candlestick`
+  - `.agents/skills/imported/hkuds--vibe-trading/ccxt`
+  - `.agents/skills/imported/hkuds--vibe-trading/chanlun`
+  - `.agents/skills/imported/hkuds--vibe-trading/commodity-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/convertible-bond`
+  - `.agents/skills/imported/hkuds--vibe-trading/corporate-events`
+  - `.agents/skills/imported/hkuds--vibe-trading/correlation-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/correlation-regime`
+  - `.agents/skills/imported/hkuds--vibe-trading/credit-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/cross-market-strategy`
+  - `.agents/skills/imported/hkuds--vibe-trading/crypto-derivatives`
+  - `.agents/skills/imported/hkuds--vibe-trading/data-routing`
+  - `.agents/skills/imported/hkuds--vibe-trading/deep-company-series`
+  - `.agents/skills/imported/hkuds--vibe-trading/defi-yield`
+  - `.agents/skills/imported/hkuds--vibe-trading/dividend-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/doc-reader`
+  - `.agents/skills/imported/hkuds--vibe-trading/earnings-forecast`
+  - `.agents/skills/imported/hkuds--vibe-trading/earnings-revision`
+  - `.agents/skills/imported/hkuds--vibe-trading/eastmoney`
+  - `.agents/skills/imported/hkuds--vibe-trading/edgar-sec-filings`
+  - `.agents/skills/imported/hkuds--vibe-trading/elliott-wave`
+  - `.agents/skills/imported/hkuds--vibe-trading/etf-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/event-driven`
+  - `.agents/skills/imported/hkuds--vibe-trading/execution-model`
+  - `.agents/skills/imported/hkuds--vibe-trading/factor-research`
+  - `.agents/skills/imported/hkuds--vibe-trading/financial-statement`
+  - `.agents/skills/imported/hkuds--vibe-trading/fund-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/fundamental-filter`
+  - `.agents/skills/imported/hkuds--vibe-trading/geopolitical-risk`
+  - `.agents/skills/imported/hkuds--vibe-trading/global-macro`
+  - `.agents/skills/imported/hkuds--vibe-trading/harmonic`
+  - `.agents/skills/imported/hkuds--vibe-trading/hedging-strategy`
+  - `.agents/skills/imported/hkuds--vibe-trading/hk-connect-flow`
+  - `.agents/skills/imported/hkuds--vibe-trading/ichimoku`
+  - `.agents/skills/imported/hkuds--vibe-trading/investor-lenses`
+  - `.agents/skills/imported/hkuds--vibe-trading/liquidation-heatmap`
+  - `.agents/skills/imported/hkuds--vibe-trading/macro-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/management-deep-dive`
+  - `.agents/skills/imported/hkuds--vibe-trading/market-microstructure`
+  - `.agents/skills/imported/hkuds--vibe-trading/minute-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/ml-strategy`
+  - `.agents/skills/imported/hkuds--vibe-trading/mootdx`
+  - `.agents/skills/imported/hkuds--vibe-trading/multi-factor`
+  - `.agents/skills/imported/hkuds--vibe-trading/okx-market`
+  - `.agents/skills/imported/hkuds--vibe-trading/onchain-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/options-advanced`
+  - `.agents/skills/imported/hkuds--vibe-trading/options-payoff`
+  - `.agents/skills/imported/hkuds--vibe-trading/options-strategy`
+  - `.agents/skills/imported/hkuds--vibe-trading/pair-trading`
+  - `.agents/skills/imported/hkuds--vibe-trading/performance-attribution`
+  - `.agents/skills/imported/hkuds--vibe-trading/perp-funding-basis`
+  - `.agents/skills/imported/hkuds--vibe-trading/pine-script`
+  - `.agents/skills/imported/hkuds--vibe-trading/private-company-research`
+  - `.agents/skills/imported/hkuds--vibe-trading/quant-statistics`
+  - `.agents/skills/imported/hkuds--vibe-trading/qveris`
+  - `.agents/skills/imported/hkuds--vibe-trading/regulatory-knowledge`
+  - `.agents/skills/imported/hkuds--vibe-trading/report-generate`
+  - `.agents/skills/imported/hkuds--vibe-trading/research-discipline`
+  - `.agents/skills/imported/hkuds--vibe-trading/research-goal`
+  - `.agents/skills/imported/hkuds--vibe-trading/risk-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/seasonal`
+  - `.agents/skills/imported/hkuds--vibe-trading/sec-edgar`
+  - `.agents/skills/imported/hkuds--vibe-trading/sector-rotation`
+  - `.agents/skills/imported/hkuds--vibe-trading/sentiment-analysis`
+  - `.agents/skills/imported/hkuds--vibe-trading/shadow-account`
+  - `.agents/skills/imported/hkuds--vibe-trading/smc`
+  - `.agents/skills/imported/hkuds--vibe-trading/social-media-intelligence`
+  - `.agents/skills/imported/hkuds--vibe-trading/stablecoin-flow`
+  - `.agents/skills/imported/hkuds--vibe-trading/strategy-dev-manager`
+  - `.agents/skills/imported/hkuds--vibe-trading/strategy-discovery`
+  - `.agents/skills/imported/hkuds--vibe-trading/strategy-generate`
+  - `.agents/skills/imported/hkuds--vibe-trading/technical-basic`
+  - `.agents/skills/imported/hkuds--vibe-trading/thesis-tracker`
+  - `.agents/skills/imported/hkuds--vibe-trading/token-unlock-treasury`
+  - `.agents/skills/imported/hkuds--vibe-trading/trade-journal`
+  - `.agents/skills/imported/hkuds--vibe-trading/tushare`
+  - `.agents/skills/imported/hkuds--vibe-trading/us-etf-flow`
+  - `.agents/skills/imported/hkuds--vibe-trading/valuation-model`
+  - `.agents/skills/imported/hkuds--vibe-trading/vnpy-export`
+  - `.agents/skills/imported/hkuds--vibe-trading/volatility`
+  - `.agents/skills/imported/hkuds--vibe-trading/web-reader`
+  - `.agents/skills/imported/hkuds--vibe-trading/yfinance`
+- `github/spec-kit`
+  - `.agents/skills/imported/github--spec-kit/add-community-extension`
+- `moeru-ai/airi`
+  - `.agents/skills/imported/moeru-ai--airi/agent-browser-electron`
+  - `.agents/skills/imported/moeru-ai--airi/agent-browser`
+  - `.agents/skills/imported/moeru-ai--airi/create-pr`
+  - `.agents/skills/imported/moeru-ai--airi/enforce-rules-for-unocss`
+  - `.agents/skills/imported/moeru-ai--airi/enforce-rules-for-vitest`
+  - `.agents/skills/imported/moeru-ai--airi/eventa`
+  - `.agents/skills/imported/moeru-ai--airi/pinia`
+  - `.agents/skills/imported/moeru-ai--airi/pnpm`
+  - `.agents/skills/imported/moeru-ai--airi/release-note-writer`
+  - `.agents/skills/imported/moeru-ai--airi/simple-english`
+  - `.agents/skills/imported/moeru-ai--airi/stage-tamagotchi-godot-csharp`
+  - `.agents/skills/imported/moeru-ai--airi/tsdown`
+  - `.agents/skills/imported/moeru-ai--airi/unocss`
+  - `.agents/skills/imported/moeru-ai--airi/upload-github-attachment`
+  - `.agents/skills/imported/moeru-ai--airi/use-agent-browser-for-airi`
+  - `.agents/skills/imported/moeru-ai--airi/use-agent-browser-with-input-file`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot-for-airi`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot-with-capacitor`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot-with-electron`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot-with-input-file`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot-with-web`
+  - `.agents/skills/imported/moeru-ai--airi/use-vishot`
+  - `.agents/skills/imported/moeru-ai--airi/vue-best-practices`
+  - `.agents/skills/imported/moeru-ai--airi/vue-testing-best-practices`
+  - `.agents/skills/imported/moeru-ai--airi/vue`
+  - `.agents/skills/imported/moeru-ai--airi/vueuse-functions`
+  - `.agents/skills/imported/moeru-ai--airi/web-design-guidelines`
+  - `.agents/skills/imported/moeru-ai--airi/xsai`
+  - `.agents/skills/imported/moeru-ai--airi/minecraft-debug-mcp`
+- `dotnet/skills`
+  - `.agents/skills/imported/dotnet--skills/authoring-github-workflows`
+  - `.agents/skills/imported/dotnet--skills/create-custom-agent`
+  - `.agents/skills/imported/dotnet--skills/create-skill-test`
+  - `.agents/skills/imported/dotnet--skills/create-skill`
+  - `.agents/skills/imported/dotnet--skills/improve-skill-quality`
+  - `.agents/skills/imported/dotnet--skills/agentic-workflows`
+  - `.agents/skills/imported/dotnet--skills/no-eval-skill`
+  - `.agents/skills/imported/dotnet--skills/sample-skill`
+  - `.agents/skills/imported/dotnet--skills/csharp-scripts`
+  - `.agents/skills/imported/dotnet--skills/dotnet-pinvoke`
+  - `.agents/skills/imported/dotnet--skills/nuget-trusted-publishing`
+  - `.agents/skills/imported/dotnet--skills/vectorization`
+  - `.agents/skills/imported/dotnet--skills/technology-selection`
+  - `.agents/skills/imported/dotnet--skills/configuring-opentelemetry-dotnet`
+  - `.agents/skills/imported/dotnet--skills/convert-blazor-server-to-webapp`
+  - `.agents/skills/imported/dotnet--skills/dotnet-webapi`
+  - `.agents/skills/imported/dotnet--skills/minimal-api-file-upload`
+  - `.agents/skills/imported/dotnet--skills/author-component`
+  - `.agents/skills/imported/dotnet--skills/collect-user-input`
+  - `.agents/skills/imported/dotnet--skills/configure-auth`
+  - `.agents/skills/imported/dotnet--skills/coordinate-components`
+  - `.agents/skills/imported/dotnet--skills/create-blazor-project`
+  - `.agents/skills/imported/dotnet--skills/fetch-and-send-data`
+  - `.agents/skills/imported/dotnet--skills/plan-ui-change`
+  - `.agents/skills/imported/dotnet--skills/support-prerendering`
+  - `.agents/skills/imported/dotnet--skills/use-js-interop`
+  - `.agents/skills/imported/dotnet--skills/create-datadriven-aspnetcore`
+  - `.agents/skills/imported/dotnet--skills/optimizing-ef-core-queries`
+  - `.agents/skills/imported/dotnet--skills/analyzing-dotnet-performance`
+  - `.agents/skills/imported/dotnet--skills/android-tombstone-symbolication`
+  - `.agents/skills/imported/dotnet--skills/apple-crash-symbolication`
+  - `.agents/skills/imported/dotnet--skills/clr-activation-debugging`
+  - `.agents/skills/imported/dotnet--skills/dotnet-trace-collect`
+  - `.agents/skills/imported/dotnet--skills/dump-collect`
+  - `.agents/skills/imported/dotnet--skills/microbenchmarking`
+  - `.agents/skills/imported/dotnet--skills/exp-mock-usage-analysis`
+  - `.agents/skills/imported/dotnet--skills/exp-test-maintainability`
+  - `.agents/skills/imported/dotnet--skills/dotnet-maui-doctor`
+  - `.agents/skills/imported/dotnet--skills/maui-app-lifecycle`
+  - `.agents/skills/imported/dotnet--skills/maui-collectionview`
+  - `.agents/skills/imported/dotnet--skills/maui-data-binding`
+  - `.agents/skills/imported/dotnet--skills/maui-dependency-injection`
+  - `.agents/skills/imported/dotnet--skills/maui-safe-area`
+  - `.agents/skills/imported/dotnet--skills/maui-shell-navigation`
+  - `.agents/skills/imported/dotnet--skills/maui-theming`
+  - `.agents/skills/imported/dotnet--skills/binlog-failure-analysis`
+  - `.agents/skills/imported/dotnet--skills/binlog-generation`
+  - `.agents/skills/imported/dotnet--skills/build-parallelism`
+  - `.agents/skills/imported/dotnet--skills/build-perf-baseline`
+  - `.agents/skills/imported/dotnet--skills/build-perf-diagnostics`
+  - `.agents/skills/imported/dotnet--skills/check-bin-obj-clash`
+  - `.agents/skills/imported/dotnet--skills/copy-to-output-directory`
+  - `.agents/skills/imported/dotnet--skills/directory-build-organization`
+  - `.agents/skills/imported/dotnet--skills/eval-performance`
+  - `.agents/skills/imported/dotnet--skills/extension-points`
+  - `.agents/skills/imported/dotnet--skills/including-generated-files`
+  - `.agents/skills/imported/dotnet--skills/incremental-build`
+  - `.agents/skills/imported/dotnet--skills/item-management`
+  - `.agents/skills/imported/dotnet--skills/msbuild-antipatterns`
+  - `.agents/skills/imported/dotnet--skills/msbuild-modernization`
+  - `.agents/skills/imported/dotnet--skills/msbuild-server`
+  - `.agents/skills/imported/dotnet--skills/property-patterns`
+  - `.agents/skills/imported/dotnet--skills/resolve-project-references`
+  - `.agents/skills/imported/dotnet--skills/target-authoring`
+  - `.agents/skills/imported/dotnet--skills/convert-to-cpm`
+  - `.agents/skills/imported/dotnet--skills/template-authoring`
+  - `.agents/skills/imported/dotnet--skills/template-comparison`
+  - `.agents/skills/imported/dotnet--skills/template-discovery`
+  - `.agents/skills/imported/dotnet--skills/template-instantiation`
+  - `.agents/skills/imported/dotnet--skills/template-smart-defaults`
+  - `.agents/skills/imported/dotnet--skills/template-validation`
+  - `.agents/skills/imported/dotnet--skills/migrate-mstest-v1v2-to-v3`
+  - `.agents/skills/imported/dotnet--skills/migrate-mstest-v3-to-v4`
+  - `.agents/skills/imported/dotnet--skills/migrate-vstest-to-mtp`
+  - `.agents/skills/imported/dotnet--skills/migrate-xunit-to-mstest`
+  - `.agents/skills/imported/dotnet--skills/migrate-xunit-to-xunit-v3`
+  - `.agents/skills/imported/dotnet--skills/assertion-quality`
+  - `.agents/skills/imported/dotnet--skills/code-testing-agent`
+  - `.agents/skills/imported/dotnet--skills/code-testing-extensions`
+  - `.agents/skills/imported/dotnet--skills/coverage-analysis`
+  - `.agents/skills/imported/dotnet--skills/crap-score`
+  - `.agents/skills/imported/dotnet--skills/detect-static-dependencies`
+  - `.agents/skills/imported/dotnet--skills/filter-syntax`
+  - `.agents/skills/imported/dotnet--skills/find-untested-sources`
+  - `.agents/skills/imported/dotnet--skills/generate-testability-wrappers`
+  - `.agents/skills/imported/dotnet--skills/grade-tests`
+  - `.agents/skills/imported/dotnet--skills/migrate-static-to-wrapper`
+  - `.agents/skills/imported/dotnet--skills/mtp-hot-reload`
+  - `.agents/skills/imported/dotnet--skills/platform-detection`
+  - `.agents/skills/imported/dotnet--skills/run-tests`
+  - `.agents/skills/imported/dotnet--skills/scaffold-dotnet-test-project`
+  - `.agents/skills/imported/dotnet--skills/test-analysis-extensions`
+  - `.agents/skills/imported/dotnet--skills/test-anti-patterns`
+  - `.agents/skills/imported/dotnet--skills/test-gap-analysis`
+  - `.agents/skills/imported/dotnet--skills/test-smell-detection`
+  - `.agents/skills/imported/dotnet--skills/test-tagging`
+  - `.agents/skills/imported/dotnet--skills/testability-obstacle`
+  - `.agents/skills/imported/dotnet--skills/writing-mstest-tests`
+  - `.agents/skills/imported/dotnet--skills/dotnet-aot-compat`
+  - `.agents/skills/imported/dotnet--skills/migrate-dotnet10-to-dotnet11`
+  - `.agents/skills/imported/dotnet--skills/migrate-dotnet8-to-dotnet9`
+  - `.agents/skills/imported/dotnet--skills/migrate-dotnet9-to-dotnet10`
+  - `.agents/skills/imported/dotnet--skills/migrate-nullable-references`
+  - `.agents/skills/imported/dotnet--skills/thread-abort-migration`
+  - `.agents/skills/imported/dotnet--skills/setup-local-sdk`
+  - `.agents/skills/imported/dotnet--skills/system-text-json-net11`
+- `ChromeDevTools/chrome-devtools-mcp`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/a11y-debugging`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/chrome-devtools-cli`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/chrome-devtools`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/cookie-debugging`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/debug-optimize-lcp`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/memory-leak-debugging`
+  - `.agents/skills/imported/chromedevtools--chrome-devtools-mcp/troubleshooting`
+- `browser-use/video-use`
+  - `.agents/skills/imported/browser-use--video-use/root-skill`
+  - `.agents/skills/imported/browser-use--video-use/manim-video`
+- `obra/superpowers`
+  - `.agents/skills/imported/obra--superpowers/brainstorming`
+  - `.agents/skills/imported/obra--superpowers/dispatching-parallel-agents`
+  - `.agents/skills/imported/obra--superpowers/executing-plans`
+  - `.agents/skills/imported/obra--superpowers/finishing-a-development-branch`
+  - `.agents/skills/imported/obra--superpowers/receiving-code-review`
+  - `.agents/skills/imported/obra--superpowers/requesting-code-review`
+  - `.agents/skills/imported/obra--superpowers/subagent-driven-development`
+  - `.agents/skills/imported/obra--superpowers/systematic-debugging`
+  - `.agents/skills/imported/obra--superpowers/test-driven-development`
+  - `.agents/skills/imported/obra--superpowers/using-git-worktrees`
+  - `.agents/skills/imported/obra--superpowers/using-superpowers`
+  - `.agents/skills/imported/obra--superpowers/verification-before-completion`
+  - `.agents/skills/imported/obra--superpowers/writing-plans`
+  - `.agents/skills/imported/obra--superpowers/writing-skills`
+- `iOfficeAI/OfficeCLI`
+  - `.agents/skills/imported/iofficeai--officecli/root-skill`
+  - `.agents/skills/imported/iofficeai--officecli/morph-ppt-3d`
+  - `.agents/skills/imported/iofficeai--officecli/morph-ppt`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-academic-paper`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-data-dashboard`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-docx`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-financial-model`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-pitch-deck`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-pptx`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-word-form`
+  - `.agents/skills/imported/iofficeai--officecli/officecli-xlsx`
+  - `.agents/skills/imported/iofficeai--officecli/officecli`
+- `ruvnet/RuView`
+  - `.agents/skills/imported/ruvnet--ruview/agentdb-advanced`
+  - `.agents/skills/imported/ruvnet--ruview/agentdb-learning`
+  - `.agents/skills/imported/ruvnet--ruview/agentdb-memory-patterns`
+  - `.agents/skills/imported/ruvnet--ruview/agentdb-optimization`
+  - `.agents/skills/imported/ruvnet--ruview/agentdb-vector-search`
+  - `.agents/skills/imported/ruvnet--ruview/browser`
+  - `.agents/skills/imported/ruvnet--ruview/github-code-review`
+  - `.agents/skills/imported/ruvnet--ruview/github-multi-repo`
+  - `.agents/skills/imported/ruvnet--ruview/github-project-management`
+  - `.agents/skills/imported/ruvnet--ruview/github-release-management`
+  - `.agents/skills/imported/ruvnet--ruview/github-workflow-automation`
+  - `.agents/skills/imported/ruvnet--ruview/hooks-automation`
+  - `.agents/skills/imported/ruvnet--ruview/pair-programming`
+  - `.agents/skills/imported/ruvnet--ruview/reasoningbank-agentdb`
+  - `.agents/skills/imported/ruvnet--ruview/reasoningbank-intelligence`
+  - `.agents/skills/imported/ruvnet--ruview/skill-builder`
+  - `.agents/skills/imported/ruvnet--ruview/sparc-methodology`
+  - `.agents/skills/imported/ruvnet--ruview/stream-chain`
+  - `.agents/skills/imported/ruvnet--ruview/swarm-advanced`
+  - `.agents/skills/imported/ruvnet--ruview/swarm-orchestration`
+  - `.agents/skills/imported/ruvnet--ruview/v3-cli-modernization`
+  - `.agents/skills/imported/ruvnet--ruview/v3-core-implementation`
+  - `.agents/skills/imported/ruvnet--ruview/v3-ddd-architecture`
+  - `.agents/skills/imported/ruvnet--ruview/v3-integration-deep`
+  - `.agents/skills/imported/ruvnet--ruview/v3-mcp-optimization`
+  - `.agents/skills/imported/ruvnet--ruview/v3-memory-unification`
+  - `.agents/skills/imported/ruvnet--ruview/v3-performance-optimization`
+  - `.agents/skills/imported/ruvnet--ruview/v3-security-overhaul`
+  - `.agents/skills/imported/ruvnet--ruview/v3-swarm-coordination`
+  - `.agents/skills/imported/ruvnet--ruview/verification-quality`
+  - `.agents/skills/imported/ruvnet--ruview/explore`
+  - `.agents/skills/imported/ruvnet--ruview/migrate`
+  - `.agents/skills/imported/ruvnet--ruview/operate-server`
+  - `.agents/skills/imported/ruvnet--ruview/secure-plugin`
+  - `.agents/skills/imported/ruvnet--ruview/verify`
+  - `.agents/skills/imported/ruvnet--ruview/calibrate-room`
+  - `.agents/skills/imported/ruvnet--ruview/cognitum-spaces`
+  - `.agents/skills/imported/ruvnet--ruview/onboard`
+  - `.agents/skills/imported/ruvnet--ruview/provision-node`
+  - `.agents/skills/imported/ruvnet--ruview/train-pose`
+  - `.agents/skills/imported/ruvnet--ruview/verify`
+  - `.agents/skills/imported/ruvnet--ruview/evolve`
+  - `.agents/skills/imported/ruvnet--ruview/plan-change`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-advanced-sensing`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-applications`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-cli-api`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-configure`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-hardware-setup`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-mmwave`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-model-training`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-quickstart`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-rvagent`
+  - `.agents/skills/imported/ruvnet--ruview/ruview-verify`
+- `alibaba/page-agent`
+  - `.agents/skills/imported/alibaba--page-agent/git-cleanup`
+  - `.agents/skills/imported/alibaba--page-agent/maintain-model-list`
+  - `.agents/skills/imported/alibaba--page-agent/pre-impl-discussion`
+  - `.agents/skills/imported/alibaba--page-agent/submit-pr-from-current-changes`
+  - `.agents/skills/imported/alibaba--page-agent/update-changelog`
+- `stablyai/orca`
+  - `.agents/skills/imported/stablyai--orca/computer-use`
+  - `.agents/skills/imported/stablyai--orca/linear-tickets`
+  - `.agents/skills/imported/stablyai--orca/orca-cli`
+  - `.agents/skills/imported/stablyai--orca/orca-emulator-android`
+  - `.agents/skills/imported/stablyai--orca/orca-emulator`
+  - `.agents/skills/imported/stablyai--orca/orca-linear`
+  - `.agents/skills/imported/stablyai--orca/orca-per-workspace-env`
+  - `.agents/skills/imported/stablyai--orca/orchestration`
+- `MadsLorentzen/ai-job-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/freehire-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/jobbank-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/jobdanmark-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/jobindex-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/jobnet-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/linkedin-search`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/job-application-assistant`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/job-scraper`
+  - `.agents/skills/imported/madslorentzen--ai-job-search/upskill`
 - `Nutlope/hallmark`
   - `.agents/skills/imported/nutlope--hallmark/hallmark`
 - `google-labs-code/design.md`
@@ -54,6 +1783,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/google-labs-code--design.md/typed-service-contracts`
 - `anomalyco/opencode`
   - `.agents/skills/imported/anomalyco--opencode/effect`
+  - `.agents/skills/imported/anomalyco--opencode/rtl-aware-development`
   - `.agents/skills/imported/anomalyco--opencode/agents-sdk`
   - `.agents/skills/imported/anomalyco--opencode/cloudflare`
 - `mvanhorn/last30days-skill`
@@ -62,21 +1792,55 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/panniantong--agent-reach/skill`
 - `hardikpandya/stop-slop`
   - `.agents/skills/imported/hardikpandya--stop-slop/root-skill`
+- `herdrdev/herdr`
+  - `.agents/skills/imported/herdrdev--herdr/herdr-pre-release-audit`
+  - `.agents/skills/imported/herdrdev--herdr/herdr-throwaway-repro`
+  - `.agents/skills/imported/herdrdev--herdr/triage`
+  - `.agents/skills/imported/herdrdev--herdr/herdr`
+  - `.agents/skills/imported/herdrdev--herdr/writing-commit-messages`
 - `rohitg00/ai-engineering-from-scratch`
   - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/check-understanding`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/claude-certification`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/course-guide`
   - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/find-your-level`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn-agent-skills`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn-mcp`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/start-learning`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/migration-review-skill`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/skill-contract-reviewer`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/skill-catalog-builder`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/skill-invocation-router`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/skill-safety-reviewer`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/skill-release-gate`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/check-understanding`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/claude-certification`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/course-guide`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/find-your-level`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn-agent-skills`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn-mcp`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/learn`
+  - `.agents/skills/imported/rohitg00--ai-engineering-from-scratch/start-learning`
 - `Egonex-AI/Understand-Anything`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-chat`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-dashboard`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-diff`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-domain`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-explain`
+  - `.agents/skills/imported/egonex-ai--understand-anything/understand-figma`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-knowledge`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand-onboard`
   - `.agents/skills/imported/egonex-ai--understand-anything/understand`
+- `esengine/DeepSeek-Reasonix`
+  - `.agents/skills/imported/esengine--deepseek-reasonix/reasonix-guide`
+- `lfnovo/open-notebook`
+  - `.agents/skills/imported/lfnovo--open-notebook/release`
+  - `.agents/skills/imported/lfnovo--open-notebook/process-discussions`
+  - `.agents/skills/imported/lfnovo--open-notebook/release`
 - `bytedance/deer-flow`
   - `.agents/skills/imported/bytedance--deer-flow/blocking-io-guard`
   - `.agents/skills/imported/bytedance--deer-flow/deerflow-maintainer-orchestrator`
+  - `.agents/skills/imported/bytedance--deer-flow/engineer-system-change`
   - `.agents/skills/imported/bytedance--deer-flow/smoke-test`
   - `.agents/skills/imported/bytedance--deer-flow/public/academic-paper-review`
   - `.agents/skills/imported/bytedance--deer-flow/public/bootstrap`
@@ -95,12 +1859,20 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/bytedance--deer-flow/public/podcast-generation`
   - `.agents/skills/imported/bytedance--deer-flow/public/ppt-generation`
   - `.agents/skills/imported/bytedance--deer-flow/public/skill-creator`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/blocked`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/needs-revision`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/partial-package`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/prompt-injection`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/publish-candidate`
+  - `.agents/skills/imported/bytedance--deer-flow/public/skill-reviewer/evals/fixtures/zh-output`
   - `.agents/skills/imported/bytedance--deer-flow/public/surprise-me`
   - `.agents/skills/imported/bytedance--deer-flow/public/systematic-literature-review`
   - `.agents/skills/imported/bytedance--deer-flow/public/vercel-deploy-claimable`
   - `.agents/skills/imported/bytedance--deer-flow/public/video-generation`
   - `.agents/skills/imported/bytedance--deer-flow/public/web-design-guidelines`
 - `NousResearch/hermes-agent`
+  - `.agents/skills/imported/nousresearch--hermes-agent/agent-merge-conflict-arbiter`
   - `.agents/skills/imported/nousresearch--hermes-agent/antigravity-cli`
   - `.agents/skills/imported/nousresearch--hermes-agent/blackbox`
   - `.agents/skills/imported/nousresearch--hermes-agent/grok`
@@ -110,19 +1882,35 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/hyperliquid`
   - `.agents/skills/imported/nousresearch--hermes-agent/solana`
   - `.agents/skills/imported/nousresearch--hermes-agent/one-three-one-rule`
+  - `.agents/skills/imported/nousresearch--hermes-agent/ascii-art`
+  - `.agents/skills/imported/nousresearch--hermes-agent/audiocraft-audio-generation`
   - `.agents/skills/imported/nousresearch--hermes-agent/baoyu-article-illustrator`
   - `.agents/skills/imported/nousresearch--hermes-agent/baoyu-comic`
-  - `.agents/skills/imported/nousresearch--hermes-agent/blender-mcp`
+  - `.agents/skills/imported/nousresearch--hermes-agent/comfyui`
   - `.agents/skills/imported/nousresearch--hermes-agent/concept-diagrams`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative-ideation`
+  - `.agents/skills/imported/nousresearch--hermes-agent/draw-your-font`
+  - `.agents/skills/imported/nousresearch--hermes-agent/excalidraw`
+  - `.agents/skills/imported/nousresearch--hermes-agent/heartmula`
   - `.agents/skills/imported/nousresearch--hermes-agent/hyperframes`
+  - `.agents/skills/imported/nousresearch--hermes-agent/impeccable`
   - `.agents/skills/imported/nousresearch--hermes-agent/kanban-video-orchestrator`
   - `.agents/skills/imported/nousresearch--hermes-agent/meme-generation`
   - `.agents/skills/imported/nousresearch--hermes-agent/pixel-art`
-  - `.agents/skills/imported/nousresearch--hermes-agent/cli`
+  - `.agents/skills/imported/nousresearch--hermes-agent/pretext`
+  - `.agents/skills/imported/nousresearch--hermes-agent/simple-english`
+  - `.agents/skills/imported/nousresearch--hermes-agent/sketch`
+  - `.agents/skills/imported/nousresearch--hermes-agent/social-media-content-calendar`
+  - `.agents/skills/imported/nousresearch--hermes-agent/tldraw-offline`
+  - `.agents/skills/imported/nousresearch--hermes-agent/touchdesigner-mcp`
+  - `.agents/skills/imported/nousresearch--hermes-agent/unreal-mcp`
+  - `.agents/skills/imported/nousresearch--hermes-agent/jupyter-notebook`
+  - `.agents/skills/imported/nousresearch--hermes-agent/actual-setup`
   - `.agents/skills/imported/nousresearch--hermes-agent/docker-management`
   - `.agents/skills/imported/nousresearch--hermes-agent/hermes-s6-container-supervision`
+  - `.agents/skills/imported/nousresearch--hermes-agent/inference-sh-cli`
   - `.agents/skills/imported/nousresearch--hermes-agent/pinggy-tunnel`
+  - `.agents/skills/imported/nousresearch--hermes-agent/setup-wizard-generator`
   - `.agents/skills/imported/nousresearch--hermes-agent/watchers`
   - `.agents/skills/imported/nousresearch--hermes-agent/adversarial-ux-test`
   - `.agents/skills/imported/nousresearch--hermes-agent/agentmail`
@@ -132,6 +1920,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/excel-author`
   - `.agents/skills/imported/nousresearch--hermes-agent/lbo-model`
   - `.agents/skills/imported/nousresearch--hermes-agent/merger-model`
+  - `.agents/skills/imported/nousresearch--hermes-agent/polymarket`
   - `.agents/skills/imported/nousresearch--hermes-agent/pptx-author`
   - `.agents/skills/imported/nousresearch--hermes-agent/stocks`
   - `.agents/skills/imported/nousresearch--hermes-agent/minecraft-modpack-server`
@@ -139,20 +1928,27 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/fitness-nutrition`
   - `.agents/skills/imported/nousresearch--hermes-agent/neuroskill-bci`
   - `.agents/skills/imported/nousresearch--hermes-agent/fastmcp`
+  - `.agents/skills/imported/nousresearch--hermes-agent/mcp-oauth-remote-gateway`
   - `.agents/skills/imported/nousresearch--hermes-agent/mcporter`
   - `.agents/skills/imported/nousresearch--hermes-agent/openclaw-migration`
   - `.agents/skills/imported/nousresearch--hermes-agent/accelerate`
   - `.agents/skills/imported/nousresearch--hermes-agent/chroma`
   - `.agents/skills/imported/nousresearch--hermes-agent/clip`
+  - `.agents/skills/imported/nousresearch--hermes-agent/evaluating-llms-harness`
+  - `.agents/skills/imported/nousresearch--hermes-agent/weights-and-biases`
   - `.agents/skills/imported/nousresearch--hermes-agent/faiss`
   - `.agents/skills/imported/nousresearch--hermes-agent/flash-attention`
   - `.agents/skills/imported/nousresearch--hermes-agent/guidance`
   - `.agents/skills/imported/nousresearch--hermes-agent/huggingface-tokenizers`
+  - `.agents/skills/imported/nousresearch--hermes-agent/llama-cpp`
   - `.agents/skills/imported/nousresearch--hermes-agent/outlines`
+  - `.agents/skills/imported/nousresearch--hermes-agent/serving-llms-vllm`
   - `.agents/skills/imported/nousresearch--hermes-agent/instructor`
   - `.agents/skills/imported/nousresearch--hermes-agent/lambda-labs`
   - `.agents/skills/imported/nousresearch--hermes-agent/llava`
   - `.agents/skills/imported/nousresearch--hermes-agent/modal`
+  - `.agents/skills/imported/nousresearch--hermes-agent/huggingface-hub`
+  - `.agents/skills/imported/nousresearch--hermes-agent/segment-anything-model`
   - `.agents/skills/imported/nousresearch--hermes-agent/nemo-curator`
   - `.agents/skills/imported/nousresearch--hermes-agent/obliteratus`
   - `.agents/skills/imported/nousresearch--hermes-agent/peft`
@@ -175,6 +1971,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/stripe-link-cli`
   - `.agents/skills/imported/nousresearch--hermes-agent/stripe-projects`
   - `.agents/skills/imported/nousresearch--hermes-agent/canvas`
+  - `.agents/skills/imported/nousresearch--hermes-agent/decision-questionnaire`
   - `.agents/skills/imported/nousresearch--hermes-agent/here-now`
   - `.agents/skills/imported/nousresearch--hermes-agent/memento-flashcards`
   - `.agents/skills/imported/nousresearch--hermes-agent/shop`
@@ -182,6 +1979,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/siyuan`
   - `.agents/skills/imported/nousresearch--hermes-agent/telephony`
   - `.agents/skills/imported/nousresearch--hermes-agent/bioinformatics`
+  - `.agents/skills/imported/nousresearch--hermes-agent/blogwatcher`
   - `.agents/skills/imported/nousresearch--hermes-agent/darwinian-evolver`
   - `.agents/skills/imported/nousresearch--hermes-agent/domain-intel`
   - `.agents/skills/imported/nousresearch--hermes-agent/drug-discovery`
@@ -189,7 +1987,9 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/gitnexus-explorer`
   - `.agents/skills/imported/nousresearch--hermes-agent/osint-investigation`
   - `.agents/skills/imported/nousresearch--hermes-agent/parallel-cli`
+  - `.agents/skills/imported/nousresearch--hermes-agent/pinecone-research`
   - `.agents/skills/imported/nousresearch--hermes-agent/qmd`
+  - `.agents/skills/imported/nousresearch--hermes-agent/research-paper-writing`
   - `.agents/skills/imported/nousresearch--hermes-agent/scrapling`
   - `.agents/skills/imported/nousresearch--hermes-agent/searxng-search`
   - `.agents/skills/imported/nousresearch--hermes-agent/1password`
@@ -198,11 +1998,17 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/sherlock`
   - `.agents/skills/imported/nousresearch--hermes-agent/unbroker`
   - `.agents/skills/imported/nousresearch--hermes-agent/web-pentest`
+  - `.agents/skills/imported/nousresearch--hermes-agent/openhue`
+  - `.agents/skills/imported/nousresearch--hermes-agent/ast-grep`
   - `.agents/skills/imported/nousresearch--hermes-agent/code-wiki`
+  - `.agents/skills/imported/nousresearch--hermes-agent/grill-me`
   - `.agents/skills/imported/nousresearch--hermes-agent/rest-graphql-debug`
   - `.agents/skills/imported/nousresearch--hermes-agent/subagent-driven-development`
   - `.agents/skills/imported/nousresearch--hermes-agent/cloudflare-temporary-deploy`
+  - `.agents/skills/imported/nousresearch--hermes-agent/har-derived-api-client`
   - `.agents/skills/imported/nousresearch--hermes-agent/page-agent`
+  - `.agents/skills/imported/nousresearch--hermes-agent/publish-site`
+  - `.agents/skills/imported/nousresearch--hermes-agent/yuanbao`
   - `.agents/skills/imported/nousresearch--hermes-agent/google_meet`
   - `.agents/skills/imported/nousresearch--hermes-agent/apple/apple-notes`
   - `.agents/skills/imported/nousresearch--hermes-agent/apple/apple-reminders`
@@ -210,72 +2016,58 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/nousresearch--hermes-agent/apple/imessage`
   - `.agents/skills/imported/nousresearch--hermes-agent/autonomous-ai-agents/claude-code`
   - `.agents/skills/imported/nousresearch--hermes-agent/autonomous-ai-agents/codex`
+  - `.agents/skills/imported/nousresearch--hermes-agent/autonomous-ai-agents/computer-use`
   - `.agents/skills/imported/nousresearch--hermes-agent/autonomous-ai-agents/hermes-agent`
   - `.agents/skills/imported/nousresearch--hermes-agent/autonomous-ai-agents/opencode`
-  - `.agents/skills/imported/nousresearch--hermes-agent/computer-use`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/architecture-diagram`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/ascii-art`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/ascii-video`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/baoyu-infographic`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/claude-design`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/comfyui`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/design-md`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/excalidraw`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/humanizer`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/manim-video`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/p5js`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/popular-web-designs`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/pretext`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/sketch`
   - `.agents/skills/imported/nousresearch--hermes-agent/creative/songwriting-and-ai-music`
-  - `.agents/skills/imported/nousresearch--hermes-agent/creative/touchdesigner-mcp`
-  - `.agents/skills/imported/nousresearch--hermes-agent/data-science/jupyter-live-kernel`
-  - `.agents/skills/imported/nousresearch--hermes-agent/dogfood`
+  - `.agents/skills/imported/nousresearch--hermes-agent/devops/sdlc-review`
+  - `.agents/skills/imported/nousresearch--hermes-agent/email/email-inbox-triage`
   - `.agents/skills/imported/nousresearch--hermes-agent/email/himalaya`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/codebase-inspection`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/github-auth`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/github-code-review`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/github-issues`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/github-pr-workflow`
-  - `.agents/skills/imported/nousresearch--hermes-agent/github/github-repo-management`
   - `.agents/skills/imported/nousresearch--hermes-agent/media/gif-search`
-  - `.agents/skills/imported/nousresearch--hermes-agent/media/heartmula`
   - `.agents/skills/imported/nousresearch--hermes-agent/media/songsee`
   - `.agents/skills/imported/nousresearch--hermes-agent/media/youtube-content`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/evaluation/lm-evaluation-harness`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/evaluation/weights-and-biases`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/huggingface-hub`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/inference/llama-cpp`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/inference/vllm`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/models/audiocraft`
-  - `.agents/skills/imported/nousresearch--hermes-agent/mlops/models/segment-anything`
   - `.agents/skills/imported/nousresearch--hermes-agent/note-taking/obsidian`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/airtable`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/box`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/document-to-action-items`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/docx`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/google-workspace`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/maps`
-  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/nano-pdf`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/meeting-action-items`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/notion`
-  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/ocr-and-documents`
-  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/petdex`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/pdf`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/powerpoint`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/product-price-monitor`
   - `.agents/skills/imported/nousresearch--hermes-agent/productivity/teams-meeting-pipeline`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/weekly-review-planning`
+  - `.agents/skills/imported/nousresearch--hermes-agent/productivity/xlsx`
   - `.agents/skills/imported/nousresearch--hermes-agent/research/arxiv`
-  - `.agents/skills/imported/nousresearch--hermes-agent/research/blogwatcher`
+  - `.agents/skills/imported/nousresearch--hermes-agent/research/competitor-news-monitor`
+  - `.agents/skills/imported/nousresearch--hermes-agent/research/grounded-citations`
   - `.agents/skills/imported/nousresearch--hermes-agent/research/llm-wiki`
-  - `.agents/skills/imported/nousresearch--hermes-agent/research/polymarket`
-  - `.agents/skills/imported/nousresearch--hermes-agent/research/research-paper-writing`
-  - `.agents/skills/imported/nousresearch--hermes-agent/smart-home/openhue`
   - `.agents/skills/imported/nousresearch--hermes-agent/social-media/xurl`
+  - `.agents/skills/imported/nousresearch--hermes-agent/software-development/codebase-inspection`
+  - `.agents/skills/imported/nousresearch--hermes-agent/software-development/dogfood`
+  - `.agents/skills/imported/nousresearch--hermes-agent/software-development/github`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/hermes-agent-skill-authoring`
+  - `.agents/skills/imported/nousresearch--hermes-agent/software-development/inspecting-hermes-desktop-dom`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/node-inspect-debugger`
-  - `.agents/skills/imported/nousresearch--hermes-agent/software-development/plan`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/python-debugpy`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/requesting-code-review`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/simplify-code`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/spike`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/systematic-debugging`
   - `.agents/skills/imported/nousresearch--hermes-agent/software-development/test-driven-development`
-  - `.agents/skills/imported/nousresearch--hermes-agent/yuanbao`
+  - `.agents/skills/imported/nousresearch--hermes-agent/web/blocked-page-recovery`
 - `mukul975/Anthropic-Cybersecurity-Skills`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/abusing-dpapi-for-credential-access`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/abusing-shadow-credentials-for-privesc`
@@ -423,6 +2215,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-domain-persistence-with-dcsync`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-external-reconnaissance-with-osint`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-full-scope-red-team-engagement`
+  - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-gdpr-compliance-assessment`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-internal-network-penetration-test`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-internal-reconnaissance-with-bloodhound-ce`
   - `.agents/skills/imported/mukul975--anthropic-cybersecurity-skills/conducting-malware-incident-response`
@@ -1112,6 +2905,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/addyosmani--agent-skills/ci-cd-and-automation`
   - `.agents/skills/imported/addyosmani--agent-skills/code-review-and-quality`
   - `.agents/skills/imported/addyosmani--agent-skills/code-simplification`
+  - `.agents/skills/imported/addyosmani--agent-skills/constraint-driven-development`
   - `.agents/skills/imported/addyosmani--agent-skills/context-engineering`
   - `.agents/skills/imported/addyosmani--agent-skills/debugging-and-error-recovery`
   - `.agents/skills/imported/addyosmani--agent-skills/deprecation-and-migration`
@@ -1200,6 +2994,8 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/phuryn--pm-skills/grammar-check`
   - `.agents/skills/imported/phuryn--pm-skills/privacy-policy`
   - `.agents/skills/imported/phuryn--pm-skills/review-resume`
+- `apple/container`
+  - `.agents/skills/imported/apple--container/container`
 - `anthropics/claude-plugins-official`
   - `.agents/skills/imported/anthropics--claude-plugins-official/access`
   - `.agents/skills/imported/anthropics--claude-plugins-official/configure`
@@ -1209,6 +3005,7 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/anthropics--claude-plugins-official/configure`
   - `.agents/skills/imported/anthropics--claude-plugins-official/claude-automation-recommender`
   - `.agents/skills/imported/anthropics--claude-plugins-official/claude-md-improver`
+  - `.agents/skills/imported/anthropics--claude-plugins-official/claude-security`
   - `.agents/skills/imported/anthropics--claude-plugins-official/cardputer-buddy`
   - `.agents/skills/imported/anthropics--claude-plugins-official/m5-onboard`
   - `.agents/skills/imported/anthropics--claude-plugins-official/example-command`
@@ -1228,5 +3025,6 @@ Generated: 2026-07-08T00:20:51.148128+00:00
   - `.agents/skills/imported/anthropics--claude-plugins-official/plugin-structure`
   - `.agents/skills/imported/anthropics--claude-plugins-official/skill-development`
   - `.agents/skills/imported/anthropics--claude-plugins-official/project-artifact`
+  - `.agents/skills/imported/anthropics--claude-plugins-official/receipts`
   - `.agents/skills/imported/anthropics--claude-plugins-official/session-report`
   - `.agents/skills/imported/anthropics--claude-plugins-official/skill-creator`
