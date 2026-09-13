@@ -57,7 +57,7 @@ Parse the argument. If it is a number, validate it is between 0 and 19 inclusive
 
 ### Step 2: Read the Phase Content
 
-Use Glob to find all lesson directories under `phases/<phase-dir>/`. For each lesson, read the `docs/en.md` file. These documents contain the teaching material you will generate questions from.
+If the repo is cloned (a `phases/` directory exists in or above the current directory), find all lesson directories under `phases/<phase-dir>/` and read each lesson's `docs/en.md`. If it is not cloned, get the phase's lesson list from the Contents section of the README (fetch `https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/README.md`), then fetch each lesson's `docs/en.md` from the same raw base URL. These documents contain the teaching material you will generate questions from.
 
 Read as many lesson docs as needed to cover the full breadth of the phase. If a phase has many lessons (15+), prioritize reading a representative spread: first few, middle, and last few.
 
@@ -79,7 +79,7 @@ These test applied knowledge and implementation awareness. Examples:
 - "What is the correct order of steps to build Z?"
 - "If you observe X during training, what should you do?"
 
-Each question must have 3 or 4 answer options labeled A, B, C (and optionally D). Exactly one option is correct. The wrong options should be plausible but clearly incorrect to someone who studied the material.
+Each question must have exactly 4 answer options labeled A, B, C, and D. Exactly one option is correct. The wrong options should be plausible but clearly incorrect to someone who studied the material.
 
 Tag each question with the specific lesson it draws from (e.g., "Lesson 03: Matrix Transformations").
 
@@ -87,7 +87,7 @@ Tag each question with the specific lesson it draws from (e.g., "Lesson 03: Matr
 
 Use the AskUserQuestion tool (or equivalent interactive prompt) to present each question individually. Format:
 
-```
+```text
 Question 1/8 (Conceptual) -- from Lesson 03: Matrix Transformations
 
 What is the geometric interpretation of an eigenvalue?
@@ -100,6 +100,13 @@ D) The rank of the matrix after transformation
 
 Wait for the user's answer before moving to the next question.
 
+### Answer isolation
+
+Keep the correct option and explanation private until the learner answers the
+current question. Never use a real answer letter, a likely answer, or the
+generated answer distribution in a reply-format hint. When a plain-text hint
+is needed, use exactly: `Reply with one letter: <A|B|C|D>.`
+
 ### Step 5: Track and Score
 
 Keep a running tally:
@@ -111,7 +118,7 @@ Keep a running tally:
 After all 8 questions, display the score and grade:
 
 **7-8 correct: Mastered**
-If the phase is 19 (Capstone Projects): "You have mastered the final phase. Congratulations, you have completed the entire curriculum."
+If the phase is 19 (Capstone Projects): "You have mastered Phase 19, the final phase." Add "Congratulations, you have completed the entire curriculum." only when you can verify the rest of the curriculum is done (a `LEARNING.md` in the current directory whose Path table shows Phases 0-18 as Done or Skip); a single phase quiz does not prove full completion.
 Otherwise: "You have a strong grasp of Phase N. You are ready to move on to Phase N+1: [next phase name]."
 
 **5-6 correct: Almost**
@@ -130,7 +137,7 @@ Then list all missed topics.
 
 For every question the user got wrong, show:
 
-```
+```text
 Question N: [question text, abbreviated]
 Your answer: B
 Correct answer: C -- [the correct option text]
@@ -153,6 +160,8 @@ Wait for the user's choice and act accordingly.
 - Avoid repeating questions on retakes until the question pool is exhausted. Once exhausted, reshuffle or rephrase questions for subsequent retakes.
 - Questions must be directly grounded in the lesson docs, not general knowledge.
 - Do not show the correct answer until after the user responds.
+- Do not include literal answer letters in examples of how the learner should
+  reply; use `<A|B|C|D>` as the placeholder.
 - Keep question text concise. One or two sentences max.
 - Wrong options must be plausible. No joke answers.
 - If a phase has no lesson docs written yet (no `en.md` files found), tell the user: "Phase N does not have lesson content yet. Pick a completed phase to quiz on."
