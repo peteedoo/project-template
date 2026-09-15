@@ -13,16 +13,27 @@
  *   { projectRoot, batchFiles: [{path, language, sizeLines, fileCategory}], batchImportData }
  *
  * Output JSON:
- *   { scriptCompleted, filesAnalyzed, filesSkipped, results: [...] }
+ *   { scriptCompleted, filesAnalyzed, filesSkipped, filesUnreadable, results: [...] }
+ *
+ * `filesSkipped` lists every batch file that produced no result, and
+ * `filesUnreadable` is the subset of those that could not be read at all
+ * (ENOENT / EACCES / ...). Only the latter points at a broken `projectRoot`;
+ * a file skipped for having no registered parser is expected and benign.
  */
 
 import { createRequire } from 'node:module';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { existsSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
-import { buildResult as buildExtractResult } from './extract-structure-result.mjs';
+import {
+  analyzeFileWithOutcomes,
+  buildResult as buildExtractResult,
+} from './extract-structure-result.mjs';
 
-export { buildResult } from './extract-structure-result.mjs';
+export {
+  analyzeFileWithOutcomes,
+  buildResult,
+} from './extract-structure-result.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // skills/understand/ -> plugin root is two dirs up
@@ -77,6 +88,11 @@ async function main() {
 
   const results = [];
   const filesSkipped = [];
+  const filesUnreadable = [];
+  const analysisOutcomes = {
+    structure: { succeeded: 0, failed: 0 },
+    callGraph: { succeeded: 0, failed: 0, skipped: 0 },
+  };
 
   for (const file of batchFiles) {
     const absolutePath = join(projectRoot, file.path);
@@ -85,8 +101,16 @@ async function main() {
     let content;
     try {
       content = readFileSync(absolutePath, 'utf-8');
-    } catch {
+    } catch (err) {
+      // Keep the path in filesSkipped so "every batch file is accounted for"
+      // still holds for callers that only read that field, but also record it
+      // in filesUnreadable so a wrong projectRoot stays distinguishable from a
+      // file that merely has no parser.
       filesSkipped.push(file.path);
+      filesUnreadable.push({
+        path: file.path,
+        code: typeof err?.code === 'string' ? err.code : null,
+      });
       continue;
     }
 
@@ -97,30 +121,16 @@ async function main() {
     const totalLines = content.endsWith('\n') ? Math.max(0, lines.length - 1) : lines.length;
     const nonEmptyLines = lines.filter(l => l.trim().length > 0).length;
 
-    // Structural analysis via registry
-    let analysis = null;
-    try {
-      analysis = registry.analyzeFile(file.path, content);
-    } catch {
-      // If analysis throws, treat as degraded — still include basic metrics
+    const { analysis, callGraph, structureOutcome, callGraphOutcome } =
+      analyzeFileWithOutcomes(registry, file, content);
+
+    if (structureOutcome === 'skipped') {
+      filesSkipped.push(file.path);
+      continue;
     }
 
-    // Call graph extraction (code files only)
-    let callGraph = null;
-    if (file.fileCategory === 'code' || file.fileCategory === 'script') {
-      try {
-        const cg = registry.extractCallGraph(file.path, content);
-        if (cg && cg.length > 0) {
-          callGraph = cg.map(entry => ({
-            caller: entry.caller,
-            callee: entry.callee,
-            lineNumber: entry.lineNumber,
-          }));
-        }
-      } catch {
-        // Call graph extraction failed — non-fatal
-      }
-    }
+    analysisOutcomes.structure[structureOutcome] += 1;
+    analysisOutcomes.callGraph[callGraphOutcome] += 1;
 
     // Build result object
     const result = buildExtractResult(file, totalLines, nonEmptyLines, analysis, callGraph, batchImportData);
@@ -132,6 +142,8 @@ async function main() {
     scriptCompleted: true,
     filesAnalyzed: results.length,
     filesSkipped,
+    filesUnreadable,
+    analysisOutcomes,
     results,
   };
 
@@ -139,6 +151,25 @@ async function main() {
 
   if (!existsSync(outputPath)) {
     throw new Error(`output file missing after write: ${outputPath}`);
+  }
+
+  if (filesUnreadable.length > 0) {
+    process.stderr.write(
+      `extract-structure.mjs: ${filesUnreadable.length}/${batchFiles.length} batch file(s) could not be read ` +
+      `(e.g. ${filesUnreadable[0].path} [${filesUnreadable[0].code ?? 'unknown error'}]); ` +
+      `verify that projectRoot resolves: ${projectRoot}\n`,
+    );
+  }
+
+  // A batch where nothing at all could be read is always a configuration
+  // error (wrong projectRoot, mismatched mount, ...), never a property of the
+  // analyzed code. Report it as a failure instead of a clean run so callers
+  // cannot mistake it for "every file simply lacks a parser".
+  if (batchFiles.length > 0 && filesUnreadable.length === batchFiles.length) {
+    throw new Error(
+      `no file in the batch could be read (${filesUnreadable.length}/${batchFiles.length}); ` +
+      `projectRoot is likely wrong: ${projectRoot}`,
+    );
   }
 }
 
