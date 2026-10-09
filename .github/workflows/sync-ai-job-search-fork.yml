@@ -41,6 +41,9 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
         with:
+          # Set SYNC_PR_TOKEN (PAT with contents + pull-requests write) if Actions isn't
+          # allowed to create PRs in this repo; otherwise falls back to github.token.
+          token: ${{ secrets.SYNC_PR_TOKEN || github.token }}
           branch: automation/sync-ai-job-search-fork
           title: "chore: sync AI Job Search fork assets"
           commit-message: "chore: sync AI Job Search fork assets"

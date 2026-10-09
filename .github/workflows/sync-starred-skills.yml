@@ -42,6 +42,9 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
         with:
+          # Set SYNC_PR_TOKEN (PAT with contents + pull-requests write) if Actions isn't
+          # allowed to create PRs in this repo; otherwise falls back to github.token.
+          token: ${{ secrets.SYNC_PR_TOKEN || github.token }}
           branch: automation/sync-starred-skills
           title: "chore: sync skills from starred repositories"
           commit-message: "chore: sync skills from starred repositories"
