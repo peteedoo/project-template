@@ -17,7 +17,8 @@ description: >
   hiring denmark, job listings denmark, python jobs denmark, grafisk designer job,
   data engineer job, softwareudvikler job, full stack developer job danmark.
 context: fork
-allowed-tools: Bash(bun run skills/jobindex-search/cli/src/cli.ts *)
+enabled: false  # Danish demo portal - ships opt-in; /setup enables it when your market is Denmark, or set true here yourself
+allowed-tools: Bash(bun run .agents/skills/jobindex-search/cli/src/cli.ts *)
 ---
 
 # Jobindex Search Skill
@@ -40,11 +41,11 @@ Invoke this skill when the user wants to:
 ### Search job listings
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search [flags]
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search --query "<text>" [flags]
 ```
 
 Key flags:
-- `--query <text>` / `-q <text>` — keyword search (job title, skill, company, city). **Required** for meaningful results.
+- `--query <text>` / `-q <text>` — keyword search (job title, skill, company, city). **Required.** Searches without a query exit with `MISSING_REQUIRED`.
 - `--jobage <days>` — filter by posting age: `1` (today), `7`, `14`, `30`, or `9999` (all, default)
 - `--sort <order>` — `score` (relevance, default) or `date` (newest first)
 - `--page <n>` — page number (1-indexed, 20 results per page, fixed)
@@ -56,7 +57,7 @@ Key flags:
 ### Fetch full job detail
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts detail <id> [--format json|plain]
+bun run .agents/skills/jobindex-search/cli/src/cli.ts detail <id> [--format json|plain]
 ```
 
 `id` is the job ID from `search` results (e.g. `h1647303`). You may also pass the full Jobindex URL. Returns the full job description, deadline, employment type, hours, and apply link.
@@ -86,7 +87,7 @@ bun run skills/jobindex-search/cli/src/cli.ts detail <id> [--format json|plain]
 ### Find Python jobs posted in the last 7 days
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
   --query python \
   --jobage 7 \
   --sort date \
@@ -96,7 +97,7 @@ bun run skills/jobindex-search/cli/src/cli.ts search \
 ### Data engineer jobs in Copenhagen
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
   --query "data engineer københavn" \
   --sort score \
   --format table
@@ -105,7 +106,7 @@ bun run skills/jobindex-search/cli/src/cli.ts search \
 ### Graphic designer jobs — all time, by relevance
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
   --query "grafisk designer" \
   --limit 10 \
   --format table
@@ -114,16 +115,17 @@ bun run skills/jobindex-search/cli/src/cli.ts search \
 ### Full-stack developer jobs, page 2
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
   --query "full stack developer" \
   --page 2 \
   --format json
 ```
 
-### Jobs posted today across all sectors
+### Jobs posted today for a keyword
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
+  --query python \
   --jobage 1 \
   --sort date \
   --limit 20 \
@@ -133,13 +135,13 @@ bun run skills/jobindex-search/cli/src/cli.ts search \
 ### Get full details for a specific job
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts detail h1647303 --format plain
+bun run .agents/skills/jobindex-search/cli/src/cli.ts detail h1647303 --format plain
 ```
 
 ### Marketing jobs in Aarhus
 
 ```bash
-bun run skills/jobindex-search/cli/src/cli.ts search \
+bun run .agents/skills/jobindex-search/cli/src/cli.ts search \
   --query "marketing aarhus" \
   --jobage 30 \
   --sort date \
@@ -166,5 +168,5 @@ All errors are written to **stderr** as `{ "error": "...", "code": "..." }` and 
 - Page size is fixed at 20 results per page (Jobindex API limitation).
 - Area/region filtering via API params does not work — include city names in `--query` instead.
 - `--jobage 9999` is the default and includes all postings regardless of age.
-- Total count in `meta.total` uses Danish dot-thousands notation internally (e.g. `18.903`) — the CLI normalizes this to a plain integer.
+- Total count in `meta.total` comes from the numeric `searchResponse.hitcount` embedded in the search page.
 - Job IDs are string-prefixed (e.g. `h1647303`) — pass them as-is to `detail`.

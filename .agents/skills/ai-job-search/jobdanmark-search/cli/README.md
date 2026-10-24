@@ -11,7 +11,7 @@ CLI for the [Jobdanmark.dk](https://www.jobdanmark.dk) public job search API.
 ## Installation
 
 ```bash
-cd skills/jobdanmark-search/cli
+cd .agents/skills/jobdanmark-search/cli
 bun install
 ```
 
@@ -79,7 +79,8 @@ bun run src/cli.ts search [flags]
 | `--jobtitle-id` | number | — | Job title ID from `autocomplete` results |
 | `--municipality` | string | — | Municipality name, e.g. `Odense`, `København` |
 | `--zip` | string | — | Zip code, e.g. `5000` |
-| `--region` | string | — | Region name |
+| `--region` | string | — | Landsdel: a `locations` item with category `region`, e.g. `Sjælland`, `Østjylland` |
+| `--administrative-region` | string | — | Administrative region: a `locations` item with category `administrativeRegion`, e.g. `Region Midtjylland` |
 | `--job-type` | string | — | Comma-separated job types: `fuldtid,deltid,fleksjob,elev,studiejob,praktik` |
 | `--page` | number | `1` | Page number (30 items per page, server-enforced) |
 | `--limit` | number | — | Cap total results returned by CLI (client-side) |
@@ -129,13 +130,6 @@ bun run src/cli.ts search --text "sygeplejerske" --zip 8000 --limit 10
     {
       "title": "IT-chef søges til RAH",
       "companyName": "Rah Service A/S",
-      "companyLogo": {
-        "key": "71f1c950-abcd-1234-efgh-000000000000",
-        "url": "https://jobdanmark.dk/media/k1epc2kk/rah-service-logo.jpg",
-        "focalPoint": null
-      },
-      "companyLogoSvgMarkup": null,
-      "overlayColor": "#FFFFFF1F",
       "companyAddress": "Ndr Ringvej 4 6950 Ringkøbing",
       "jobTypes": ["fuldtid"],
       "boostJob": true,
@@ -143,12 +137,10 @@ bun run src/cli.ts search --text "sygeplejerske" --zip 8000 --limit 10
       "applicationDeadline": "10-04-2026",
       "url": "https://jobdanmark.dk/job/it-chef-soeges-til-rah",
       "slug": "it-chef-soeges-til-rah",
-      "coverImage": {
-        "key": "cf06eb46-abcd-1234-efgh-000000000000",
-        "url": "https://jobdanmark.dk/media/idvbnt4y/rah-service-as-billede.png",
-        "focalPoint": { "top": 0.488, "left": 0.499 }
-      },
-      "silhouetteLogo": false
+      "company": "Rah Service A/S",
+      "location": "Ringkøbing",
+      "date": "2026-03-12",
+      "deadline": "2026-04-10"
     }
   ]
 }
@@ -158,15 +150,15 @@ bun run src/cli.ts search --text "sygeplejerske" --zip 8000 --limit 10
 > - `url` is normalized to a full URL (CLI prepends `https://jobdanmark.dk` to the relative path from the API).
 > - `slug` is extracted from the relative `url` field (the path segment after `/job/`).
 > - `applicationDeadline` can be `null`.
-> - `companyLogo` can be `null`.
 > - `publishedDate` format: `"DD-MM-YYYY"`.
-> - `coverImage` can be `null`.
+> - Presentation-only keys the API sends (`coverImage`, `companyLogo`, `companyLogoSvgMarkup`, `overlayColor`, `silhouetteLogo`) are dropped from search output — they were ~40% of a live payload and an agent can never use them.
+> - Every result also carries the cross-portal contract fields `company`, `location`, `date` and `deadline`, derived from `companyName`, the city after the postal code in `companyAddress`, and the day-first dates converted to `YYYY-MM-DD` — `/scrape` Step 2 expects search output to include title, company, location, date, and URL. Native fields are preserved unchanged.
 
 ---
 
 ## `detail` — Full job posting detail
 
-**Method**: Fetch HTML from `https://jobdanmark.dk/job/{slug}`, extract `<script type="application/ld+json">` block.
+**Method**: Fetch HTML from `https://jobdanmark.dk/job/{slug}`. The CLI extracts a `<script type="application/ld+json">` JobPosting block when present, and falls back to parsing the rendered job page HTML when Jobdanmark omits JSON-LD.
 
 ```bash
 bun run src/cli.ts detail <slug> [--format json|plain]
@@ -202,11 +194,12 @@ bun run src/cli.ts detail it-chef-soeges-til-rah --format plain
     "postalCode": "6950",
     "addressCountry": "DK"
   },
-  "description": "<p>Full HTML description...</p>"
+  "description": "<p>Full HTML description...</p>",
+  "applyUrl": "https://example.com/apply"
 }
 ```
 
-> **Note**: The `hiringOrganization.logo` and `validThrough` fields may be `null` if not present in the JSON-LD. `jobLocation` fields may be `null` if the location data is absent.
+> **Note**: The `hiringOrganization.logo`, `validThrough`, and `applyUrl` fields may be `null` if not present in the structured data or rendered page. `jobLocation` fields may be `null` if the location data is absent.
 
 ---
 
@@ -428,7 +421,7 @@ bun run src/cli.ts locations --query "Sjælland"
 ]
 ```
 
-> **Note**: Returns `[]` when no locations match. The `value` field for municipalities is the display name (string); for zip codes it is the numeric string. Use `value` directly as `--municipality` or `--zip` in `search`.
+> **Note**: Returns `[]` when no locations match. The `value` field for municipalities is the display name (string); for zip codes it is the numeric string. Pass `value` to the `search` flag matching its `category`: `--municipality`, `--zip`, `--region` (category `region`, a landsdel such as `Sjælland`) or `--administrative-region` (category `administrativeRegion`, such as `Region Midtjylland`). Under any other flag the value matches no jobs.
 
 ---
 
@@ -440,7 +433,7 @@ All errors are written to **stderr** in JSON format and exit with code `1`:
 { "error": "Job not found", "code": "NOT_FOUND" }
 { "error": "API request failed: 400 Bad Request", "code": "API_ERROR" }
 { "error": "--query is required", "code": "MISSING_REQUIRED" }
-{ "error": "Failed to parse JSON-LD from job page", "code": "PARSE_ERROR" }
+{ "error": "Failed to parse job page HTML", "code": "PARSE_ERROR" }
 ```
 
 ---
@@ -448,5 +441,4 @@ All errors are written to **stderr** in JSON format and exit with code `1`:
 ## URL construction
 
 - Job detail pages: `https://jobdanmark.dk/job/{slug}`
-- Company logo images: `https://jobdanmark.dk{companyLogo.url}` (prepend base URL to relative path)
-- Cover images: `https://jobdanmark.dk{coverImage.url}` (prepend base URL to relative path)
+- Image URLs from the raw API (`companyLogo.url`, `coverImage.url`) are relative; prepend `https://jobdanmark.dk` if you consume the API directly (the CLI drops these keys)
