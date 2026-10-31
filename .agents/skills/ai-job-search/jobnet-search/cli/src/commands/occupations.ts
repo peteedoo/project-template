@@ -21,7 +21,7 @@ export const occupations = defineCommand({
     "search-string": option(z.string().optional(), {
       description: "Search term for occupation, e.g. sygeplejerske",
     }),
-    "per-page": option(z.coerce.number().default(10), {
+    "per-page": option(z.coerce.number().int().min(1).default(10), {
       description: "Max results to return",
     }),
     format: option(z.enum(["json", "table", "plain"]).default("json"), {
@@ -64,9 +64,12 @@ export const occupations = defineCommand({
 })
 
 function outputTable(data: Occupation[]): void {
-  console.log("conceptUriDa                                                            preferredLabelDa")
+  // The full URI is an identifier: truncating it cuts the UUID used to build
+  // search filters. Widen the column instead of abbreviating its value.
+  const uriWidth = data.reduce((width, o) => Math.max(width, o.conceptUriDa.length), 70)
+  console.log(`${"conceptUriDa".padEnd(uriWidth)} preferredLabelDa`)
   for (const o of data) {
-    const uri = o.conceptUriDa.substring(0, 70).padEnd(70)
+    const uri = o.conceptUriDa.padEnd(uriWidth)
     const label = o.preferredLabelDa
     console.log(`${uri} ${label}`)
   }

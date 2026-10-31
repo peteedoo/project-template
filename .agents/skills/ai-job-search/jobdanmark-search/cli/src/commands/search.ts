@@ -1,8 +1,8 @@
 import { defineCommand, option } from "@bunli/core"
 import { z } from "zod"
-import { apiPost, writeError, BASE_URL } from "../helpers.js"
+import { apiPost, writeError, stripInvisible, BASE_URL } from "../helpers.js"
 
-interface ApiSearchItem {
+export interface ApiSearchItem {
   title: string
   companyName: string
   companyLogo: {
@@ -12,7 +12,7 @@ interface ApiSearchItem {
   } | null
   companyLogoSvgMarkup: string | null
   overlayColor: string | null
-  companyAddress: string
+  companyAddress: string | null
   jobTypes: string[]
   boostJob: boolean
   publishedDate: string
@@ -34,7 +34,24 @@ interface ApiSearchResponse {
   totalPages: number
 }
 
-function normalizeItem(item: ApiSearchItem): Record<string, unknown> {
+export function toContractDate(value: string | null): string | null {
+  const match = value?.match(/^(\d{2})-(\d{2})-(\d{4})$/)
+  return match ? `${match[3]}-${match[2]}-${match[1]}` : (value ?? null)
+}
+
+// Live companyAddress values put the city after the postcode either as
+// "Lautruphoej 2, 2750 Ballerup" or "2670, Greve". The comma fallback
+// requires a non-digit after the comma so a 4-digit street number
+// ("Vejlevej 1234, 7100 Vejle") never wins over the real postcode.
+export function extractCity(address: string | null): string | null {
+  if (!address) return null
+  const city =
+    address.match(/\d{4}\s+(.+)$/)?.[1] ?? address.match(/\d{4}\s*,\s*([^\d,].*)$/)?.[1]
+  const trimmed = city?.trim()
+  return trimmed ? trimmed : null
+}
+
+export function normalizeItem(item: ApiSearchItem): Record<string, unknown> {
   const relativeUrl = item.url
   const fullUrl = relativeUrl.startsWith("http")
     ? relativeUrl
@@ -42,32 +59,14 @@ function normalizeItem(item: ApiSearchItem): Record<string, unknown> {
   // Extract slug from url path: /job/<slug>
   const slug = relativeUrl.replace(/^\/job\//, "")
 
-  const companyLogo = item.companyLogo
-    ? {
-        key: item.companyLogo.key,
-        url: item.companyLogo.url.startsWith("http")
-          ? item.companyLogo.url
-          : `${BASE_URL}${item.companyLogo.url}`,
-        focalPoint: item.companyLogo.focalPoint,
-      }
-    : null
-
-  const coverImage = item.coverImage
-    ? {
-        key: item.coverImage.key,
-        url: item.coverImage.url.startsWith("http")
-          ? item.coverImage.url
-          : `${BASE_URL}${item.coverImage.url}`,
-        focalPoint: item.coverImage.focalPoint,
-      }
-    : null
-
-  return {
+  // Presentation-only keys (coverImage, companyLogo, companyLogoSvgMarkup,
+  // overlayColor, silhouetteLogo) are dropped: they were ~40% of a live
+  // payload and the /scrape agent can never use an image or overlay colour.
+  // The #340 compatibility duplicates (companyName, publishedDate,
+  // applicationDeadline) stay.
+  return stripInvisible({
     title: item.title,
     companyName: item.companyName,
-    companyLogo,
-    companyLogoSvgMarkup: item.companyLogoSvgMarkup ?? null,
-    overlayColor: item.overlayColor ?? null,
     companyAddress: item.companyAddress,
     jobTypes: item.jobTypes,
     boostJob: item.boostJob,
@@ -75,9 +74,15 @@ function normalizeItem(item: ApiSearchItem): Record<string, unknown> {
     applicationDeadline: item.applicationDeadline ?? null,
     url: fullUrl,
     slug,
-    coverImage,
-    silhouetteLogo: item.silhouetteLogo,
-  }
+    // /scrape contract aliases (add-portal.md: every result carries at least
+    // id, title, company, location, date, url). `id` is the slug - the value
+    // `detail` takes - under the name every other portal CLI uses.
+    id: slug,
+    company: item.companyName,
+    location: extractCity(item.companyAddress),
+    date: toContractDate(item.publishedDate),
+    deadline: toContractDate(item.applicationDeadline),
+  })
 }
 
 export const search = defineCommand({
@@ -87,10 +92,10 @@ export const search = defineCommand({
     text: option(z.string().optional(), {
       description: "Free-text keyword search (job title, keyword)",
     }),
-    category: option(z.coerce.number().optional(), {
+    category: option(z.coerce.number().int().min(1).optional(), {
       description: "Category ID",
     }),
-    "jobtitle-id": option(z.coerce.number().optional(), {
+    "jobtitle-id": option(z.coerce.number().int().min(1).optional(), {
       description: "Job title ID from autocomplete results",
     }),
     municipality: option(z.string().optional(), {
@@ -100,15 +105,18 @@ export const search = defineCommand({
       description: "Zip code, e.g. 5000",
     }),
     region: option(z.string().optional(), {
-      description: "Region name",
+      description: "Landsdel from locations (category region), e.g. Sjælland, Østjylland",
+    }),
+    "administrative-region": option(z.string().optional(), {
+      description: "Administrative region from locations (category administrativeRegion), e.g. Region Midtjylland",
     }),
     "job-type": option(z.string().optional(), {
       description: "Comma-separated job types: fuldtid,deltid,fleksjob,elev,studiejob,praktik",
     }),
-    page: option(z.coerce.number().default(1), {
+    page: option(z.coerce.number().int().min(1).default(1), {
       description: "Page number (30 items per page, server-enforced)",
     }),
-    limit: option(z.coerce.number().optional(), {
+    limit: option(z.coerce.number().int().min(1).optional(), {
       description: "Cap total results returned by CLI (client-side)",
     }),
     format: option(z.enum(["json", "table", "plain"]).default("json"), {
@@ -137,6 +145,12 @@ export const search = defineCommand({
     }
     if (flags.region) {
       filters.push({ type: "region", value: flags.region, displayText: flags.region })
+    }
+    // `locations` returns two kinds of region, and the API filters each by its
+    // own type: a "region" filter holding "Region Midtjylland" matches no job.
+    if (flags["administrative-region"]) {
+      const value = flags["administrative-region"]
+      filters.push({ type: "administrativeRegion", value, displayText: value })
     }
 
     const jobTypes = flags["job-type"]
