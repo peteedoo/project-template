@@ -1,0 +1,84 @@
+# Supervisor middleware troubleshooting
+
+Use this reference when the deployment registers supervisor middleware or a
+sandbox policy attaches it through `network_middlewares`. Start with gateway
+reachability and compute-platform checks in the [main skill](../SKILL.md).
+Use installed CLI help for command syntax and the published
+[gateway configuration reference](https://docs.nvidia.com/openshell/latest/how-it-works/gateways/configuration)
+for registration settings.
+
+## Collect diagnostics
+
+For operator-run supervisor middleware, inspect `[[openshell.supervisor.middleware]]`, service reachability, and both gateway and supervisor logs:
+
+```shell
+rg -n 'supervisor|middleware|grpc_endpoint|tls_ca_cert_path|audience|allow_insecure_transport|binding_policy|bindings|max_payload_bytes|timeout|gateway_jwt' /etc/openshell/gateway.toml
+journalctl -u <middleware-service> --no-pager --lines=200
+journalctl -u openshell-gateway --no-pager --lines=200
+openshell logs <sandbox-name> --tail --source sandbox
+```
+
+## Startup and authentication
+
+The middleware service must start before the gateway and be reachable from both the gateway and sandbox supervisors. Gateway startup fails if `Describe` is unavailable, peer metadata is missing, the protocol major is incompatible, a required capability is absent, a manifest exposes duplicate operation/phase bindings, the registration claims the reserved `openshell/` namespace, or payload and timeout limits are invalid. Current services receive `MiddlewareDescribeRequest` instead of an empty request; regenerate bindings when upgrading a legacy service. Supported bindings are `HTTP_REQUEST/PRE_CREDENTIALS`, `HTTP_RESPONSE/PRE_RETURN`, and `WEBSOCKET_MESSAGE/PRE_CREDENTIALS`.
+
+A service selects HTTP hooks for all of its HTTP bindings by listing `openshell.supervisor-middleware.http-hooks` in `extension.required_capabilities`; without it, the same bindings use the deprecated legacy HTTP hooks. Registration fails when a service lists the capability as supported but not required. Gateways and supervisors that predate HTTP hooks reject a service that requires it, reporting a missing gateway capability or, for a headers-only binding, an invalid payload limit. Upgrade the gateway first and recreate sandboxes started by older supervisors. `max_payload_bytes = 0` is valid when every binding is a zero-limit HTTP hook.
+
+When gateway JWT signing is disabled, supervisors preserve the legacy unauthenticated connector and do not request extension credentials. When signing is enabled, credential acquisition and verification failures are fail closed: check HTTPS trust and hostname validation, audience and issuer agreement, the token `kid`, gateway `RefreshSandboxToken` errors, and middleware logs. Changing a registration requires a gateway restart. A policy update can also fail before persistence if the selected implementation rejects its `network_middlewares` config.
+
+## A matching request skips the middleware
+
+Compare the service's `Describe` bindings with `binding_policy` and `bindings` in its gateway registration. The gateway checks its own `Describe` response at startup; the supervisor checks again when it installs the registration. The default `dynamic` policy accepts all valid advertised bindings. An `allowlist` requires every listed binding and ignores extras; `exact` also rejects extras.
+
+For example, if the service advertises both HTTP hooks but the allowlist is `bindings = ["http_response_pre_return"]`, only the response hook is selected. Requests skip this middleware even with `on_error: fail_closed`, because that setting applies only after a stage is selected. If request inspection is required, include `http_request_pre_credentials` in the registration, restart the gateway, and confirm the supervisor accepted the change. Older supervisors ignore these fields; a running supervisor that rejects an update keeps its last accepted configuration.
+
+## HTTP hook stage ordering
+
+Each HTTP hook stage receives preflight only after the preceding stage establishes its output headers. If a later service has no RPC yet, check whether the earlier service has returned `buffered_result` or `output_start`. A stage that continues without inspection passes its header changes immediately. Later stages see earlier body-time header changes before choosing inspection.
+
+Preflight and WHOLE_BODY processing share the per-message buffering slot. A chain with deferred decisions also reserves a stream slot. If a deferred preflight cannot acquire capacity within its setup budget, the exchange fails closed with `middleware_unavailable`; services not yet opened receive no session-end event.
+
+## HTTP response failures
+
+For response failures, distinguish a deliberate `middleware_denied` decision from `response_delivery_failed`. Before response commitment, they produce canonical 403 and 502 responses respectively. After commitment, OpenShell aborts without adding an error body, final chunk, or trailer. A whole-body accumulation timeout is one fixed, non-resetting 120-second wall-clock deadline shared across response reads and whole-body barriers; inspect the active stage's `on_error` and `whole_body_accumulation_timeout` diagnostics. Header-only stages preserve upstream body framing. Body-processing stages normalize framing and send a trailer exchange, including an empty trailer set, after the final body result.
+
+## HTTP hook failures
+
+The HTTP hooks (`HttpHooks.EvaluateHttpRequestHook` and `HttpHooks.EvaluateHttpResponseHook`) always fail closed, and `on_error` does not apply. The sandbox's error body carries a `failure_code`; sandbox OCSF events carry a more specific reason. Map them as follows:
+
+- `middleware_hook_versions_mixed` (same `failure_code`): one request or response chain selected entries of both HTTP hook versions. The gateway rejects such policies, so look for a policy stored before a service changed hook version, and separate the selectors.
+- `middleware_cannot_inspect` (same `failure_code`): OpenShell could not provide the message head to the stage, for example because it exceeded capacity. A service that cannot inspect a message, usually because no body mode was offered (encoded request or response, or a partial, no-transform, or oversized response), denies it with its own `reason_code` instead. When a response stage may inspect bodies, OpenShell sends `Accept-Encoding: identity` upstream, so an encoded response points to an upstream that ignores it. A gRPC status that ends the stream is `middleware_unavailable`.
+- `middleware_unimplemented` (OCSF reason; `failure_code: middleware_lifecycle_violation`): the service declared HTTP hook bindings but does not implement the matching `HttpHooks.EvaluateHttpRequestHook` or `HttpHooks.EvaluateHttpResponseHook` RPC.
+- `middleware_body_timeout` (OCSF reason; `failure_code: middleware_timeout`): a WHOLE_BODY stage exceeded the 2-minute whole-body deadline.
+- `middleware_stall_timeout` (OCSF reason; `failure_code: stream_idle_timeout`): a DUPLEX stage stalled for 30 seconds.
+- `408 Request Timeout` with `error: request_timeout`: the sandbox stopped sending a request body for 30 seconds while a DUPLEX stage held it. This is a client problem, not a middleware failure.
+
+A response failure after the head is committed aborts the connection without a terminating chunk and emits a High finding. On uninspectable connections (`tls: skip`, h2c, unsupported tunnels, raw TCP, SQL passthrough) to a selected host, a fail-closed entry denies the connection, and an all-fail-open chain lets it through. Both emit an `openshell.middleware.traffic_uninspectable` finding. To allow such traffic, exclude the host from the selector.
+
+## Request and WebSocket failures
+
+At request time, distinguish attachment, binding selection, coverage, denial, and failure. A host-matched HTTP-only attachment can inspect the upgrade GET but does not join the WebSocket chain; the connection proceeds under either `on_error` mode and emits `binding_not_selected` coverage. A selected WebSocket stage receives text messages only. Binary messages pass under both modes, emit `unsupported_message_type` coverage, and consume a session sequence without an RPC.
+
+An explicit `middleware_denied` result is always enforced. WebSocket preflight returns `INSPECT`, voluntary `SKIP`, or authoritative `DENY`; `DENY` rejects the upgrade before upstream contact under both `on_error` modes. A selected-stage failure follows the policy-local `on_error`: `fail_closed` blocks the HTTP request or closes the WebSocket, while `fail_open` bypasses only that stage and emits a detection finding. A fail-open per-message capacity failure bypasses that message without disabling the stage. A timeout, transport failure, stream closure, missing or invalid response, duplicate or regressed sequence, or other failure that makes an established WebSocket stream unreliable disables that stage for later messages on the connection and emits `openshell.middleware.websocket_stage_disabled`.
+
+Confirm preflight, session-start, and session-end in service logs. OpenShell best-effort sends at most one session-end to each still-writable opened stage, including a preflight that terminates before session start; distinguish `MIDDLEWARE_DENIAL` from `MIDDLEWARE_FAILURE`.
+
+WebSocket message sequences are allocated session-wide; each stage receives a strictly increasing subset, so gaps are valid when binary messages or other units are not delivered to that stage. Zero, duplicate, or regressed sequences are protocol errors. If a running supervisor cannot install a new registry, it preserves its last-known-good generation and emits a configuration failure event.
+
+## Common failure patterns
+
+| Symptom | Likely cause | Check |
+|---|---|---|
+| Authenticated middleware rejects gateway calls | Private CA or hostname mismatch, expected audience or issuer mismatch, stale/unknown `kid`, or malformed extension token | `tls_ca_cert_path`, registration `audience`, service verifier config and logs; fetch well-known metadata only through the already-trusted gateway TLS endpoint |
+| Gateway fails after registering supervisor middleware | Service unavailable, invalid manifest, duplicate binding, reserved name, or invalid payload/timeout limit | Middleware service and gateway logs; `[[openshell.supervisor.middleware]]`; `Describe` response |
+| Gateway or middleware rejects its peer before serving health | Missing peer metadata, incompatible protocol major, or unmet `required_capabilities` | Gateway and middleware startup logs; compare `PeerMetadata`; legacy-to-current migration requires a coordinated gateway and middleware outage |
+| Policy update rejects `network_middlewares` | Unknown middleware name, implementation-owned config invalid, duplicate order, broad/invalid host selector, fail-closed coverage of `tls: skip`, `fail_open` on an HTTP hook service, or overlapping selectors that use different HTTP hook versions | Policy error, gateway logs, middleware `ValidateConfig`, selector, order, and `on_error` fields, service `Describe` binding operations |
+| Gateway fails with a capability error after a middleware upgrade | The service lists `openshell.supervisor-middleware.http-hooks` as supported but not required, or a gateway that predates HTTP hooks reports it as a missing gateway capability | Service `Describe` manifest and gateway startup logs |
+| HTTP traffic fails with `failure_code` `middleware_hook_versions_mixed`, `middleware_cannot_inspect`, or `middleware_lifecycle_violation` (OCSF reason `middleware_unimplemented`) | HTTP hook chain failure; always fail-closed | Sandbox OCSF middleware events; policy selectors; service `HttpHooks.EvaluateHttpRequestHook`/`HttpHooks.EvaluateHttpResponseHook` implementation and logs |
+| Streaming upload returns `408 Request Timeout` | The sandbox paused a request body for 30 seconds while a DUPLEX stage held it | Client upload behavior; middleware OCSF event with `client_progress_timeout` |
+| HTTP request returns `middleware_failed` or `middleware_denied`, or WebSocket closes with `1008` | Selected stage failed or explicitly denied admitted traffic | `failure_code` and `middleware` in an HTTP hook failure body; sandbox OCSF logs; policy-local middleware config; service availability; binding operation; `on_error` |
+| HTTP response becomes canonical `403 middleware_denied`, `502 response_delivery_failed`, or closes mid-body | Response middleware blocked, failed before commitment, or stopped delivery after commitment | Sandbox OCSF response middleware events; `HTTP_RESPONSE/PRE_RETURN` binding; `on_error`; `whole_body_accumulation_timeout`; service stream lifecycle |
+| WebSocket upgrades but a host-matched middleware receives no preflight or message RPC | The service did not advertise `WEBSOCKET_MESSAGE/PRE_CREDENTIALS`, or its registration did not authorize that binding | `WEBSOCKET_MIDDLEWARE_COVERAGE state=binding_not_selected`; compare `Describe` with `binding_policy` and `bindings`; the upgrade GET may still have used its HTTP binding |
+| Binary WebSocket message passes without a middleware RPC | Binary is unsupported by the V1 text-message binding under both `on_error` modes | `WEBSOCKET_MIDDLEWARE_COVERAGE state=unsupported_message_type`; the next text RPC may have a valid sequence gap |
+| WebSocket messages stop reaching middleware after one failure | A fail-open stage stream was disabled for the rest of the connection | `openshell.middleware.websocket_stage_disabled`; middleware timeout/stream/protocol logs. A per-message capacity bypass alone leaves the stage active. Reconnect to create a fresh stream after a genuine stream failure |
+| Supervisor repeatedly fails to install middleware after enabling gateway JWT signing | Extension credential minting, distribution, or authenticated service connection failed; last-known-good registry remains active | Gateway `RefreshSandboxToken` logs, sandbox configuration events, service token-verification logs, registration TLS/audience settings |
