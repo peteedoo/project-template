@@ -1,0 +1,278 @@
+#!/usr/bin/env python3
+"""The router, as the core watcher's task-event handler.
+
+One process, two watches: the core's watcher already watches `tasks/`, so the
+router runs inside it rather than as a second daemon. This file is dispatch
+only — every routing decision belongs to `pool_router`/`pool_roster`.
+
+The watcher's handler protocol carries the design's recipient rules exactly:
+
+    probe 3   decline    not a roster hit -- unbound, or a name never created.
+                          The core takes it; it is a recipient, not a fallback.
+    probe 0   accept     every target is on the roster; the real run delivers.
+    4         must-handle a header id that is not the file's, or an admitted
+                          target left without a sentinel: the core must not
+                          inherit it, and 0 would release the claim on nothing.
+
+Run: called by src/watch-tasks-stream.sh; see dispatch_task there. A worker's own
+gateway lane also runs it (`--from-lane --payload <staged copy>`) on each task it
+queues, BEFORE publishing it to `tasks/`, so the task is already its worker's when
+it appears and the core's watcher leaves it alone (it never routes a held task).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+# local_task_protocol lives in the core; repo root is parents[3] from here
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "src"))
+
+import activity_bus  # noqa: E402
+import local_task_protocol as ltp  # noqa: E402
+
+import pool_roster as pr  # noqa: E402
+
+import pool_router as rt  # noqa: E402
+import pool_advertise as pa
+import pool_attribution as pat  # noqa: E402
+import pool_routing_receipt as prr  # noqa: E402
+
+DECLINE = 3
+MUST_HANDLE = 4
+PICKER_WIRE = "worker-picker"
+
+
+def read_task(task_file: str, payload: "str | None" = None) -> dict:
+    """The watcher hands a task FILE; the router takes a task DICT.
+
+    `requested_worker` (and its legacy alias) is read only from ABOVE `task:`,
+    so a body cannot forge it. `channel_id`/`source` are read leniently: the gateway stamps them
+    below `task:`, where the strict parse never looks. `payload` holds the bytes of a task
+    not yet published at `task_file`, which still names it.
+    """
+    text = Path(payload or task_file).read_text(encoding="utf-8", errors="replace")
+    task: dict = {"id": Path(task_file).stem}
+    # A stop from a trusted source must reach whoever holds the task it names; anything else is a task.
+    stop_of = activity_bus.trusted_cancel_target(text, task_file)
+    if stop_of:
+        task["stop_of"] = stop_of
+    for line in text.splitlines():
+        if line.startswith("task:"):
+            break
+        key, _, value = line.partition(":")
+        if _ and key.strip() in ("id", "channel_id", "source", "requested_worker",
+                                 pr.LEGACY_WORKER_FIELD):
+            task[key.strip()] = value.strip()
+    if not task.get("channel_id") or not task.get("source") or "wire_source" not in task:
+        lenient = ltp.parse_task_headers_lenient(text).headers
+        for k in ("channel_id", "source", "wire_source"):
+            if not task.get(k) and lenient.get(k):
+                task[k] = str(lenient.get(k)).strip()
+    return task
+
+
+def classify(workspace, task: dict) -> tuple[int, list, dict | None]:
+    """(exit code, targets, the roster they were read from) without delivering.
+
+    The roster is returned so the run routes against the SAME snapshot that
+    admitted the task: reloaded, a binding removed in between sends the task
+    to the core under an exit code that says a worker has it.
+    """
+    # A picker button is the core's to answer; routing it BY a binding would hand
+    # it to the worker bound to the room it was pressed in.
+
+    # Two writer generations: the lane-authority writer stamps wire_source,
+    # the older one stamps source itself. Either mark means the same command.
+    if PICKER_WIRE in (task.get("wire_source"), task.get("source")):
+        return DECLINE, [], None
+    # A replay follows the committed delivery, whatever the bindings say now; one roster
+    # read serves the replay check and the route, and decides for a task nobody holds yet.
+    try:
+        raw, unreadable = pr._load_existing_roster_strict(workspace), False
+    except pr.RosterError:
+        raw, unreadable = None, True
+    roster = raw if (isinstance(raw, dict) and "workers" in raw) else None
+    try:
+        committed = rt.committed_recipient(workspace, task.get("id") or "", roster=roster)
+    except rt.RouterRefused as e:      # a conflict, or evidence that cannot be read
+        print(f"pool_route_handler: {e}", file=sys.stderr)
+        return MUST_HANDLE, [], None
+    if committed is not None and committed != pr.CORE:
+        return 0, [committed], roster
+    try:
+        holder = rt.stop_holder(workspace, task, roster=roster)
+    except rt.RouterRefused as e:      # whose the stopped task is cannot be told
+        print(f"pool_route_handler: {e}", file=sys.stderr)
+        return MUST_HANDLE, [], None
+    if holder is not None:
+        return 0, [holder], roster
+    if unreadable:
+        # Absent means no pool; UNREADABLE means we cannot tell whose work this
+        # is. Declining would hand every bound task to the unrestricted core.
+        return MUST_HANDLE, [], None
+    if roster is None:
+        return DECLINE, [], None
+    try:
+        targets = pr.targets_for(roster, task.get("channel_id") or task.get("source") or "",
+                                 pr.requested_worker_of(task))
+    except pr.AmbiguousWorkerName as e:
+        print(f"pool_route_handler: {e}", file=sys.stderr)
+        return MUST_HANDLE, [], roster
+    # One question only: is every target on the roster? Anything else -- no
+    # binding, a name never created -- is the core's, which is a real recipient.
+    if targets == [pr.CORE] or pr.unknown_targets(roster, targets):
+        return DECLINE, targets, roster
+    # A worker on its own folders is reached through its own agent, never routed to.
+    own = rt.own_dir_workers(workspace, targets)
+    targets = rt.without_own_dir_workers(workspace, targets)
+    if own:
+        print(f"pool_route_handler: {task.get('id')} not routed to {', '.join(own)} (on its own folders, "
+              f"reached through its own agent)", file=sys.stderr)
+    if targets == [pr.CORE]:
+        return DECLINE, targets, roster
+    # Liveness is deliberately NOT asked: the sentinel is durable, so a worker
+    # that starts later finds its work.
+    return 0, targets, roster
+
+
+def attribute_only(workspace, task_id: str, worker: str) -> int:
+    """0 once `task_id` is recorded as `worker`'s (now or before); 1 when it is not a worker id or another
+    worker holds the record."""
+    if not workspace or not pat.is_worker_id(worker):
+        print(f"pool_route_handler: --attribute-only needs a workspace and a worker id, not {worker!r}",
+              file=sys.stderr)
+        return 1
+    if pat.record(workspace, task_id, worker):
+        return 0
+    held = pat.worker_for_task(workspace, task_id) or ""
+    if held == worker:
+        return 0
+    print(f"pool_route_handler: {task_id} is attributed to {held or 'an unreadable record'}, not {worker}",
+          file=sys.stderr)
+    return 1
+
+
+def migrate_dirs(workspace, worker: str) -> int:
+    """0 once `worker` (switched to its own folders) holds no owed sentinel but answered ones; prints
+    the outcome as one JSON line. 1 when it has no own folders or the folder cannot be read."""
+    import connections
+    import pool_delivery
+    own = connections.worker_dirs(worker, Path(workspace)) if workspace and worker else None
+    if own is None:
+        print(f"pool_route_handler: --migrate-dirs: worker {worker!r} has no own folders", file=sys.stderr)
+        return 1
+    try:
+        out = pool_delivery.migrate_to_own_dirs(
+            workspace, worker, own[0], lambda tid: connections.task_home(tid, Path(workspace))["worker"] == worker)
+    except (OSError, pr.RosterError, ValueError) as e:
+        print(f"pool_route_handler: --migrate-dirs: {e}", file=sys.stderr)
+        return 1
+    print(json.dumps(out, sort_keys=True))
+    return 0
+
+
+def main(argv=None) -> int:
+    p = argparse.ArgumentParser(add_help=False)
+    p.add_argument("--task-file", default=None)
+    p.add_argument("--workspace", default=None)
+    p.add_argument("--probe", action="store_true")
+    # The watcher and a lane still pass their results dir; nothing here reads it.
+    p.add_argument("--results-dir", default=None)
+    # A worker's own lane routing the task it queued: the same decision, but not the watcher's receipt.
+    p.add_argument("--from-lane", action="store_true")
+    # The lane's staged copy of `--task-file`, routed before it is published there.
+    p.add_argument("--payload", default=None)
+    # The lane again, once the task is published: re-raise its worker's pending sentinel.
+    p.add_argument("--renotify", action="store_true")
+    # A worker's own-dir lane: its folder is the inbox, so the task is only recorded as `--worker`'s.
+    p.add_argument("--attribute-only", action="store_true")
+    p.add_argument("--worker", default="")
+    # `worker_lane.py migrate-dirs`: move the worker's delivered work into its own tasks folder.
+    p.add_argument("--migrate-dirs", action="store_true")
+    for ignored in ("--runtime", "--repo"):
+        p.add_argument(ignored, default=None)
+    args, _unknown = p.parse_known_args(argv)
+
+    ws = args.workspace
+    if args.migrate_dirs:
+        return migrate_dirs(ws, args.worker)
+    if not args.task_file:
+        p.error("--task-file is required")
+    if args.attribute_only:
+        return attribute_only(ws, Path(args.task_file).stem, args.worker)
+    # First, before anything can fail: the receipt is the only proof outside this
+    # process that the watcher routes at all, and a write failure changes nothing.
+    if ws and not args.from_lane and not prr.record(ws, mode="probe" if args.probe else "run",
+                             task_id=Path(args.task_file).stem):
+        print("pool_route_handler: routing receipt not written", file=sys.stderr)
+    # An inherited roster has no advertisement until something publishes it;
+    # the edge is here, and a failure to publish must never stop routing.
+    try:
+        pa.ensure_advertisement(ws)
+    except Exception as e:  # noqa: BLE001 — ANY failure, per the contract above:
+        # an escape here routes a BOUND task to the unrestricted live core.
+        print(f"pool_route_handler: advertisement not ensured: {e!r}", file=sys.stderr)
+    task = read_task(args.task_file, args.payload)
+    code, targets, roster = classify(ws, task)
+    stem = Path(args.task_file).stem
+    if code == 0 and task["id"] != stem:
+        # The router delivers BY id: a header naming another file delivers
+        # nothing, and the shared writer rejects the sentinel anyway.
+        print(f"pool_route_handler: header id {task['id']!r} is not the file's "
+              f"{stem!r}; refusing", file=sys.stderr)
+        return MUST_HANDLE
+    if args.probe:
+        return code
+    if code == MUST_HANDLE:
+        return MUST_HANDLE
+    if code == DECLINE:
+        return DECLINE
+
+    try:
+        out = rt.route(ws, task, roster, payload=args.payload, renotify=args.renotify)
+    except rt.RouterRefused as e:
+        # The pass refused; the core must not silently inherit the task.
+        print(f"pool_route_handler: {e}", file=sys.stderr)
+        return MUST_HANDLE
+    except OSError as e:
+        # A delivery I/O failure is still "a worker holds this": rc 1 would read
+        # as an optional decline and hand the task to the unrestricted core.
+        print(f"pool_route_handler: delivery failed: {e}", file=sys.stderr)
+        return MUST_HANDLE
+    if out.get("fenced") and not (out.get("delivered") or out.get("already")):
+        # Retired after this pass read the roster: nothing was written, so the core takes it.
+        return DECLINE
+    settled = set(out.get("delivered") or []) | set(out.get("already") or [])
+    # Judge settlement by the targets the route COMMITTED to, not the probe's
+    # snapshot: a commit that landed between the two is not a missing delivery.
+    routed = list(out.get("targets") or targets)
+    unsettled = [t for t in routed if t not in settled] + list(out.get("skipped") or [])
+    if unsettled:
+        # 0 here releases the watcher's claim on a task no worker holds.
+        print(json.dumps({**out, "unsettled": unsettled}), file=sys.stderr)
+        return MUST_HANDLE
+    return 0
+
+
+def guarded_main(argv=None) -> int:
+    """`main` for the watcher, failing CLOSED on anything it did not anticipate.
+
+    A handler that crashed did not settle the task, and any other non-zero code
+    reads as an optional decline — which hands a bound task to the live core.
+    """
+    try:
+        return main(argv)
+    except SystemExit as e:
+        # argparse exits rather than raising, and SystemExit is a BaseException:
+        # an `Exception` floor moves this fail-open instead of closing it.
+        return MUST_HANDLE if (e.code or 0) != 0 else 0
+    except Exception as e:  # noqa: BLE001 — the exit code IS the routing decision
+        print(f"pool_route_handler: unhandled {e!r}", file=sys.stderr)
+        return MUST_HANDLE
+
+
+if __name__ == "__main__":
+    raise SystemExit(guarded_main())
