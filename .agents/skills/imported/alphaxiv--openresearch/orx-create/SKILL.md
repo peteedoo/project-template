@@ -1,0 +1,57 @@
+---
+name: orx-create
+description: "Start a project or add experiment nodes. Use when the project or its tree is empty, or when choosing a baseline, a parent or the run command."
+---
+
+## Start a project
+
+Run `orx up`, then use the dashboard to import an existing Git repository or
+create a new project. Optional GitHub publication is for collaboration and is
+not required for compute.
+
+For an existing GitHub repository, clone it normally before importing it:
+
+```sh
+git clone https://github.com/<owner>/<repo>
+orx up
+```
+
+Prefer an existing implementation over starting from a blank repository. For a
+paper, use `orx paper <id>` and the `orx-lit-review` retrieval workflow to find the authors' or best
+community implementation, clone it, then import that checkout in `orx up`.
+
+Set the project's run command once before launching experiments:
+
+```sh
+orx project edit --run-command '<command>'
+```
+
+## Add an experiment node
+
+`orx create-experiment` accepts project and experiment ids:
+
+```sh
+# First node in an empty project: the baseline root.
+orx create-experiment --title "Baseline"
+
+# Child node branched from an existing experiment.
+orx create-experiment --title "Larger batch" \
+  --parent <localExperimentId> \
+  --description "Increase batch size and compare throughput and loss."
+
+# Explicit additional root when the project already has one.
+orx create-experiment --title "Alternative baseline" --baseline
+```
+
+- The first parentless node is the baseline. Later parentless nodes attach to
+  the oldest root unless `--baseline` explicitly requests another root.
+- A child branches from its parent's Git branch and inherits its run
+  command. Vary code or configuration on the child; keep the command fixed.
+- `--title` is what the user reads beside the node's progress among its
+  siblings: short, the setting that varies first ("Depth 4 at 2e15 FLOPs").
+- `--description` should state the concrete change and measurement the node
+  owes.
+- Before a baseline's first run, declare its stages, report its measures and
+  set its view (`orx-experiment-runs`).
+- Commit the node's branch before launching. Runs use an immutable archive of
+  that local commit.

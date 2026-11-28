@@ -1,0 +1,314 @@
+"""Run ordinary engine trials against one immutable, exported input snapshot."""
+
+from __future__ import annotations
+
+import ast
+import hashlib
+import io
+import json
+import math
+import os
+import shutil
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+from backtest.frozen import (
+    BENCHMARK_PRICE_ARTIFACT,
+    BENCHMARK_PRICE_FILENAME,
+    frozen_benchmark_entry,
+    read_benchmark_prices,
+    read_frozen_input,
+    write_benchmark_prices,
+)
+from src.config.paths import get_runs_dir
+from src.core.runner import Runner
+from src.tools.backtest_tool import _backtest_timeout_seconds
+from src.tools.path_utils import safe_run_dir
+
+
+def digest(path: Path) -> str:
+    """Hash a file's exact bytes."""
+    hasher = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            hasher.update(block)
+    return hasher.hexdigest()
+
+
+def source_run(value: str) -> Path:
+    """Resolve a run identifier or an explicitly allowed run directory."""
+    path = Path(value).expanduser()
+    if not path.is_absolute():
+        path = get_runs_dir() / path
+    return safe_run_dir(str(path))
+
+
+def constructor_defaults(source: str) -> dict[str, Any]:
+    """Inspect literal constructor defaults without importing generated code."""
+    tree = ast.parse(source)
+    for cls in tree.body:
+        if not isinstance(cls, ast.ClassDef) or cls.name != "SignalEngine":
+            continue
+        for method in cls.body:
+            if isinstance(method, ast.FunctionDef) and method.name == "__init__":
+                defaults = {}
+                args = method.args.posonlyargs + method.args.args
+                pairs = list(zip(args[-len(method.args.defaults) :], method.args.defaults))
+                pairs.extend(zip(method.args.kwonlyargs, method.args.kw_defaults))
+                for arg, node in pairs:
+                    try:
+                        value = ast.literal_eval(node)
+                    except (ValueError, TypeError):
+                        continue
+                    if value is None or isinstance(value, (str, bool, int, float)):
+                        defaults[arg.arg] = value
+                return defaults
+    return {}
+
+
+def freeze_run(
+    run: Path, destination: Path, *, use_evaluation_calendar: bool = False
+) -> tuple[dict, Path, pd.DatetimeIndex, str]:
+    """Copy verified engine inputs and strategy, retaining every exported field.
+
+    Args:
+        run: Completed source run.
+        destination: New experiment root.
+        use_evaluation_calendar: Use the source run's manifested scored dates.
+
+    Returns:
+        Original config, sealed data manifest, study calendar and strategy hash.
+
+    Raises:
+        ValueError: If inputs are incomplete, changed or cannot be reproduced.
+    """
+    for relative in ("config.json", "run_card.json", "code/signal_engine.py"):
+        if not (run / relative).resolve().is_relative_to(run.resolve()):
+            raise ValueError(f"source file escapes its run: {relative}")
+    config_bytes = (run / "config.json").read_bytes()
+    config = json.loads(config_bytes)
+    card = json.loads((run / "run_card.json").read_text())
+    entries = {row["path"]: row for row in card.get("artifacts", [])}
+    config_hash = hashlib.sha256(config_bytes).hexdigest()
+    if entries.get("config.json", {}).get("sha256") != config_hash:
+        raise ValueError("source configuration changed since its completed backtest; rerun it before studying it")
+    code = run / "code/signal_engine.py"
+    from backtest.runner import _validate_signal_engine_source
+
+    _validate_signal_engine_source(code)
+    wanted = [symbol.removeprefix("local:") for symbol in config["codes"]]
+    if not wanted or len(wanted) != len(set(wanted)):
+        raise ValueError("source run must declare distinct instrument codes")
+    frames = {}
+    calendar = None
+    snapshot = destination / "snapshot"
+    snapshot.mkdir(parents=True)
+    (snapshot / "config.json").write_bytes(config_bytes)
+    for index, symbol in enumerate(wanted):
+        relative = f"artifacts/ohlcv_{symbol}.csv"
+        path = (run / relative).resolve()
+        if not path.is_relative_to(run.resolve()) or relative not in entries:
+            raise ValueError(f"source run has no manifested price snapshot for {symbol}; rerun its backtest")
+        raw = path.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != entries[relative]["sha256"]:
+            raise ValueError(f"source price snapshot changed: {symbol}")
+        frame = pd.read_csv(io.BytesIO(raw), index_col=0, parse_dates=True)
+        if not isinstance(frame.index, pd.DatetimeIndex) or not frame.index.is_unique:
+            raise ValueError(f"price snapshot has an invalid calendar: {symbol}")
+        frame = frame.sort_index()
+        if calendar is None:
+            calendar = frame.index
+        else:
+            calendar = calendar.union(frame.index)
+        filename = f"frame-{index}.csv"
+        (snapshot / filename).write_bytes(raw)
+        frames[symbol] = {"path": filename, "sha256": digest(snapshot / filename), "rows": len(frame)}
+    strategy_entry = entries.get("code/signal_engine.py")
+    strategy_bytes = code.read_bytes()
+    strategy_hash = hashlib.sha256(strategy_bytes).hexdigest()
+    if strategy_entry is None or strategy_hash != strategy_entry["sha256"]:
+        raise ValueError("source strategy changed since its completed backtest; rerun it before studying it")
+    (snapshot / "signal_engine.py").write_bytes(strategy_bytes)
+    manifest = {
+        "schema_version": 1,
+        "interval": config.get("interval", "1D"),
+        "frames": frames,
+        "sources": card.get("data_sources", [config.get("source", "auto")]),
+        "source_run": run.name,
+        "strategy_sha256": strategy_hash,
+        "config_sha256": config_hash,
+    }
+    if "benchmark_input" in card:
+        reference = card["benchmark_input"]
+        if (
+            not isinstance(reference, dict)
+            or reference.get("path") != BENCHMARK_PRICE_ARTIFACT
+            or BENCHMARK_PRICE_ARTIFACT not in entries
+        ):
+            raise ValueError("source run has no manifested benchmark prices; rerun its backtest")
+        ticker = reference.get("ticker")
+        if not isinstance(ticker, str) or not ticker or ticker != card.get("metrics", {}).get("benchmark_ticker"):
+            raise ValueError("source benchmark prices do not match its recorded ticker")
+        entry = entries[BENCHMARK_PRICE_ARTIFACT]
+        raw = read_frozen_input(run, entry, "benchmark")
+        prices = read_benchmark_prices(raw, reference.get("timezone"))
+        (snapshot / BENCHMARK_PRICE_FILENAME).write_bytes(raw)
+        manifest["benchmark_input"] = {
+            "ticker": ticker,
+            "path": BENCHMARK_PRICE_FILENAME,
+            "sha256": entry["sha256"],
+            "rows": len(prices),
+        }
+        if reference.get("timezone") is not None:
+            manifest["benchmark_input"]["timezone"] = reference["timezone"]
+    manifest_path = snapshot / "manifest.json"
+    if calendar is None or len(calendar) < 2:
+        raise ValueError("snapshot needs at least two trading bars")
+    # Training spans belong to the original evaluation, not its raw price
+    # history. The full inputs remain visible for indicator warm-up.
+    declared = (
+        config.get("warmup_bars") is not None
+        or config.get("evaluation_start_date") is not None
+    )
+    relative = "artifacts/equity.csv"
+    if use_evaluation_calendar and (declared or relative in entries):
+        equity = (run / relative).resolve()
+        if relative not in entries or not equity.is_relative_to(run.resolve()) or not equity.is_file():
+            raise ValueError(
+                "source run has no manifested evaluation calendar; rerun it before studying it"
+            )
+        raw_equity = equity.read_bytes()
+        equity_hash = hashlib.sha256(raw_equity).hexdigest()
+        if equity_hash != entries[relative]["sha256"]:
+            raise ValueError(
+                "source equity changed since its completed backtest; rerun it before studying it"
+            )
+        observed = pd.read_csv(io.BytesIO(raw_equity), index_col=0, parse_dates=True).index
+        if len(observed) < 2:
+            raise ValueError("source run needs at least two evaluated bars")
+        if (
+            not isinstance(observed, pd.DatetimeIndex)
+            or not observed.is_unique
+            or not observed.is_monotonic_increasing
+            or not observed.isin(calendar).all()
+        ):
+            raise ValueError("source run's evaluation calendar does not match its price snapshots")
+        calendar = observed
+        manifest["source_equity_sha256"] = equity_hash
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2, allow_nan=False))
+    return config, manifest_path, calendar.sort_values(), strategy_hash
+
+
+def _snapshot_price_entries(manifest: dict):
+    for entry in manifest["frames"].values():
+        yield entry, False
+    reference = frozen_benchmark_entry(manifest)
+    if reference is not None:
+        yield reference, True
+
+
+def trial(study: Path, name: str, config: dict, manifest: Path, *, parameters: dict | None = None) -> dict:
+    """Execute a real sandboxed engine trial and return persisted measurements."""
+    root = study / "trials" / name
+    root.mkdir(parents=True)
+    (root / "code").mkdir()
+    (root / "code/signal_engine.py").write_bytes((manifest.parent / "signal_engine.py").read_bytes())
+    settings = dict(config)
+    # These are experiments, not evidence writes for the parent's registered
+    # strategy. Keep the engine itself and all execution rules unchanged.
+    for key in ("artifact_id", "strategy_adaptation", "validation"):
+        settings.pop(key, None)
+    settings["codes"] = [code.removeprefix("local:") for code in settings["codes"]]
+    # The trial-local files must obey the same cutoff as data_map. Otherwise
+    # a strategy loading its own snapshot could accidentally see future bars
+    # even though the normal loader returns a correctly truncated frame.
+    local_snapshot = root / "snapshot"
+    local_snapshot.mkdir()
+    parent_bytes = manifest.read_bytes()
+    parent_hash = hashlib.sha256(parent_bytes).hexdigest()
+    parent_snapshot = json.loads(parent_bytes)
+    frozen = json.loads(parent_bytes)
+    for entry, is_benchmark in _snapshot_price_entries(frozen):
+        source = manifest.parent / entry["path"]
+        target = local_snapshot / entry["path"]
+        raw = read_frozen_input(manifest.parent, entry, "benchmark" if is_benchmark else "portfolio")
+        if is_benchmark:
+            frame = read_benchmark_prices(raw, entry.get("timezone"))
+        else:
+            frame = pd.read_csv(
+                io.BytesIO(raw),
+                index_col=0,
+                parse_dates=True,
+                float_precision="round_trip",
+            )
+        visible = frame.loc[settings["start_date"] : settings["end_date"]]
+        if len(visible) == len(frame):
+            try:
+                os.link(source, target)
+            except OSError:
+                shutil.copyfile(source, target)
+        elif is_benchmark:
+            write_benchmark_prices(target, visible)
+        else:
+            visible.to_csv(target)
+        entry.update(sha256=digest(target), rows=len(visible))
+    frozen["parent_manifest_sha256"] = parent_hash
+    frozen["visible_window"] = {key: settings[key] for key in ("start_date", "end_date")}
+    local_manifest = local_snapshot / "manifest.json"
+    local_manifest.write_text(json.dumps(frozen, ensure_ascii=False, allow_nan=False))
+    settings["frozen_data_manifest"] = str(local_manifest)
+    if parameters is not None:
+        settings["signal_parameters"] = {**settings.get("signal_parameters", {}), **parameters}
+    (root / "config.json").write_text(json.dumps(settings, indent=2, allow_nan=False))
+    agent = Path(__file__).resolve().parents[2]
+    process = Runner(timeout=_backtest_timeout_seconds()).execute(
+        agent / "backtest/runner.py",
+        root,
+        cwd=agent,
+        cli_args=[str(root)],
+    )
+    if not process.success:
+        raise ValueError(f"trial {name} failed; inspect its logs in {root}")
+    if digest(manifest) != parent_hash or digest(manifest.parent / "signal_engine.py") != parent_snapshot["strategy_sha256"]:
+        raise ValueError("sealed manifest or strategy changed during trial execution")
+    for entry, _ in _snapshot_price_entries(parent_snapshot):
+        path = manifest.parent / entry["path"]
+        if not path.is_file() or digest(path) != entry["sha256"]:
+            raise ValueError("sealed prices changed during trial execution")
+    card = json.loads((root / "run_card.json").read_text())
+    equity = pd.read_csv(root / "artifacts/equity.csv", index_col=0, parse_dates=True)
+    raw_metrics = pd.read_csv(root / "artifacts/metrics.csv").iloc[0]
+    metrics = {
+        name: float(raw_metrics[name])
+        for name in (
+            "final_value",
+            "total_return",
+            "annual_return",
+            "max_drawdown",
+            "sharpe",
+            "trade_count",
+            "total_turnover",
+        )
+        # calc_metrics reports an annualisation that overflows as inf, which the
+        # report cannot store (allow_nan=False), so it is dropped like a NaN.
+        if name in raw_metrics and math.isfinite(float(raw_metrics[name]))
+    }
+    if not metrics:
+        raise ValueError(f"trial {name} produced no structured metrics")
+    card_metrics = card.get("metrics", {})
+    benchmark = {
+        key.removeprefix("benchmark_"): card_metrics[key]
+        for key in ("benchmark_kind", "benchmark_label", "benchmark_ticker", "benchmark_return")
+        if key in card_metrics
+    }
+    if benchmark:
+        benchmark["frozen_input_used"] = "benchmark_input" in card
+    return {
+        "run_dir": str(root),
+        "metrics": metrics,
+        "equity": equity,
+        "benchmark": benchmark or None,
+        "config": settings,
+    }

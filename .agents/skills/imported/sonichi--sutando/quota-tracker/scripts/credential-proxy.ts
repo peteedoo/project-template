@@ -1,0 +1,1035 @@
+/**
+ * Sutando credential proxy — intercepts Anthropic API calls to read rate limit headers.
+ *
+ * Based on nanoclaw's credential-proxy.ts approach:
+ * - Runs as a local HTTP proxy between Claude Code and api.anthropic.com
+ * - Injects OAuth credentials from macOS keychain
+ * - Reads `anthropic-ratelimit-unified-*` headers from responses
+ * - Writes quota state to <workspace>/state/quota-state.json for the dashboard
+ *
+ * Usage:
+ *   npx tsx src/credential-proxy.ts              # start on port 7846
+ *   ANTHROPIC_BASE_URL=http://localhost:7846 claude ...  # route Claude through proxy
+ */
+
+import { createServer, type RequestOptions } from 'node:http';
+import { request as httpsRequest } from 'node:https';
+import { execFileSync } from 'node:child_process';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { createHash } from 'node:crypto';
+import { statusPath } from '../../../src/workspace_default.js';
+
+const PORT = 7846;
+const UPSTREAM = 'https://api.anthropic.com';
+// Idle (inactivity) timeout in ms for the upstream connection. The socket timer
+// resets on every byte sent or received, so a healthy long stream never trips it
+// (Anthropic's SSE ping cadence is ~25s); it only fires when the connection has
+// genuinely gone dead — sleep/wake, wifi drop, gateway unreachable mid-flight.
+// Node sets no default request timeout, so without this an in-flight request
+// hangs forever and freezes the agent until a full app restart. Override via
+// SUTANDO_PROXY_TIMEOUT_MS; default 120s.
+const UPSTREAM_IDLE_TIMEOUT_MS = Number(process.env.SUTANDO_PROXY_TIMEOUT_MS) || 120_000;
+// Quota state is per-user runtime state — canonical home is <workspace>/state/.
+// Historically written into the skill dir; readers (dashboard.py, read-quota.py)
+// keep the skill-dir path as a last-resort fallback for one release.
+const QUOTA_FILE = statusPath('quota-state.json');
+// Bounded ledger of upstream rejections (4xx/5xx other than the handled 401),
+// persisted in quota-state.json so health-check can page on a transient one.
+export const MAX_RECENT_REJECTIONS = 20;
+const REJECTION_SNIPPET_BYTES = 2048;
+
+// OAuth self-refresh. A namespaced CLAUDE_CONFIG_DIR uses a namespaced keychain
+// item (`Claude Code-credentials-<sha256(config-dir)[0..8]>`), while vanilla
+// Claude Code uses `Claude Code-credentials`. Prefer the scoped item so an
+// interactive `/login` in the Sutando core is the token the proxy injects, then
+// use the vanilla item ONLY when no config dir is set: it is the machine's shared
+// login, never a stand-in for a scoped identity (see ownCandidates). When the chosen token
+// is at/near expiry, use its refreshToken to mint a fresh one and write it back
+// to the SAME keychain item. Endpoint + client_id verified from the Claude Code
+// binary (v2.1.170 strings).
+const TOKEN_ENDPOINT = 'https://platform.claude.com/v1/oauth/token';
+const OAUTH_CLIENT_ID = '9d1c250a-e61b-44d9-88ed-5944d1962f5e';
+const DEFAULT_KEYCHAIN_SERVICE = 'Claude Code-credentials';
+// Refresh when the token expires within this window (ms). Tokens are ~8h-lived;
+// 5 min of slack avoids racing the expiry on a long-running upstream request.
+const REFRESH_SKEW_MS = 5 * 60 * 1000;
+
+// Failure backoff. Once the stored token is at/near expiry, `needsRefresh` stays
+// true on EVERY subsequent request — so if the refresh itself keeps failing
+// (e.g. the stored refresh token was revoked/rotated out-of-band → HTTP 400),
+// the naive code re-attempts on each request and hammers the OAuth endpoint in
+// a tight loop. After a failure we hold off re-attempting until a backoff window
+// elapses, growing exponentially from BASE to MAX and resetting on the next
+// success. Overridable via env for tests / tuning.
+const REFRESH_FAIL_BACKOFF_BASE_MS =
+	Number(process.env.SUTANDO_PROXY_REFRESH_BACKOFF_BASE_MS) || 30 * 1000; // 30s
+const REFRESH_FAIL_BACKOFF_MAX_MS =
+	Number(process.env.SUTANDO_PROXY_REFRESH_BACKOFF_MAX_MS) || 15 * 60 * 1000; // 15 min
+
+// A wedge (refresh fails, process stays up and keeps serving 502s) never asks
+// a supervisor for help, because the process never exits. After this many
+// CONSECUTIVE failures (reset to 0 on any success — see runSingleFlightRefresh)
+// the proxy gives up and exits non-zero instead of retrying forever, so
+// whichever supervisor is watching (launchd, a process manager) gets a real
+// signal to act on. At the default backoff schedule (30s · 2^(n-1), capped at
+// 15min) the waits before attempts 2..6 sum to 930s -- ~15.5 min of continuous
+// failure before giving up, not 35 (an earlier, uncorrected estimate) — and
+// that is a LOWER bound: a refresh is only attempted when a request arrives,
+// so an idle host takes longer to reach the threshold.
+//
+// Giving up is only safe where something restarts the process. Set by the
+// launchd wrapper (src/launchd/credential-proxy-wrapper.sh), never by the
+// legacy `run_node_service ... &` fallback in startup.sh, which has no
+// restart loop — there, exiting would turn a self-healing 502 wedge into a
+// permanent outage.
+const PROXY_IS_SUPERVISED = process.env.SUTANDO_PROXY_SUPERVISED === '1';
+
+// `Number(env) || 6` would silently turn an explicit "0" into 6 (0 is falsy);
+// parse explicitly so 0 (give up on the very first failure) takes effect.
+// Unset AND unsupervised defaults to Infinity (never give up) — see
+// PROXY_IS_SUPERVISED above; an explicit env override always applies
+// regardless of supervision, since that's a deliberate operator choice.
+export function parseGiveUpAfter(raw: string | undefined, supervised: boolean): number {
+	const unsupervisedDefault = supervised ? 6 : Infinity;
+	if (raw === undefined || raw === "") return unsupervisedDefault;
+	const n = Number(raw);
+	if (!Number.isFinite(n)) return unsupervisedDefault;
+	// A negative value would behave like 0 (refreshFailCount >= n is true
+	// immediately) but unintentionally, since nothing chose that -- clamp
+	// rather than let a typo silently double as "give up on the first failure".
+	return n < 0 ? 0 : n;
+}
+const REFRESH_GIVE_UP_AFTER = parseGiveUpAfter(process.env.SUTANDO_PROXY_REFRESH_GIVE_UP_AFTER, PROXY_IS_SUPERVISED);
+
+// Pure: how long to wait before the next refresh attempt after `failCount`
+// consecutive failures. 0 failures → 0 (attempt immediately). Exponential
+// (BASE·2^(n-1)) capped at MAX.
+export function nextRefreshBackoffMs(failCount: number): number {
+	if (failCount <= 0) return 0;
+	return Math.min(
+		REFRESH_FAIL_BACKOFF_BASE_MS * 2 ** (failCount - 1),
+		REFRESH_FAIL_BACKOFF_MAX_MS,
+	);
+}
+
+// Pure: should we attempt a refresh right now? Only when the token needs it AND
+// we're past any active failure-backoff window. This is the guard that turns the
+// per-request retry storm into at most one attempt per backoff window.
+export function shouldAttemptRefresh(
+	needsRefresh: boolean,
+	now: number,
+	nextAllowedAt: number,
+): boolean {
+	return needsRefresh && now >= nextAllowedAt;
+}
+
+interface ClaudeOAuth {
+	accessToken: string;
+	refreshToken?: string;
+	expiresAt?: number; // epoch ms
+	[k: string]: unknown;
+}
+
+export interface StoredClaudeOAuth {
+	service: string;
+	oauth: ClaudeOAuth;
+}
+
+function ts(): string { return new Date().toISOString().slice(11, 23); }
+
+export function scopedKeychainService(configDir?: string): string | null {
+	const dir = (configDir ?? '').trim();
+	if (!dir) return null;
+	return `${DEFAULT_KEYCHAIN_SERVICE}-${createHash('sha256').update(dir).digest('hex').slice(0, 8)}`;
+}
+
+export function keychainServiceCandidates(configDir = process.env.CLAUDE_CONFIG_DIR): string[] {
+	const services = [scopedKeychainService(configDir), DEFAULT_KEYCHAIN_SERVICE].filter(Boolean) as string[];
+	return [...new Set(services)];
+}
+
+// `security` stderr is piped, not inherited (a missing item wrote a line per
+// request); any OTHER failure, e.g. a locked keychain, is logged once per change.
+const keychainReadErrors = new Map<string, string>();
+function readKeychainSecret(service: string): string {
+	try {
+		const out = execFileSync('security', ['find-generic-password', '-s', service, '-w'], {
+			encoding: 'utf-8',
+			timeout: 5000,
+			stdio: ['ignore', 'pipe', 'pipe'],
+		});
+		keychainReadErrors.delete(service);
+		return out;
+	} catch (e) {
+		const detail = String((e as { stderr?: unknown }).stderr || (e as Error).message).trim().split('\n')[0];
+		if (!/could not be found/.test(detail) && keychainReadErrors.get(service) !== detail) {
+			keychainReadErrors.set(service, detail);
+			console.error(`${ts()} [Proxy] keychain read of '${service}' failed: ${redactForLog(detail)}`);
+		}
+		throw e;
+	}
+}
+
+// Read the full cred object from one keychain service (not just accessToken).
+// A blank accessToken counts as absent, so it cannot eclipse a later candidate.
+export function readCredFromService(
+	service: string,
+	readSecret: (service: string) => string = readKeychainSecret,
+): StoredClaudeOAuth | null {
+	try {
+		const parsed = JSON.parse(readSecret(service).trim());
+		const oauth = parsed?.claudeAiOauth;
+		return oauth && typeof oauth.accessToken === 'string' && oauth.accessToken.trim() !== ''
+			? { service, oauth: oauth as ClaudeOAuth }
+			: null;
+	} catch {
+		return null;
+	}
+}
+
+// All keychain candidates that currently hold a credential, scoped item first.
+export function readCredCandidates(
+	services: string[] = keychainServiceCandidates(),
+	readSecret: (service: string) => string = readKeychainSecret,
+): StoredClaudeOAuth[] {
+	return services
+		.map((service) => readCredFromService(service, readSecret))
+		.filter((s): s is StoredClaudeOAuth => s !== null);
+}
+
+export function readCred(
+	services: string[] = keychainServiceCandidates(),
+	readSecret: (service: string) => string = readKeychainSecret,
+): StoredClaudeOAuth | null {
+	return readCredCandidates(services, readSecret)[0] ?? null;
+}
+
+// Pure: first candidate whose token is usable; if none, the first present, so
+// degraded handling (pass-through / fail-fast) sees it. Callers pass ownCandidates.
+export function selectCred(
+	candidates: StoredClaudeOAuth[],
+	now: number,
+	rejectedToken: string | null,
+): StoredClaudeOAuth | null {
+	for (const c of candidates) {
+		if (classifyCredential(c.oauth, now, rejectedToken) === 'ok') return c;
+	}
+	return candidates[0] ?? null;
+}
+
+// Pure: the items this proxy may inject or refresh. With a config dir set that is
+// ONLY its scoped item; the shared default item serves installs with no config dir.
+export function ownCandidates(
+	candidates: StoredClaudeOAuth[],
+	scopedService: string | null,
+): StoredClaudeOAuth[] {
+	return scopedService ? candidates.filter((c) => c.service === scopedService) : candidates;
+}
+
+// Pure: the log lines for a keychain selection — service names and config dir only.
+export function describeKeychainSelection(
+	service: string | null,
+	scopedService: string | null,
+	configDir: string,
+): { info: string; warning: string | null } {
+	const origin = !service ? ''
+		: scopedService ? ` (scoped to CLAUDE_CONFIG_DIR=${configDir})`
+		: ' (shared default item; no CLAUDE_CONFIG_DIR set)';
+	return {
+		info: `keychain service selected: ${service ? `'${service}'` : 'none'}${origin}`,
+		warning: scopedService && !service
+			? `WARNING: no keychain item '${scopedService}' for CLAUDE_CONFIG_DIR=${configDir}. The shared ` +
+				`'${DEFAULT_KEYCHAIN_SERVICE}' item is not used in its place (it may be another account). ` +
+				'Requests that carry their own credential are forwarded untouched; others get a 401. ' +
+				'If this proxy serves a Sutando core, its CLAUDE_CONFIG_DIR must be the core\'s ' +
+				'(reinstall: bash src/install-credential-proxy-launchd.sh), or run /login in the core.'
+			: null,
+	};
+}
+
+// Pure: the once-per-state warning for a scoped token that cannot be made usable.
+export function scopedTokenUnusableWarning(verdict: 'expired' | 'rejected', scopedService: string): string {
+	return `WARNING: the token in keychain item '${scopedService}' is ${verdict} and could not be refreshed. ` +
+		`The shared '${DEFAULT_KEYCHAIN_SERVICE}' item is not used in its place. Requests that carry their own ` +
+		'credential are forwarded untouched; others get a 401. Run /login in the core to restore injection.';
+}
+
+// 401 body for a proxy with a config dir and no login stored under it.
+export function authMissingBody(scopedService: string, configDir: string): string {
+	return JSON.stringify({
+		type: 'error',
+		error: {
+			type: 'authentication_error',
+			message:
+				`sutando credential-proxy: no login is stored for CLAUDE_CONFIG_DIR=${configDir} (keychain item ` +
+				`'${scopedService}') and the request carried no credential. Run /login in Claude Code under that config dir.`,
+		},
+	});
+}
+
+// Atomically write the cred back to the keychain. Returns true ONLY after a
+// read-back confirms the new accessToken landed — the rotation-lockout guard:
+// if we consumed a (rotating) refresh token we MUST be sure its replacement
+// persisted, else the node can never refresh again.
+function keychainAccount(service: string): string | null {
+	try {
+		const meta = execFileSync('security', ['find-generic-password', '-s', service], {
+			encoding: 'utf-8', timeout: 5000, stdio: ['ignore', 'pipe', 'pipe'],
+		});
+		const m = meta.match(/"acct"<blob>="([^"]*)"/);
+		return m ? m[1] : null;
+	} catch {
+		return null;
+	}
+}
+
+function writeCred(service: string, oauth: ClaudeOAuth): boolean {
+	try {
+		const acct = keychainAccount(service);
+		if (!acct) { console.error(`${ts()} [Proxy] keychain write: account not found`); return false; }
+		const payload = JSON.stringify({ claudeAiOauth: oauth });
+		// execFileSync (args array, no shell) — value passed as a single argv
+		// element, so no quoting/injection surface. -U updates the item in place.
+		// (Value is briefly visible in `ps` to the same user — acceptable on a
+		// single-user Mac, same as the rest of the vault path.)
+		execFileSync('security', [
+			'add-generic-password', '-U',
+			'-s', service, '-a', acct, '-w', payload,
+		], { timeout: 5000 });
+		const back = readCredFromService(service);
+		return back?.oauth.accessToken === oauth.accessToken; // rotation-lockout read-back guard
+	} catch (e) {
+		console.error(`${ts()} [Proxy] keychain write FAILED:`, (e as Error).message);
+		return false;
+	}
+}
+
+// POST the stored refresh token to the OAuth token endpoint → fresh cred.
+// Fail-safe: any error returns null and the caller keeps the existing token
+// (== current behavior, no regression). Request shape is standard OAuth2
+// public-client refresh (JSON body); response field names tolerated in both
+// snake_case (spec) and camelCase. NOT live-validated — see PR notes.
+// Pure: map an OAuth token-endpoint response into a fresh cred, or null if the
+// response isn't usable. Tolerates snake_case (spec) and camelCase, keeps the
+// existing refresh token when the response doesn't rotate it, and refuses any
+// access token that isn't a plausible non-empty string (never write garbage).
+// Exported so this — the highest-risk logic (field names + the guard) — is
+// unit-tested offline: no network, no keychain, no token rotation.
+// Redact + truncate an upstream response body before it goes to the log.
+// The OAuth token-endpoint ERROR body (e.g. `{"error":"invalid_grant",...}`)
+// is what we want to see when a refresh 400s — but never risk emitting a
+// token if one ever appears: mask any long token-like run (20+ base64url/JWT
+// chars, incl. dotted JWTs) and cap the length. Exported for offline testing.
+export function redactForLog(bodyText: string, max: number = 300): string {
+	const trimmed = (bodyText ?? '').trim();
+	if (!trimmed) return '(empty body)';
+	const redacted = trimmed.replace(/[A-Za-z0-9_-]{20,}(?:\.[A-Za-z0-9_-]{10,}){0,2}/g, '[redacted]');
+	return redacted.length > max ? redacted.slice(0, max) + '…(truncated)' : redacted;
+}
+
+export function parseRefreshResponse(
+	statusCode: number,
+	bodyText: string,
+	oauth: ClaudeOAuth,
+	now: number = Date.now(),
+): ClaudeOAuth | null {
+	if (statusCode >= 400) return null;
+	let j: Record<string, unknown>;
+	try { j = JSON.parse(bodyText); } catch { return null; }
+	const access = j.access_token ?? j.accessToken;
+	const refresh = (j.refresh_token ?? j.refreshToken ?? oauth.refreshToken) as string | undefined;
+	const expiresIn = j.expires_in ?? j.expiresIn;
+	const expiresAt = (j.expires_at ?? j.expiresAt ??
+		(typeof expiresIn === 'number' ? now + expiresIn * 1000 : undefined)) as number | undefined;
+	if (typeof access !== 'string' || access.length < 20) return null;
+	return { ...oauth, accessToken: access, refreshToken: refresh, expiresAt };
+}
+
+function refreshAccessToken(oauth: ClaudeOAuth): Promise<ClaudeOAuth | null> {
+	return new Promise((resolve) => {
+		if (!oauth.refreshToken) { resolve(null); return; }
+		const bodyStr = JSON.stringify({
+			grant_type: 'refresh_token',
+			refresh_token: oauth.refreshToken,
+			client_id: OAUTH_CLIENT_ID,
+		});
+		const u = new URL(TOKEN_ENDPOINT);
+		const reqOpts: RequestOptions = {
+			hostname: u.hostname,
+			port: 443,
+			path: u.pathname,
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+				'content-length': Buffer.byteLength(bodyStr),
+				accept: 'application/json',
+			},
+		};
+		const r = httpsRequest(reqOpts, (resp) => {
+			const cs: Buffer[] = [];
+			resp.on('data', (c) => cs.push(c));
+			resp.on('end', () => {
+				const rawBody = Buffer.concat(cs).toString('utf-8');
+				const fresh = parseRefreshResponse(resp.statusCode ?? 0, rawBody, oauth);
+				// Instrument the ACTUAL upstream failure. Previously this masked
+				// every failure as "HTTP N or bad/empty response", so a recurring
+				// refresh 400 (the fb556dd6 crash-loop root cause) was undiagnosable
+				// — "bad/empty response" hid the real token-endpoint error. Log the
+				// redacted+truncated body so the actual `error`/`error_description`
+				// is visible in credential-proxy.log.
+				if (!fresh) console.error(`${ts()} [Proxy] refresh unusable (HTTP ${resp.statusCode}): ${redactForLog(rawBody)}`);
+				resolve(fresh);
+			});
+		});
+		r.on('error', (e) => { console.error(`${ts()} [Proxy] refresh request error:`, e.message); resolve(null); });
+		r.setTimeout(10000, () => { r.destroy(); resolve(null); });
+		r.write(bodyStr);
+		r.end();
+	});
+}
+
+// Pure: is this credential safe to inject? 'expired' = hard expiry (the 5-min
+// REFRESH_SKEW only triggers refresh attempts — a not-yet-expired token still
+// works upstream). 'rejected' = upstream already 401'd this exact token, so it
+// is known-dead regardless of its expiry metadata.
+export function classifyCredential(
+	oauth: ClaudeOAuth,
+	now: number,
+	rejectedToken: string | null,
+): 'ok' | 'expired' | 'rejected' {
+	if (rejectedToken !== null && oauth.accessToken === rejectedToken) return 'rejected';
+	if (typeof oauth.expiresAt === 'number' && oauth.expiresAt <= now) return 'expired';
+	return 'ok';
+}
+
+// Distinct fail-fast body: name the proxy and the remedy so a 401 from HERE is
+// never mistaken for an upstream auth failure.
+export function authUnavailableBody(verdict: 'expired' | 'rejected'): string {
+	return JSON.stringify({
+		type: 'error',
+		error: {
+			type: 'authentication_error',
+			message:
+				`sutando credential-proxy: stored OAuth token is ${verdict} and self-refresh is unavailable ` +
+				'(OAuth endpoint failing; backing off). Run /login in Claude Code — the proxy re-reads the ' +
+				'keychain on every request and will pick the new token up immediately.',
+		},
+	});
+}
+
+// Injectable seams (keychain, refresh, upstream, clock) so the proxy's failure
+// semantics are testable hermetically; defaults are the production bindings.
+export interface RejectionRecord {
+	ts: string;
+	status: number;
+	path: string;
+	snippet: string;
+	// The proxy serves every seat on a host, so a rejection is attributable only
+	// by what the request carried: the model, the CLI's user-agent, the peer port.
+	model?: string;
+	user_agent?: string;
+	peer_port?: number;
+	// This response's own rate-limit headers ({} when it carried none): the record's
+	// top-level headers may belong to another request.
+	limit_headers?: Record<string, string>;
+	// The acct_ label of the credential the request was sent with; absent when unbound.
+	account?: string;
+}
+
+/** The `model` field of a JSON request body, or "" when absent or unparsable. */
+export function requestModel(body: Buffer): string {
+	try {
+		const m = JSON.parse(body.toString('utf8'))?.model;
+		return typeof m === 'string' ? m : '';
+	} catch {
+		return '';
+	}
+}
+
+function isRejectionRecord(x: unknown): x is RejectionRecord {
+	return !!x && typeof x === 'object'
+		&& typeof (x as RejectionRecord).ts === 'string'
+		&& typeof (x as RejectionRecord).status === 'number';
+}
+
+/** Append one rejection to a (possibly foreign/corrupt) prior ledger, keeping the newest `max`. */
+export interface LastRequest { model: string; at: string }
+
+/** The model that last consumed quota through this proxy, carried across
+ *  requests that name none (a non-messages call must not blank the tile). */
+export function withLastRequest(prev: unknown, model: string, at: string): LastRequest | undefined {
+	if (model) return { model, at };
+	const old = (prev as { last_request?: unknown } | null)?.last_request;
+	if (old && typeof old === 'object' && typeof (old as LastRequest).model === 'string' && (old as LastRequest).model
+		&& typeof (old as LastRequest).at === 'string') return old as LastRequest;
+	return undefined;
+}
+
+export function appendRejection(prev: unknown, rej: RejectionRecord, max: number = MAX_RECENT_REJECTIONS): RejectionRecord[] {
+	const list = Array.isArray(prev) ? prev.filter(isRejectionRecord) : [];
+	list.push(rej);
+	return list.slice(-max);
+}
+
+export type LimitState = 'allowed' | 'overage' | 'rejected';
+
+/** The ledger rejections sent with the record's own account; unlabeled matches only unlabeled.
+ *  Same rule as `record_rejections` in src/quota_availability.py. */
+export function boundRejections(record: Record<string, unknown>): RejectionRecord[] {
+	const ledger = Array.isArray(record.recent_rejections) ? record.recent_rejections : [];
+	const own = (typeof record.account === 'string' && record.account) || null;
+	return ledger.filter((r): r is RejectionRecord => !!r && typeof r === 'object' && !Array.isArray(r)
+		&& ((typeof r.account === 'string' && r.account) || null) === own);
+}
+
+/** Same rule as `classify_limit_state` in src/quota_availability.py; both run
+ *  tests/fixtures/quota-limit-state.parity.json. `overage` is served, not paused. */
+export function limitState(record: unknown): LimitState {
+	const rec = (record && typeof record === 'object' && !Array.isArray(record)) ? record as Record<string, unknown> : {};
+	const h = (rec.headers && typeof rec.headers === 'object' && !Array.isArray(rec.headers)) ? rec.headers as Record<string, unknown> : {};
+	const prefix = 'anthropic-ratelimit-unified-';
+	const limited = h[`${prefix}status`] === 'rejected' || Object.entries(h).some(([k, v]) => {
+		if (!k.startsWith(prefix) || !k.endsWith('-status')) return false;
+		const w = k.slice(prefix.length, -'-status'.length);
+		return w !== '' && w !== 'overage' && v === 'rejected';
+	});
+	if (!limited) return 'allowed';
+	const overage = h[`${prefix}overage-status`];
+	if (overage !== 'allowed' && overage !== 'allowed_warning') return 'rejected';
+	const checked = typeof rec.last_checked === 'string' ? Date.parse(rec.last_checked) : NaN;
+	for (const r of boundRejections(rec)) {
+		if (r.status !== 429) continue;
+		const at = typeof (r as RejectionRecord).ts === 'string' ? Date.parse((r as RejectionRecord).ts) : NaN;
+		// An unordered 429 (either stamp unreadable) is not known to be older.
+		if (Number.isNaN(checked) || Number.isNaN(at) || at >= checked) return 'rejected';
+	}
+	return 'overage';
+}
+
+export type CredentialState = 'ok' | 'exhausted';
+
+export interface ProxyDeps {
+	readCredCandidates: () => StoredClaudeOAuth[];
+	writeCred: (service: string, oauth: ClaudeOAuth) => boolean;
+	refreshAccessToken: (oauth: ClaudeOAuth) => Promise<ClaudeOAuth | null>;
+	request: typeof httpsRequest;
+	upstreamUrl: URL;
+	updateQuotaState: (headers: Record<string, string>, model?: string, account?: string | null) => void;
+	// The acct_ label of the CLI account in CLAUDE_CONFIG_DIR, and that dir's own keychain item.
+	readAccount: () => string | null;
+	scopedService: () => string | null;
+	recordRejection: (rej: RejectionRecord) => void;
+	recordCredentialState: (state: CredentialState, detail?: string) => void;
+	now: () => number;
+	idleTimeoutMs: number;
+	exitProcess: (code: number) => void;
+	// Consecutive refresh-failure threshold before giving up (see
+	// parseGiveUpAfter). Injectable so tests can exercise the
+	// supervised/unsupervised default without process-env/import-order
+	// tricks; production always gets the env-derived value below.
+	giveUpAfter: number;
+	// The keychain item scoped to this proxy's CLAUDE_CONFIG_DIR, or null when
+	// no config dir is set (then the default item is the right one, not a fallback).
+	scopedItem: string | null;
+	// That config dir, for the selection log lines only.
+	configDir: string;
+}
+
+export function createProxyServer(overrides: Partial<ProxyDeps> = {}) {
+	const deps: ProxyDeps = {
+		readCredCandidates,
+		writeCred,
+		refreshAccessToken,
+		request: httpsRequest,
+		upstreamUrl: new URL(UPSTREAM),
+		updateQuotaState,
+		readAccount: () => accountLabel(),
+		scopedService: () => scopedKeychainService(process.env.CLAUDE_CONFIG_DIR),
+		recordRejection,
+		recordCredentialState,
+		now: Date.now,
+		idleTimeoutMs: UPSTREAM_IDLE_TIMEOUT_MS,
+		exitProcess: (code) => process.exit(code),
+		giveUpAfter: REFRESH_GIVE_UP_AFTER,
+		scopedItem: null,
+		configDir: (process.env.CLAUDE_CONFIG_DIR ?? '').trim(),
+		...overrides,
+	};
+	// One source for the scoped item: the item the account is bound to is the item the proxy reads.
+	if (!('scopedItem' in overrides)) deps.scopedItem = deps.scopedService();
+	const upstreamPort = deps.upstreamUrl.port ? Number(deps.upstreamUrl.port) : 443;
+
+	// Single-flight guard: at most one refresh in progress, so concurrent requests
+	// never race to consume/rotate the refresh token twice.
+	let refreshInFlight: Promise<void> | null = null;
+
+	// Failure-backoff state (see nextRefreshBackoffMs / shouldAttemptRefresh).
+	// While now < nextRefreshAllowedAt, skip the refresh instead of hammering.
+	let refreshFailCount = 0;
+	let nextRefreshAllowedAt = 0;
+
+	// Last token an upstream 401 proved dead — never injected again until a
+	// refresh or /login replaces it (cleared on refresh success).
+	let rejectedToken: string | null = null;
+
+	function runSingleFlightRefresh(service: string, cred: ClaudeOAuth): Promise<void> {
+		if (!refreshInFlight) {
+			refreshInFlight = (async () => {
+				const fresh = await deps.refreshAccessToken(cred);
+				if (fresh && deps.writeCred(service, fresh)) {
+					refreshFailCount = 0;
+					nextRefreshAllowedAt = 0;
+					rejectedToken = null;
+					console.log(`${ts()} [Proxy] OAuth token refreshed (new expiry ${new Date(fresh.expiresAt ?? 0).toISOString()})`);
+				} else {
+					refreshFailCount += 1;
+					// Set the backoff before the give-up check: in production process.exit
+					// ends the process either way, but an injected exitProcess (tests) that
+					// doesn't exit must not leave the next request retrying with no backoff.
+					const backoff = nextRefreshBackoffMs(refreshFailCount);
+					nextRefreshAllowedAt = deps.now() + backoff;
+					if (refreshFailCount >= deps.giveUpAfter) {
+						console.error(`${ts()} [Proxy] refresh failed ${refreshFailCount} consecutive times (give-up threshold ${deps.giveUpAfter}) — exiting so a supervisor can restart; serving 502s forever hides a wedge as "up"`);
+						deps.exitProcess(1);
+						return;
+					}
+					console.error(`${ts()} [Proxy] refresh failed (failure ${refreshFailCount}, next attempt allowed in ${Math.round(backoff / 1000)}s)`);
+				}
+			})().finally(() => { refreshInFlight = null; });
+		}
+		return refreshInFlight;
+	}
+
+	// The service in use is logged at start and on change, never per request.
+	let announced: string | null = null;
+	function pick(): StoredClaudeOAuth | null {
+		const own = ownCandidates(deps.readCredCandidates(), deps.scopedItem);
+		const stored = selectCred(own, deps.now(), rejectedToken);
+		const key = stored?.service ?? '';
+		if (key !== announced) {
+			announced = key;
+			const { info, warning } = describeKeychainSelection(stored?.service ?? null, deps.scopedItem, deps.configDir);
+			console.log(`${ts()} [Proxy] ${info}`);
+			if (warning) console.error(`${ts()} [Proxy] ${warning}`);
+		}
+		return stored;
+	}
+
+	// One warning per state while the scoped token is unusable; reset once it is ok.
+	let unusable: string | null = null;
+	function noteScopedToken(verdict: 'ok' | 'expired' | 'rejected'): void {
+		if (verdict === 'ok') { unusable = null; return; }
+		if (!deps.scopedItem || unusable === verdict) return;
+		unusable = verdict;
+		console.error(`${ts()} [Proxy] ${scopedTokenUnusableWarning(verdict, deps.scopedItem)}`);
+	}
+
+	// Re-read the keychain (every call — no cache, so /login lands within one
+	// request) and refresh first when at/near expiry or upstream-rejected.
+	async function resolveCredential(): Promise<StoredClaudeOAuth | null> {
+		const stored = pick();
+		if (!stored) return null;
+		const { service, oauth: cred } = stored;
+		const nearExpiry =
+			typeof cred.expiresAt === 'number' &&
+			cred.expiresAt - deps.now() <= REFRESH_SKEW_MS;
+		const needsRefresh =
+			(nearExpiry || classifyCredential(cred, deps.now(), rejectedToken) !== 'ok') &&
+			!!cred.refreshToken;
+		if (shouldAttemptRefresh(needsRefresh, deps.now(), nextRefreshAllowedAt)) {
+			if (nearExpiry) console.log(`${ts()} [Proxy] stored token at/near expiry — attempting refresh`);
+			await runSingleFlightRefresh(service, cred);
+			return pick() ?? stored;
+		}
+		return stored;
+	}
+
+	// Owner's 401 state machine: reload (keychain re-read) → refresh (if the
+	// backoff window allows) → rebuild → retry once. Null = give up loud.
+	async function recoverAfter401(failedToken: string): Promise<StoredClaudeOAuth | null> {
+		rejectedToken = failedToken;
+		const stored = selectCred(ownCandidates(deps.readCredCandidates(), deps.scopedItem), deps.now(), rejectedToken);
+		console.log(`${ts()} [Proxy] keychain re-read after 401: ${stored ? 'credential present' : 'no credential'}`);
+		if (!stored) return null;
+		if (
+			stored.oauth.accessToken !== failedToken &&
+			classifyCredential(stored.oauth, deps.now(), rejectedToken) === 'ok'
+		) {
+			return stored; // a fresh /login already landed
+		}
+		if (stored.oauth.refreshToken && shouldAttemptRefresh(true, deps.now(), nextRefreshAllowedAt)) {
+			await runSingleFlightRefresh(stored.service, stored.oauth);
+			const after = selectCred(ownCandidates(deps.readCredCandidates(), deps.scopedItem), deps.now(), rejectedToken);
+			if (
+				after &&
+				after.oauth.accessToken !== failedToken &&
+				classifyCredential(after.oauth, deps.now(), rejectedToken) === 'ok'
+			) {
+				return after;
+			}
+		}
+		return null;
+	}
+
+	const server = createServer((req, res) => {
+		const chunks: Buffer[] = [];
+		req.on('data', (c) => chunks.push(c));
+		req.on('end', async () => {
+			const body = Buffer.concat(chunks);
+
+			const headers: Record<string, string | number | string[] | undefined> = {
+				...(req.headers as Record<string, string>),
+				host: deps.upstreamUrl.host,
+				'content-length': body.length,
+			};
+
+			// Strip hop-by-hop headers
+			delete headers['connection'];
+			delete headers['keep-alive'];
+			delete headers['transfer-encoding'];
+
+			const hasClientAuth = !!headers['authorization'] || !!headers['x-api-key'];
+
+			// Read token fresh from keychain each request, refreshing it first if it
+			// is at/near expiry (self-refresh covers headless nodes).
+			// Kept so a scoped token that cannot be recovered hands back to it, never to the shared item.
+			const clientAuthorization = headers['authorization'];
+			const accountBefore = deps.readAccount();
+			const stored = await resolveCredential();
+			// The token this proxy injected, if any — non-null means WE authored the
+			// request's auth and own the 401-recovery duty for it.
+			let injectedToken: string | null = null;
+			if (!stored) {
+				if (!hasClientAuth && deps.scopedItem) {
+					res.writeHead(401, { 'content-type': 'application/json' });
+					res.end(authMissingBody(deps.scopedItem, deps.configDir));
+					return;
+				}
+				if (!hasClientAuth) {
+					res.writeHead(502);
+					res.end('No OAuth token in keychain');
+					return;
+				}
+				// With a config dir set, pick() already warned once; no line per request.
+				if (!deps.scopedItem) console.log(`${ts()} [Proxy] no keychain credential — passing client credential through`);
+			} else {
+				const verdict = classifyCredential(stored.oauth, deps.now(), rejectedToken);
+				noteScopedToken(verdict);
+				if (verdict === 'ok') {
+					// Inject OAuth token for auth requests
+					if (headers['authorization']) {
+						headers['authorization'] = `Bearer ${stored.oauth.accessToken}`;
+						injectedToken = stored.oauth.accessToken;
+						deps.recordCredentialState('ok');
+					}
+				} else if (hasClientAuth) {
+					// Never inject a known-dead token over a client credential that may
+					// be fresher (the /login case) — pass it through untouched.
+					if (!deps.scopedItem) console.log(`${ts()} [Proxy] stored token ${verdict}, refresh unavailable — pass-through engaged (client credential forwarded untouched)`);
+				} else {
+					console.error(`${ts()} [Proxy] stored token ${verdict}, refresh unavailable, no client credential — failing fast (401)`);
+					deps.recordCredentialState('exhausted', `stored token ${verdict}, refresh unavailable`);
+					res.writeHead(401, { 'content-type': 'application/json' });
+					res.end(authUnavailableBody(verdict));
+					return;
+				}
+			}
+
+			let account = injectedToken && stored
+				? boundAccount(stored.service, deps.scopedService(), accountBefore, deps.readAccount()) : null;
+			const forward = (attempt: number): void => {
+				let timedOut = false;
+
+				const upstream = deps.request(
+					{
+						hostname: deps.upstreamUrl.hostname,
+						port: upstreamPort,
+						path: req.url,
+						method: req.method,
+						headers,
+						timeout: deps.idleTimeoutMs,
+					} as RequestOptions,
+					(upRes) => {
+						// Extract rate limit headers
+						const quotaHeaders: Record<string, string> = {};
+						for (const [key, val] of Object.entries(upRes.headers)) {
+							if (key.startsWith('anthropic-ratelimit')) {
+								quotaHeaders[key] = String(val);
+							}
+						}
+						if (Object.keys(quotaHeaders).length > 0) {
+							console.log(`${ts()} [Quota]`, quotaHeaders);
+							deps.updateQuotaState(quotaHeaders, requestModel(body), account);
+						}
+
+						if (upRes.statusCode === 401 && injectedToken && attempt === 0) {
+							// 401 on proxy-authored auth is an auth-state transition, not a
+							// generic failure: reload → refresh → retry once → give up loud.
+							console.error(`${ts()} [Proxy] upstream 401 on injected token — invalidating it and re-reading keychain`);
+							const buf: Buffer[] = [];
+							upRes.on('data', (c) => buf.push(c));
+							upRes.on('end', async () => {
+								const before = deps.readAccount();
+								const recovered = await recoverAfter401(injectedToken as string);
+								if (recovered) {
+									console.log(`${ts()} [Proxy] retrying once with reloaded credential`);
+									headers['authorization'] = `Bearer ${recovered.oauth.accessToken}`;
+									injectedToken = recovered.oauth.accessToken;
+									account = boundAccount(recovered.service, deps.scopedService(), before, deps.readAccount());
+									forward(1);
+									return;
+								}
+								deps.recordCredentialState('exhausted', 'post-401 recovery failed (reload + refresh)');
+								if (
+									deps.scopedItem && typeof clientAuthorization === 'string' &&
+									clientAuthorization !== `Bearer ${injectedToken}`
+								) {
+									// The scoped token is dead and its own item cannot replace it:
+									// the client's credential goes up once, the shared item never.
+									noteScopedToken('rejected');
+									headers['authorization'] = clientAuthorization;
+									injectedToken = null;
+									forward(1);
+									return;
+								}
+								console.error(`${ts()} [Proxy] credential recovery failed — forwarding the upstream 401 (re-auth with /login)`);
+								const h = { ...upRes.headers };
+								delete h['content-length'];
+								delete h['transfer-encoding'];
+								res.writeHead(401, h);
+								res.end(Buffer.concat(buf));
+							});
+							return;
+						}
+						if (upRes.statusCode === 401 && injectedToken && attempt > 0) {
+							console.error(`${ts()} [Proxy] reloaded credential also rejected (401) — giving up`);
+							rejectedToken = injectedToken;
+							deps.recordCredentialState('exhausted', 'reloaded credential rejected upstream');
+						}
+
+						const code = upRes.statusCode ?? 0;
+						if (code >= 400 && code !== 401) {
+							// The only component that sees a credits/overage rejection is this
+							// proxy; without a record the dropped request is invisible upstream.
+							const rejChunks: Buffer[] = [];
+							let seen = 0;
+							upRes.on('data', (c: Buffer) => {
+								if (seen < REJECTION_SNIPPET_BYTES) { rejChunks.push(c); seen += c.length; }
+							});
+							upRes.on('end', () => {
+								const snippet = redactForLog(Buffer.concat(rejChunks).toString('utf8').slice(0, REJECTION_SNIPPET_BYTES));
+								const model = requestModel(body);
+								console.error(`${ts()} [Proxy] rejected HTTP ${code} on ${req.url} model=${model || '?'} peer=${req.socket.remotePort ?? '?'}: ${snippet}`);
+								try {
+									deps.recordRejection({
+										ts: new Date(deps.now()).toISOString(), status: code, path: req.url ?? '', snippet,
+										model, user_agent: String(req.headers['user-agent'] ?? ''), peer_port: req.socket.remotePort,
+										limit_headers: quotaHeaders,
+										...(account ? { account } : {}),
+									});
+								} catch { /* best effort */ }
+							});
+						}
+						res.writeHead(code, upRes.headers);
+						upRes.pipe(res);
+					},
+				);
+
+				// 'timeout' fires on socket inactivity but does NOT auto-abort — destroy the
+				// request so it surfaces through the 'error' handler below as a clean failure
+				// (and Claude Code's own retry kicks in) instead of hanging indefinitely.
+				upstream.on('timeout', () => {
+					timedOut = true;
+					console.error(`${ts()} [Proxy] Upstream idle >${deps.idleTimeoutMs}ms — aborting`);
+					upstream.destroy(new Error('upstream idle timeout'));
+				});
+
+				upstream.on('error', (err) => {
+					console.error(`${ts()} [Proxy] Upstream error:`, err.message);
+					if (!res.headersSent) {
+						res.writeHead(timedOut ? 504 : 502);
+						res.end(timedOut ? 'Gateway Timeout' : 'Bad Gateway');
+					} else {
+						// Headers already streamed — can't change status. Tear down the client
+						// connection so the agent sees a broken stream and retries rather than
+						// waiting forever on a dead upstream.
+						res.destroy(err);
+					}
+				});
+
+				// If the agent hangs up first, don't leak the in-flight upstream request.
+				res.on('close', () => {
+					if (!res.writableEnded) upstream.destroy();
+				});
+
+				upstream.write(body);
+				upstream.end();
+			};
+
+			forward(0);
+		});
+	});
+	// Name the selected service once at start, before the first request.
+	server.on('listening', () => { try { pick(); } catch { /* best effort */ } });
+	return server;
+}
+
+// Back-compat sync reader (startup probe only — does not refresh).
+function getOAuthToken(): string | null {
+	return readCred()?.oauth.accessToken ?? null;
+}
+
+function readQuotaFile(): Record<string, unknown> {
+	try {
+		const parsed = JSON.parse(readFileSync(QUOTA_FILE, 'utf8'));
+		return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+	} catch {
+		return {};
+	}
+}
+
+function writeQuotaFile(state: Record<string, unknown>): void {
+	mkdirSync(dirname(QUOTA_FILE), { recursive: true });
+	writeFileSync(QUOTA_FILE, JSON.stringify(state, null, 2));
+}
+
+/** The record after one rejection is appended. A 429 after the headers ends an
+ *  overage reading, which the header write cannot see. */
+export function recordWithRejection(prev: Record<string, unknown>, rej: RejectionRecord): Record<string, unknown> {
+	const next: Record<string, unknown> = { ...prev, recent_rejections: appendRejection(prev.recent_rejections, rej) };
+	if (prev.limit_state === 'overage' && limitState(next) === 'rejected') {
+		next.limit_state = 'rejected';
+		next.available = false;
+	}
+	return next;
+}
+
+function recordRejection(rej: RejectionRecord): void {
+	try {
+		writeQuotaFile(recordWithRejection(readQuotaFile(), rej));
+	} catch { /* best effort */ }
+}
+
+// Terminal credential health for the desktop app's banner: 'exhausted' means
+// every recovery path (keychain re-read, refresh, retry) failed and only a
+// human /login restores service. Change-only write, so per-request 'ok'
+// confirmations cost nothing.
+function recordCredentialState(state: CredentialState, detail = ''): void {
+	try {
+		const prev = readQuotaFile();
+		if (prev.credential_state === state) return;
+		writeQuotaFile({
+			...prev,
+			credential_state: state,
+			credential_state_detail: detail,
+			credential_state_at: new Date().toISOString(),
+		});
+	} catch { /* best effort */ }
+}
+
+/** The account a request's credential belongs to: only a token the proxy took from this config
+ *  dir's own keychain item, with that dir's account unchanged across the pick; else unbound (null). */
+export function boundAccount(
+	service: string, scoped: string | null, before: string | null, after: string | null,
+): string | null {
+	return scoped && service === scoped && before && before === after ? before : null;
+}
+
+/** The `acct_` label of the account the CLI in `configDir` is signed in to, else null.
+ *  Same digest as core_limit_hold.account_digest; only non-secret identity fields are read. */
+export function accountLabel(
+	configDir = process.env.CLAUDE_CONFIG_DIR,
+	read: (path: string) => string = (path) => readFileSync(path, 'utf8'),
+): string | null {
+	if (!configDir) return null;
+	let acct: unknown;
+	try {
+		acct = JSON.parse(read(join(configDir, '.claude.json')))?.oauthAccount;
+	} catch {
+		return null;
+	}
+	if (!acct || typeof acct !== 'object' || Array.isArray(acct)) return null;
+	const a = acct as Record<string, unknown>;
+	const ident = ['accountUuid', 'organizationUuid', 'emailAddress'].map((k) => (a[k] ? String(a[k]) : ''));
+	if (!ident.some(Boolean)) return null;
+	return `acct_${createHash('sha256').update(ident.join('\0')).digest('hex').slice(0, 6)}`;
+}
+
+/** The record one header-bearing response writes; it replaces the file. `account` is the
+ *  label of the credential that request was sent with; a write without one names no account. */
+export function quotaStateFromHeaders(
+	prev: Record<string, unknown>, headers: Record<string, string>, model: string, nowIso: string,
+	account: string | null = null,
+): Record<string, unknown> {
+	// The header write replaces the file, so carry the rejection ledger across it.
+	const prevLedger = prev.recent_rejections;
+	// Another account's model hint is not carried: a model-less request names no model then.
+	const prevAccount = (typeof prev.account === 'string' && prev.account) || null;
+	const lastRequest = withLastRequest(prevAccount === (account || null) ? prev : {}, model, nowIso);
+	const state: Record<string, unknown> = {
+		available: true,
+		last_checked: nowIso,
+		headers,
+		...(account ? { account } : {}),
+		recent_rejections: Array.isArray(prevLedger) ? prevLedger.filter(isRejectionRecord) : [],
+		...(lastRequest ? { last_request: lastRequest } : {}),
+		// The header write replaces the file — carry credential health across it
+		// the same way as the rejection ledger.
+		...(typeof prev.credential_state === 'string' ? {
+			credential_state: prev.credential_state,
+			credential_state_detail: prev.credential_state_detail,
+			credential_state_at: prev.credential_state_at,
+		} : {}),
+	};
+
+	// Parse specific headers
+	const status5h = headers['anthropic-ratelimit-unified-5h-status'];
+	const util5h = headers['anthropic-ratelimit-unified-5h-utilization'];
+	const reset5h = headers['anthropic-ratelimit-unified-5h-reset'];
+	const util7d = headers['anthropic-ratelimit-unified-7d-utilization'];
+	const reset7d = headers['anthropic-ratelimit-unified-7d-reset'];
+	const overallStatus = headers['anthropic-ratelimit-unified-status'];
+
+	if (util5h) state.utilization_5h = parseFloat(util5h);
+	if (util7d) state.utilization_7d = parseFloat(util7d);
+	if (reset5h) state.resets_at_5h = new Date(parseInt(reset5h) * 1000).toISOString();
+	if (reset7d) state.resets_at_7d = new Date(parseInt(reset7d) * 1000).toISOString();
+
+	state.limit_state = limitState(state);
+	if (state.limit_state !== 'overage' && (overallStatus === 'rejected' || status5h === 'rejected')) {
+		state.available = false;
+		state.exhausted_since = nowIso;
+	}
+	return state;
+}
+
+function updateQuotaState(headers: Record<string, string>, model = '', account: string | null = null): void {
+	try {
+		writeQuotaFile(quotaStateFromHeaders(readQuotaFile(), headers, model, new Date().toISOString(), account));
+	} catch { /* best effort */ }
+}
+
+// Only start the server when run directly. Importing this module (e.g. from the
+// offline tests) must NOT bind the port, touch the keychain, or exit.
+// Match the exact basename — works for BOTH the dev entry (`credential-proxy.ts`
+// run via tsx) AND the bundled artifact (`dist/credential-proxy.js`), while
+// excluding the `credential-proxy-*.test.{ts,js}` files (different basenames).
+const _entryName = (process.argv[1] ?? '').split(/[\\/]/).pop() ?? '';
+const isMain = _entryName === 'credential-proxy.ts' || _entryName === 'credential-proxy.js';
+
+if (isMain) {
+	// Verify token exists at startup
+	const initToken = getOAuthToken();
+	if (!initToken) {
+		console.error('No OAuth token found in macOS keychain. Is Claude Code logged in?');
+		process.exit(1);
+	}
+	console.log(`${ts()} [Proxy] OAuth token loaded from keychain (will re-read on each request)`);
+
+	createProxyServer().listen(PORT, '127.0.0.1', () => {
+		console.log(`${ts()} [Proxy] Credential proxy → http://localhost:${PORT}`);
+		console.log(`${ts()} [Proxy] Upstream: ${UPSTREAM}`);
+		console.log(`${ts()} [Proxy] Set ANTHROPIC_BASE_URL=http://localhost:${PORT} to route through proxy`);
+	});
+}
